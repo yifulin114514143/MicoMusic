@@ -1,6 +1,6 @@
 <template>
     <div class="discover-page">
-        <img class="discover-floating-arona" src="/assets/images/arona.png" alt="Arona" />
+        <img class="discover-floating-mico" src="/assets/images/mico/mico-discover-peek.png" alt="米可在发现页陪你探索音乐" />
 
         <div class="discover-switch" :style="discoverSwitchStyle">
             <button v-for="tab in discoverTabs" :key="tab.key" class="switch-item"
@@ -98,7 +98,7 @@ const handleDiscoverTabClick = (tab) => {
     }
 }
 
-.discover-floating-arona {
+.discover-floating-mico {
     position: absolute;
     top: calc(var(--discover-switch-top) + 1px);
     left: 50%;

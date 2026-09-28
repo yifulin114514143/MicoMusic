@@ -3,11 +3,11 @@
         <div v-if="showOnboardingGuide && currentSteps.length" class="onboarding-overlay">
             <div v-if="hasTarget" class="onboarding-highlight" :style="highlightStyle"></div>
             <img class="onboarding-mascot" :class="{ intro: isIntroStep }" :style="mascotStyle"
-                src="/assets/images/mascotGirl.png" alt="MoeKoe 看板娘">
+                src="/assets/images/mico/mico-onboarding-bust.png" alt="MicoMusic 看板娘米可">
             <section class="onboarding-card" :class="{ centered: !hasTarget, intro: isIntroStep }" :style="cardStyle">
                 <div class="onboarding-progress">{{ progressText }}</div>
                 <template v-if="isIntroStep">
-                    <h3>Hi，I'm 萌音酱!</h3>
+                    <h3>Hi，我是米可。</h3>
                     <p>这里是新手引导，我会用几个简短步骤介绍常用入口和一些隐藏功能。你可以随时跳过，也可以之后在设置里重新查看。</p>
                 </template>
                 <template v-else>
@@ -507,6 +507,8 @@ onUnmounted(() => {
     z-index: 1;
     display: block;
     height: auto;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
     filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.22));
     pointer-events: none;
     user-select: none;
