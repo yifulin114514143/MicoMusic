@@ -81,7 +81,7 @@ const handleDiscoverTabClick = (tab) => {
 <style lang="scss" scoped>
 .discover-page {
     position: relative;
-    --discover-switch-top: 40px;
+    --discover-switch-top: 128px;
     padding: var(--discover-switch-top) 20px 20px;
     --discover-switch-bg: #f3f4f7;
     --discover-switch-border: #e8eaf0;
