@@ -67,7 +67,7 @@ export function registerExtensionIPC() {
             // 插件页面也能看到 preload 暴露的 electronAPI，所以授权接口必须在主进程校验来源。
             // 只要请求来自 chrome-extension://，就视为插件自调用，不能修改授权记录。
             if (getSenderExtensionId(event)) {
-                return { success: false, message: '本地程序授权只能在萌音插件管理页操作' };
+                return { success: false, message: '本地程序授权只能在 MicoMusic 插件管理页操作' };
             }
 
             return nativeHostManager.setAuthorization(extensionId, hostId, authorized === true);

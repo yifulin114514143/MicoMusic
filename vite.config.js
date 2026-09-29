@@ -60,9 +60,9 @@ export default defineConfig({
         ]
       },
       manifest: {
-        name: 'MoeKoe 萌音',
-        short_name: 'MoeKoe',
-        description: '一个高颜值的kugou第三方播放器',
+        name: 'MicoMusic',
+        short_name: 'MicoMusic',
+        description: '一款以米可为主题的第三方音乐播放器',
         theme_color: '#FF69B4',
         background_color: '#ffffff',
         display: 'standalone',

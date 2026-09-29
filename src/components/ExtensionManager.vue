@@ -87,11 +87,11 @@
 
                     <p v-if="!extension.moeKoeAdapted" class="extension-compatibility-warning installed-warning">
                         <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                        <span>该插件未对萌音适配，可能存在兼容性问题</span>
+                        <span>该插件未对 MicoMusic 适配，可能存在兼容性问题</span>
                     </p>
                     <p v-if="isCurrentAppVersionLowerThanMin(extension.minversion)" class="extension-compatibility-warning installed-warning">
                         <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                        <span>当前萌音版本较低，插件最低支持 V{{ extension.minversion }}</span>
+                        <span>当前 MicoMusic 版本较低，插件最低支持 V{{ extension.minversion }}</span>
                     </p>
                     <div v-if="extension.nativeHosts?.length" class="native-host-panel">
                         <div class="native-host-title">
@@ -592,7 +592,7 @@ const buildNativeHostAuthorizationMessage = (extension, host) => {
         `插件 ${extension.name} 请求运行本地程序：`,
         host.path,
         '',
-        '1. 该程序会由 MoeKoe Music 启动，并可能在后台持续运行。',
+        '1. 该程序会由 MicoMusic 启动，并可能在后台持续运行。',
         '2. 该程序属于插件附带的本地二进制内容，具备普通本地程序的系统访问能力。',
         '3. 如果插件来源不可信，可能带来隐私泄露、文件读写或网络访问风险。',
         '4. 本地程序运行后可能修改系统状态，造成数据丢失、系统异常，甚至损坏计算机。',

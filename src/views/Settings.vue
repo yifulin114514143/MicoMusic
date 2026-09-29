@@ -55,7 +55,7 @@
                 </button>
             </div>
             <div class="version-info">
-                <p>© MoeKoe Music</p>
+                <p>MicoMusic</p>
                 <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span>
             </div>
         </div>

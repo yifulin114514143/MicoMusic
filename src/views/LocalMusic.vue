@@ -159,7 +159,7 @@
             <!-- 欢迎状态 -->
             <div v-if="!currentFolder" class="welcome-state">
                 <img src="/assets/images/empty1.png">
-                <h3>欢迎使用MoeKoe Music</h3>
+                <h3>欢迎使用 MicoMusic</h3>
                 <p>请选择并授权以访问您的本地音乐文件夹</p>
             </div>
         </div>

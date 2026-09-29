@@ -21,7 +21,7 @@
             </div>
             <div class="song-info" @click="toggleLyrics(currentSong.hash, currentTime)">
                 <div class="song-title-row">
-                    <div class="song-title" @click.stop="searchSong(currentSong.name)">{{ currentSong?.name || "MoeKoeMusic" }}</div>
+                    <div class="song-title" @click.stop="searchSong(currentSong.name)">{{ currentSong?.name || "MicoMusic" }}</div>
                     <div v-if="currentSong?.qualityLabel" class="quality-menu-wrapper" @click.stop>
                         <button
                             type="button"
@@ -47,7 +47,7 @@
                         </transition>
                     </div>
                 </div>
-                <div class="artist" @click.stop="searchSong(currentSong.author)">{{ currentSong?.author || "MoeJue" }}</div>
+                <div class="artist" @click.stop="searchSong(currentSong.author)">{{ currentSong?.author || "米可" }}</div>
             </div>
             <div class="controls">
                 <button class="control-btn" :title="t('shang-yi-shou')" @click="playSongFromQueue('previous')">

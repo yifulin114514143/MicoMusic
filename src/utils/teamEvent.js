@@ -52,8 +52,8 @@ const joinTeam = async (team_code) => {
 
 const generateShareText = (teamCode) => {
     return window.electron?
-        `快来参与萌音组队领取VIP活动, 这是我的组队链接喵: moekoe://team/join?code=${teamCode}`:
-        `快来参与萌音组队领取VIP活动, 我的组队码是 ${teamCode} 谢谢喵`;
+        `快来参与 MicoMusic 组队领取 VIP 活动，这是我的组队链接：moekoe://team/join?code=${teamCode}`:
+        `快来参与 MicoMusic 组队领取 VIP 活动，我的组队码是 ${teamCode}`;
 }
 
 const copyTeamCode = async (teamCode) => {

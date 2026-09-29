@@ -69,7 +69,7 @@
             <h2>{{ $t('mian-ze-sheng-ming') }}</h2>
             <p v-for="key in ABOUT_DISCLAIMER_KEYS" :key="key">{{ $t(key) }}</p>
             <button @click="Disclaimer">{{ $t('guan-bi-an-niu') }}</button>
-            <div class="version-number">© MoeKoe Music <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span></div>
+            <div class="version-number">MicoMusic <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span></div>
         </div>
     </div>
     <AppUpdateDialog ref="updateDialogRef" :app-version="appVersion" :platform="platform" @badge-change="showNewBadge = $event" />

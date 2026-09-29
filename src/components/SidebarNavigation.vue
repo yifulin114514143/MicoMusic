@@ -31,7 +31,7 @@
                     alt="Profile Picture">
                 <div class="side-profile-info">
                     <span>{{ MoeAuth.UserInfo?.nickname || $t('deng-lu') }}</span>
-                    <small>{{ MoeAuth.isAuthenticated ? 'Hi,欢迎回来!' : 'MoeKoe Music' }}</small>
+                    <small>{{ MoeAuth.isAuthenticated ? 'Hi,欢迎回来!' : 'MicoMusic' }}</small>
                 </div>
             </router-link>
             <button class="side-profile-menu-button" @click.stop="toggleProfile">
@@ -144,7 +144,7 @@
             <h2>{{ $t('mian-ze-sheng-ming') }}</h2>
             <p v-for="key in ABOUT_DISCLAIMER_KEYS" :key="key">{{ $t(key) }}</p>
             <button @click="Disclaimer">{{ $t('guan-bi-an-niu') }}</button>
-            <div class="version-number">© MoeKoe Music <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span></div>
+            <div class="version-number">MicoMusic <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span></div>
         </div>
     </div>
     <AppUpdateDialog ref="updateDialogRef" :app-version="appVersion" :platform="platform"

@@ -296,9 +296,9 @@ import { MoeAuthStore } from '../stores/store';
 export const share = (songName, id, type = 0, songDesc = '') => {
     let text = '';
     const MoeAuth = MoeAuthStore();
-    let userName = '萌音';
+    let userName = 'MicoMusic';
     if(MoeAuth.isAuthenticated) {
-        userName = MoeAuth.UserInfo?.nickname || '萌音';
+        userName = MoeAuth.UserInfo?.nickname || 'MicoMusic';
     };
     // 客户端分享
     let shareUrl = '';

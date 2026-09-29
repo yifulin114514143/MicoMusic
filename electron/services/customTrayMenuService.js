@@ -287,8 +287,8 @@ class CustomTrayMenuService {
             const progressPercent = duration > 0 ? Math.max(0, Math.min((currentTime / duration) * 100, 100)) : 0;
 
             return {
-                title: currentSong?.displayName || currentSong?.name || 'MoeKoe Music',
-                artist: currentSong?.author || 'MoeJue',
+                title: currentSong?.displayName || currentSong?.name || 'MicoMusic',
+                artist: currentSong?.author || '米可',
                 cover: currentSong?.img || '',
                 qualityLabel: currentSong?.qualityLabel || '',
                 currentTime,

@@ -93,7 +93,7 @@ const renderFrameWithOffset = (text, offsetX = 0, isMarquee = false) => {
         if (scrollState.hasPlayedLyrics) {
             textToDraw = '♩ ♩ ♩';
         } else {
-            textToDraw = '♪ MoeKoeMusic - 萌音';
+            textToDraw = '♪ MicoMusic - 米可';
         }
         isPlaceholder = true;
     } else {

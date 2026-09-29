@@ -283,7 +283,7 @@ export function createTray(mainWindow, title = '') {
     }
 
     tray = new Tray(getIconPath(trayIconName));
-    tray.setToolTip('MoeKoe Music');
+    tray.setToolTip('MicoMusic');
 
     const contextMenu = Menu.buildFromTemplate([
         {
