@@ -12,21 +12,25 @@ export const onboardingGuideSteps = [
     },
     {
         selector: '.app-header .search-bar input',
+        mascotPose: 'search',
         title: '搜索音乐',
         description: '在这里输入歌曲、歌手或歌单关键词。按回车即可搜索，搜索模式可以在设置中进行切换。'
     },
     {
         selector: '.app-header .profile',
+        mascotPose: 'settings',
         title: '账号与设置',
         description: '点击头像可以登录账号、打开设置、检查更新和查看关于信息。'
     },
     {
         selector: '.player-container .controls',
+        mascotPose: 'play',
         title: '播放控制',
         description: '底部中间可以切换上一首、播放或暂停、下一首。播放中的歌曲信息也会显示在这里。'
     },
     {
         selector: '.player-container .extra-controls',
+        mascotPose: 'play',
         title: '更多播放功能',
         description: '这里可以收藏、分享、调整播放速度、切换播放模式、打开队列和调节音量。'
     }
@@ -35,6 +39,7 @@ export const onboardingGuideSteps = [
 export const onboardingGuideGroups = [
     {
         key: 'userAgreement',
+        mascotPose: 'front',
         version: '1',
         routeNames: ['Index'],
         triggerSelector: '.user-agreement-guide',
@@ -48,6 +53,7 @@ export const onboardingGuideGroups = [
     },
     {
         key: 'main',
+        mascotPose: 'point',
         version: ONBOARDING_GUIDE_VERSION,
         storageKey: ONBOARDING_GUIDE_STORAGE_KEY,
         routeNames: ['Index', 'Discover', 'Library', 'Settings', 'PlaylistDetail', 'Search', 'RecommendedSearch', 'Ranking', 'CloudDrive', 'LocalMusic'],
@@ -56,6 +62,7 @@ export const onboardingGuideGroups = [
     },
     {
         key: 'home',
+        mascotPose: 'point',
         version: '2',
         routeNames: ['Index'],
         triggerSelector: '.recommendations',
@@ -67,11 +74,13 @@ export const onboardingGuideGroups = [
             },
             {
                 selector: '.recommendations .radio-card',
+                mascotPose: 'play',
                 title: 'MoeKoe Radio',
                 description: '这里可以快速播放一组推荐歌曲，适合不知道听什么时直接开始。'
             },
             {
                 selector: '.radio-title .shuffle-icon',
+                mascotPose: 'play',
                 title: '切换电台类型',
                 description: '点这里可以在私人推荐、经典怀旧、热门歌曲、小众发现等模式之间切换。'
             },
@@ -82,21 +91,25 @@ export const onboardingGuideGroups = [
             },
             {
                 selector: '.playlist-entry',
+                mascotPose: 'favorite',
                 title: '阿珏酱的歌单',
                 description: '这个卡片是作者放在首页的推荐歌单入口，喜欢可以收藏哦~'
             },
             {
                 selector: '.section-title .mama',
+                mascotPose: 'play',
                 title: '每日推荐一键加入',
                 description: '每日推荐标题旁边这个隐藏入口可以把当前推荐歌曲一次性加入播放队列。'
             },
             {
                 selector: '.song-list .song-item',
+                mascotPose: 'play',
                 title: '每日推荐歌曲',
                 description: '点击歌曲会直接加入播放；右键可以打开更多操作菜单。'
             },
             {
                 selector: '.playlist-grid .playlist-item',
+                mascotPose: 'favorite',
                 title: '推荐歌单',
                 description: '这里展示推荐歌单，点击卡片可以进入歌单详情继续浏览和播放。'
             }
@@ -104,6 +117,7 @@ export const onboardingGuideGroups = [
     },
     {
         key: 'discover',
+        mascotPose: 'point',
         version: '1',
         routeNames: ['Discover'],
         triggerSelector: '.discover-page',
@@ -122,12 +136,14 @@ export const onboardingGuideGroups = [
     },
     {
         key: 'library',
+        mascotPose: 'favorite',
         version: '1',
         routeNames: ['Library'],
         triggerSelector: '.library-page',
         steps: [
             {
                 selector: '.library-page .profile-header',
+                mascotPose: 'settings',
                 title: '音乐库资料卡',
                 description: '这里会显示你的头像、昵称、等级、听歌时长和关注数据，也会根据资料背景自动调整卡片氛围。'
             },
@@ -143,11 +159,13 @@ export const onboardingGuideGroups = [
             },
             {
                 selector: '.library-page .category-tabs',
+                mascotPose: 'point',
                 title: '音乐库分类',
                 description: '这里可以切换我创建的歌单、收藏的歌单、收藏的专辑、关注的歌手和关注的好友。'
             },
             {
                 selector: '.music-grid .create-playlist-button',
+                mascotPose: 'point',
                 title: '云盘和本地音乐',
                 description: '前两个快捷卡片分别进入我的云盘和本地音乐，方便管理在线云盘歌曲和本地文件。'
             },
@@ -165,6 +183,7 @@ export const onboardingGuideGroups = [
     },
     {
         key: 'playlistDetail',
+        mascotPose: 'point',
         version: '1',
         routeNames: ['PlaylistDetail'],
         triggerSelector: '.detail-page',
@@ -176,21 +195,25 @@ export const onboardingGuideGroups = [
             },
             {
                 selector: '.detail-page .actions',
+                mascotPose: 'play',
                 title: '播放和收藏',
                 description: '这里可以一键播放整个列表，也可以收藏、关注或打开更多操作。'
             },
             {
                 selector: '.track-list-actions',
+                mascotPose: 'search',
                 title: '列表工具',
                 description: '歌曲列表支持批量操作、视图切换和列表内搜索。'
             },
             {
                 selector: '.batch-action-btn',
+                mascotPose: 'favorite',
                 title: '批量操作',
                 description: '开启后可以一次选择多首歌曲加入队列或添加到歌单。'
             },
             {
                 selector: '.track-list',
+                mascotPose: 'play',
                 title: '歌曲列表',
                 description: '点击歌曲播放，右键歌曲可以打开更多操作，表头也支持排序。'
             }
@@ -198,6 +221,7 @@ export const onboardingGuideGroups = [
     },
     {
         key: 'playerLyrics',
+        mascotPose: 'play',
         version: '2',
         triggerSelector: '.lyrics-bg .lyrics-screen',
         steps: [
@@ -213,6 +237,7 @@ export const onboardingGuideGroups = [
             },
             {
                 selector: '.fullscreen-lyrics-settings .settings-guide-anchor',
+                mascotPose: 'settings',
                 title: '全屏歌词快捷设置',
                 description: '鼠标移到右侧小箭头上可以滑出设置面板，快速调整歌词背景、字号、高亮方式和对齐方式。'
             },
@@ -235,6 +260,7 @@ export const onboardingGuideGroups = [
     },
     {
         key: 'settings',
+        mascotPose: 'settings',
         version: '1',
         routeNames: ['Settings'],
         triggerSelector: '.settings-page',
