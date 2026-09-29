@@ -158,14 +158,14 @@
                             <div v-if="coverMode === 'vinyl'" key="vinyl" class="vinyl-player">
                                 <!-- 唱片播放器模式 -->
                                 <div class="vinyl-disc" :class="{ 'rotating': playing }">
-                                    <img :src="currentSong?.img || './assets/images/!.png'" alt="Album Art" class="vinyl-cover" />
+                                    <img :src="currentSong?.img || './assets/images/mico/mico-app-icon-512.png'" alt="Album Art" class="vinyl-cover" />
                                 </div>
                                 <div class="tonearm" :class="{ 'playing': playing }"></div>
                             </div>
                             <div v-else key="square" class="album-art-large">
                                 <!-- 普通封面模式 -->
                                 <img v-if="easterEggImage" :src="easterEggImage.src" :class="easterEggClass" alt="Easter Egg" />
-                                <img :src="currentSong?.img || './assets/images/!.png'" alt="Album Art" />
+                                <img :src="currentSong?.img || './assets/images/mico/mico-app-icon-512.png'" alt="Album Art" />
                             </div>
                         </transition>
                     </div>

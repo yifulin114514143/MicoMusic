@@ -3,7 +3,7 @@
         <div class="header detail-sliver-header" :style="headerStyle">
             <CommonSkeleton v-if="loading" variant="detail-header" />
             <template v-else>
-                <img class="cover-art" :style="coverStyle" :src="`./assets/images/local.png`" />
+                <img class="cover-art" :style="coverStyle" src="/assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png" alt="米可陪你听本地音乐" />
             <div class="info" :style="infoStyle">
                 <h1 class="title" :style="titleStyle">本地音乐</h1>
                 <div class="expanded-info" :style="detailsStyle">
@@ -151,14 +151,14 @@
 
             <!-- 空状态 -->
             <div v-if="musicFiles.length === 0 && currentFolder" class="empty-state">
-                <img src="/assets/images/empty1.png">
+                <img src="/assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png" alt="米可正在寻找本地歌曲">
                 <p>{{ hasMusicCache ? '该文件夹中没有找到音乐文件' : '该文件夹尚未建立本地音乐缓存' }}</p>
                 <p class="hint">{{ hasMusicCache ? '支持的格式: MP3, FLAC, WAV, AAC, OGG, M4A' : '点击刷新按钮扫描音乐文件' }}</p>
             </div>
 
             <!-- 欢迎状态 -->
             <div v-if="!currentFolder" class="welcome-state">
-                <img src="/assets/images/empty1.png">
+                <img src="/assets/images/mico/onboarding/mico-onboarding-chibi-welcome-v1.png" alt="米可欢迎你添加本地音乐">
                 <h3>欢迎使用 MicoMusic</h3>
                 <p>请选择并授权以访问您的本地音乐文件夹</p>
             </div>
@@ -1135,7 +1135,8 @@ const getSortIconClass = (field) => {
     height: 200px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    object-fit: cover;
+    object-fit: contain;
+    background: linear-gradient(135deg, #e8e9ff, #f7eaf8);
     transition: box-shadow 0.2s ease;
 }
 
@@ -1791,6 +1792,14 @@ const getSortIconClass = (field) => {
     text-align: center;
     padding: 60px 20px;
     color: #666;
+
+    img {
+        display: block;
+        width: min(180px, 40vw);
+        height: 190px;
+        object-fit: contain;
+        margin: 0 auto 18px;
+    }
 
     i {
         font-size: 48px;

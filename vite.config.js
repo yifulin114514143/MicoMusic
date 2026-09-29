@@ -80,7 +80,7 @@ export default defineConfig({
             type: 'image/png'
           },
           {
-            src: '/assets/images/logo.png',
+            src: '/assets/images/mico/mico-app-icon-512.png',
             sizes: '512x512',
             type: 'image/png'
           }

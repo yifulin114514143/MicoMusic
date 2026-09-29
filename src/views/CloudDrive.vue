@@ -4,7 +4,7 @@
         <div class="header detail-sliver-header" :style="headerStyle">
             <CommonSkeleton v-if="loading" variant="detail-header" />
             <template v-else>
-                <img class="cover-art" :style="coverStyle" :src="`./assets/images/cloud.png`" />
+                <img class="cover-art" :style="coverStyle" src="/assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png" alt="米可陪你查找云盘音乐" />
             <div class="info" :style="infoStyle">
                 <h1 class="title" :style="titleStyle">{{ $t('wo-de-yun-pan') }}</h1>
                 <div class="expanded-info" :style="detailsStyle">
@@ -869,7 +869,8 @@ $shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
     height: 200px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    object-fit: cover;
+    object-fit: contain;
+    background: linear-gradient(135deg, #e8e9ff, #f7eaf8);
     transition: box-shadow 0.2s ease;
 }
 

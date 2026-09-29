@@ -11,7 +11,7 @@
                         <div class="radio-card">
                             <div class="radio-left">
                                 <div class="disc-container">
-                                    <img :src="`./assets/images/home/hutao1.png`" class="radio-disc">
+                                    <img src="/assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png" class="radio-disc" alt="正在听音乐的米可">
                                 </div>
                                 <div class="decorative-box">
                                     <div class="music-bars">
@@ -26,7 +26,7 @@
                             <div class="radio-content gradient-background">
                                 <div class="radio-title">
                                     <span class="heart-icon">💖</span>
-                                    MoeKoe Radio
+                                    MicoMusic 电台
                                     <span class="shuffle-icon" @click="toggleMode">{{ modeIcon }}</span>
                                 </div>
                                 <div class="radio-subtitle">{{ radioSubtitle }}</div>
@@ -38,7 +38,7 @@
                             path: '/Ranking'
                         }" class="ranking-entry">
                             <div class="ranking-content">
-                                <img :src="`./assets/images/home/hutao2.png`" class="ranking-icon">
+                                <img src="/assets/images/mico/onboarding/mico-onboarding-chibi-point-v1.png" class="ranking-icon" alt="为你指向排行榜的米可">
                                 <h3 class="ranking-title">排行榜</h3>
                                 <div class="ranking-description">发现你的专属好歌</div>
                             </div>
@@ -53,7 +53,7 @@
                             }">
                                 <div class="playlist-content">
                                     <div class="playlist-icon">
-                                        <img :src="`./assets/images/home/hutao.png`" />
+                                        <img src="/assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png" alt="抱着爱心的米可" />
                                     </div>
                                     <div class="ranking-description">送给也喜欢音乐的你</div>
                                 </div>
@@ -71,7 +71,7 @@
                             <div class="icon-card-copy">
                                 <div class="icon-card-eyebrow">
                                     <i class="fas fa-headphones"></i>
-                                    <span>MoeKoe Radio</span>
+                                    <span>MicoMusic 电台</span>
                                 </div>
                                 <div class="icon-card-title">{{ radioSubtitle }}</div>
                             </div>
@@ -100,8 +100,8 @@
                             <i class="fas fa-list-ul"></i>
                         </div>
                         <div class="icon-card-copy">
-                            <div class="icon-card-eyebrow">精选歌单</div>
-                            <div class="icon-card-title">阿珏酱的歌单</div>
+                            <div class="icon-card-eyebrow">音乐发现</div>
+                            <div class="icon-card-title">精选歌单</div>
                             <div class="icon-card-description">送给也喜欢音乐的你</div>
                         </div>
                     </router-link>
@@ -481,7 +481,7 @@ const playFM = async (event) => {
 .radio-disc {
     width: 125px;
     height: 125px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 50%;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2),
         inset 0 0 20px rgba(0, 0, 0, 0.1),
@@ -685,6 +685,8 @@ const playFM = async (event) => {
 
 .ranking-icon {
     width: 135px;
+    height: 135px;
+    object-fit: contain;
 }
 
 .ranking-title {
@@ -734,6 +736,7 @@ const playFM = async (event) => {
     img {
         width: 100%;
         height: 100%;
+        object-fit: contain;
     }
 }
 

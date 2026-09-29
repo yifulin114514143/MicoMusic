@@ -65,7 +65,7 @@
     </header>
     <div v-if="isDisclaimerVisible" class="modal-overlay" @click="Disclaimer">
         <div class="modal-content" @click.stop>
-            <img class="modal-banner" :src="DISCLAIMER_BANNER_SRC" alt="Banner">
+            <MicoBrandBanner />
             <h2>{{ $t('mian-ze-sheng-ming') }}</h2>
             <p v-for="key in ABOUT_DISCLAIMER_KEYS" :key="key">{{ $t(key) }}</p>
             <button @click="Disclaimer">{{ $t('guan-bi-an-niu') }}</button>
@@ -81,7 +81,8 @@ import { useRouter, useRoute } from 'vue-router';
 import { MoeAuthStore } from '../stores/store';
 import { useI18n } from 'vue-i18n';
 import AppUpdateDialog from './AppUpdateDialog.vue';
-import { ABOUT_DISCLAIMER_KEYS, DISCLAIMER_BANNER_SRC } from '../config/disclaimer';
+import { ABOUT_DISCLAIMER_KEYS } from '../config/disclaimer';
+import MicoBrandBanner from './MicoBrandBanner.vue';
 
 const MoeAuth = MoeAuthStore();
 const searchQuery = ref('');

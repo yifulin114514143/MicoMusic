@@ -81,7 +81,7 @@ const handleNetworkChange = (online) => {
 
     new Notification(title, {
         body,
-        icon: './assets/images/logo.png'
+        icon: './assets/images/mico/mico-app-icon-512.png'
     });
 };
 

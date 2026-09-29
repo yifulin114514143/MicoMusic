@@ -656,7 +656,7 @@ onMounted(() => {
     align-items: center;
     overflow-x: clip;
     position: relative;
-    background-image: url('/assets/images/recognize-bg.png');
+    background-image: url('/assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png');
     background-repeat: no-repeat;
     background-size: 35% auto;
     background-position: left bottom;

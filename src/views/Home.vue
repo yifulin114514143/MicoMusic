@@ -2,7 +2,8 @@
     <div class="container">
         <HomeRecommendations :playerControl="playerControl" />
         <h2 class="section-title">
-            <img :src="`./assets/images/home/mama.png`" class="mama" @click="addAllSongsToQueue">
+            <img src="/assets/images/mico/onboarding/mico-onboarding-chibi-welcome-v1.png" class="mico-daily-helper"
+                alt="米可：将每日推荐加入播放队列" title="将每日推荐加入播放队列" @click="addAllSongsToQueue">
             {{ $t('mei-ri-tui-jian') }}
         </h2>
         <CommonSkeleton v-if="isLoading" variant="compact-grid" :count="20" />
@@ -182,11 +183,12 @@ const addAllSongsToQueue = () => {
     margin-bottom: 30px;
     color: var(--primary-color);
 
-    .mama {
+    .mico-daily-helper {
         position: absolute;
-        height: 40px;
+        height: 50px;
         margin-left: 117px;
         cursor: cell;
+        object-fit: contain;
     }
 }
 

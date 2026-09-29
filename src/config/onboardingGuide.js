@@ -70,12 +70,12 @@ export const onboardingGuideGroups = [
             {
                 selector: '.recommend-title',
                 title: '切换推荐卡片样式',
-                description: '点击“推荐”标题可以在图片卡片和图标卡片之间切换，如果你不喜欢胡桃的话。'
+                description: '点击“推荐”标题可以在米可图片卡片和图标卡片之间切换。'
             },
             {
                 selector: '.recommendations .radio-card',
                 mascotPose: 'play',
-                title: 'MoeKoe Radio',
+                title: 'MicoMusic 电台',
                 description: '这里可以快速播放一组推荐歌曲，适合不知道听什么时直接开始。'
             },
             {
@@ -92,11 +92,11 @@ export const onboardingGuideGroups = [
             {
                 selector: '.playlist-entry',
                 mascotPose: 'favorite',
-                title: '阿珏酱的歌单',
-                description: '这个卡片是作者放在首页的推荐歌单入口，喜欢可以收藏哦~'
+                title: '精选歌单',
+                description: '这里可以打开一张精选歌单，喜欢可以收藏。'
             },
             {
-                selector: '.section-title .mama',
+                selector: '.section-title .mico-daily-helper',
                 mascotPose: 'play',
                 title: '每日推荐一键加入',
                 description: '每日推荐标题旁边这个隐藏入口可以把当前推荐歌曲一次性加入播放队列。'

@@ -40,7 +40,7 @@ export default function useMediaSession() {
   const changeMediaSession = (song) => {
     if (!("mediaSession" in navigator) || !navigator.mediaSession) return;
 
-    const defaultArtwork = './assets/images/logo.png';
+    const defaultArtwork = './assets/images/mico/mico-app-icon-512.png';
     const checkImageAccessibility = (src) => {
       return new Promise((resolve) => {
         const img = new Image();
