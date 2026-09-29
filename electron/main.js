@@ -42,6 +42,13 @@ if (!gotTheLock) {
 }
 
 app.on('ready', () => {
+    if (process.platform === 'darwin') {
+        const dockIconPath = process.env.NODE_ENV === 'development'
+            ? path.join(__dirname, '../build/icons/logo.png')
+            : path.join(process.resourcesPath, 'icons/logo.png');
+        app.dock?.setIcon(dockIconPath);
+    }
+
     startApiServer().then(() => {
         try {
             mainWindow = createWindow();

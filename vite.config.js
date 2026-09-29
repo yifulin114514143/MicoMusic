@@ -75,8 +75,13 @@ export default defineConfig({
         ],
         icons: [
           {
+            src: '/assets/images/mico/mico-app-icon-192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
             src: '/assets/images/logo.png',
-            sizes: '256x256',
+            sizes: '512x512',
             type: 'image/png'
           }
         ]
