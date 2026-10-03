@@ -15,6 +15,7 @@ import { setupDesktopShortcutIcon } from './services/desktopShortcutIcon.js';
 import { openLogPath, exportLog } from './services/logHelper.js';
 import Store from 'electron-store';
 import { initializeProtocolHandler, attachProtocolWindow } from './services/protocolHandler.js';
+import { APP_NAME } from './services/identityConfig.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { t } from './language/i18n.js';
@@ -33,6 +34,13 @@ if (!gotTheLock) {
 }
 
 app.on('ready', () => {
+    app.setAboutPanelOptions({
+        applicationName: APP_NAME,
+        applicationVersion: app.getVersion(),
+        copyright: '© 2024 MoeKoe',
+        credits: 'MicoMusic 基于 MoeKoeMusic 开发，保留原作者信息与 GPL-2.0 许可。',
+        website: 'https://github.com/yifulin114514143/MicoMusic'
+    });
     if (process.platform === 'darwin') {
         const dockIconPath = process.env.NODE_ENV === 'development'
             ? path.join(__dirname, '../build/icons/logo.png')

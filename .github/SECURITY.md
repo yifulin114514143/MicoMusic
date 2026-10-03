@@ -1,45 +1,9 @@
-# Security Policy
+# MicoMusic 安全问题说明
 
-## Supported Versions
+MicoMusic 当前处于源码开发和本地验证阶段，尚未发布正式安装包，也未承诺特定版本的安全维护期限。
 
-We actively maintain security updates for the following versions:
+MicoMusic 尚未指定专属安全邮箱和响应时限。需要私密报告漏洞时，请先联系 [项目维护者](https://github.com/yifulin114514143)，确认接收渠道。公开问题中可说明需要私下报告，但请勿公开登录凭据或可直接利用的漏洞细节。
 
-| Version | Supported          |
-|---------|--------------------|
-| 1.x     | ✅                 |
-| 0.x     | ❌ (no longer supported) |
+报告应包含受影响的版本或提交、复现步骤、影响范围和错误原文。涉及 MoeKoeMusic 或 KuGouMusicApi 上游的问题，请注明实际来源，由维护者确认后协调处理。
 
-## Reporting a Vulnerability
-
-If you discover a security vulnerability in this project, please follow these steps:
-
-1. **Do not open a public issue.**  
-   Please email us **privately** to allow time for remediation before public disclosure.
-
-2. **Contact:**
-   - 📧 Email: [MoeJue@qq.com](mailto:MoeJue@qq.com)
-   - 🕒 Expected Response Time: 1–3 business days
-
-3. **Information to include in your report:**
-   - A clear and detailed description of the vulnerability
-   - Steps to reproduce the issue
-   - Potential impact or severity
-   - (Optional) Any suggested fix or patch
-
-4. **Responsible Disclosure Policy:**
-   We believe in responsible disclosure and commit to:
-   - Confirming and triaging valid reports promptly
-   - Patching and releasing a fix within **30 days**
-   - Crediting the reporter in the changelog (with consent)
-
-## Security Best Practices (for users)
-
-To keep your environment safe, we recommend:
-- Always use the latest stable version
-- Avoid using deprecated versions
-- Keep your dependencies updated regularly
-- Use a secure environment (e.g. HTTPS, proper file permissions)
-
----
-
-🔐 Thank you for helping us keep our project safe and secure!
+原作者的邮箱是上游作者信息，不作为 MicoMusic 的专属安全联系地址。

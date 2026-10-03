@@ -32,7 +32,7 @@
                     </router-link>
                 </div>
                 <div class="profile" @click="toggleProfile">
-                    <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/mico/mico-app-icon-512.png'" alt="Profile Picture">
+                    <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/mico/mico-app-icon-512.png'" alt="用户头像，未登录时显示米可">
                     <div v-if="showProfile" class="profile-menu">
                         <ul>
                             <li>
@@ -68,6 +68,7 @@
             <MicoBrandBanner />
             <h2>{{ $t('mian-ze-sheng-ming') }}</h2>
             <p v-for="key in ABOUT_DISCLAIMER_KEYS" :key="key">{{ $t(key) }}</p>
+            <MicoProjectInfo />
             <button @click="Disclaimer">{{ $t('guan-bi-an-niu') }}</button>
             <div class="version-number">MicoMusic <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span></div>
         </div>
@@ -83,6 +84,7 @@ import { useI18n } from 'vue-i18n';
 import AppUpdateDialog from './AppUpdateDialog.vue';
 import { ABOUT_DISCLAIMER_KEYS } from '../config/disclaimer';
 import MicoBrandBanner from './MicoBrandBanner.vue';
+import MicoProjectInfo from './MicoProjectInfo.vue';
 
 const MoeAuth = MoeAuthStore();
 const searchQuery = ref('');

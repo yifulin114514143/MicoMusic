@@ -16,7 +16,7 @@ body:
         - 您已经搜索过现有的讨论，避免重复
         - 您的问题足够清晰，以便其他人能够理解和参与讨论
         
-        或前往 [社区](https://github.com/iAJue/MoeKoeMusic/discussions) 进行讨论
+        也可查看 [MicoMusic 已有问题与讨论](https://github.com/yifulin114514143/MicoMusic/issues)
   - type: textarea
     id: topic
     attributes:

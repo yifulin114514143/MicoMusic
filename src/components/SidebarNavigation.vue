@@ -28,7 +28,7 @@
         <div class="side-profile">
             <router-link :to="!isCollapsed ? '/library' : '/settings'" class="side-profile-link">
                 <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/mico/mico-app-icon-512.png'"
-                    alt="Profile Picture">
+                    alt="用户头像，未登录时显示米可">
                 <div class="side-profile-info">
                     <span>{{ MoeAuth.UserInfo?.nickname || $t('deng-lu') }}</span>
                     <small>{{ MoeAuth.isAuthenticated ? 'Hi,欢迎回来!' : 'MicoMusic' }}</small>
@@ -143,6 +143,7 @@
             <MicoBrandBanner />
             <h2>{{ $t('mian-ze-sheng-ming') }}</h2>
             <p v-for="key in ABOUT_DISCLAIMER_KEYS" :key="key">{{ $t(key) }}</p>
+            <MicoProjectInfo />
             <button @click="Disclaimer">{{ $t('guan-bi-an-niu') }}</button>
             <div class="version-number">MicoMusic <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span></div>
         </div>
@@ -160,6 +161,7 @@ import { MoeAuthStore } from '../stores/store';
 import AppUpdateDialog from './AppUpdateDialog.vue';
 import { ABOUT_DISCLAIMER_KEYS } from '../config/disclaimer';
 import MicoBrandBanner from './MicoBrandBanner.vue';
+import MicoProjectInfo from './MicoProjectInfo.vue';
 
 const MoeAuth = MoeAuthStore();
 const router = useRouter();

@@ -56,6 +56,7 @@
             </div>
             <div class="version-info">
                 <p>MicoMusic</p>
+                <MicoProjectInfo />
                 <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span>
             </div>
         </div>
@@ -204,6 +205,7 @@ import { ref, onMounted, getCurrentInstance, onUnmounted, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { MoeAuthStore } from '../stores/store';
 import ExtensionManager from '@/components/ExtensionManager.vue';
+import MicoProjectInfo from '@/components/MicoProjectInfo.vue';
 import { applyCustomFont, requestMicrophonePermission } from '../utils/utils';
 import { DEFAULT_API_BASE_URL, validateApiBaseUrl, testApiBaseUrl as testApiBaseUrlRequest } from '@/utils/apiBaseUrl';
 import { useSettingsConfig } from '@/config/settings';

@@ -36,7 +36,7 @@
                 </button>
                 <button @click="openPluginsRepo" class="extension-btn secondary">
                     <i class="fas fa-arrow-up-right-from-square"></i>
-                    上架&举报
+                    上游插件仓库
                 </button>
             </div>
         </div>

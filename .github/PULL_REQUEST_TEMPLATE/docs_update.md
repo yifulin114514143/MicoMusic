@@ -1,34 +1,28 @@
 ---
-name: 📝 Docs Update | 文档更新
-about: 提交文档相关的修改
-title: 'docs: 更新 [文档主题]'
+name: 文档更新
+about: 说明文档用途、修改范围和路径或命令核查结果。
+title: "docs: 更新 [文档主题]"
 labels: documentation
 ---
 
-## 📄 更新内容 Description
+## 修改摘要
 
-请说明你更新了哪些文档，以及为什么更新它们：
-> Describe what parts of the documentation were updated and why.
+请用中文说明修改了什么、涉及哪些文件，以及修改原因。
 
----
+## 验证结果
 
-## 📌 文档类型 Type of Docs
+- 执行的命令与退出结果：
+- 手动验证的页面或桌面行为：
+- 尚未验证的范围：
 
-- [ ] 使用说明 Usage guide
-- [ ] 开发者文档 Developer guide
-- [ ] API 文档 API references
-- [ ] 项目规范 Project rules
-- [ ] 其他 Other: _________
+## 风险与兼容性
 
----
+说明数据、安装身份、API、插件和上游同步是否受到影响；英文错误保留原文并附中文解释。
 
-## ✅ 其他说明 Notes
+## Git 与合并说明
 
-> 是否与代码变更有关？是否同步更新了？
-Mention if this change is associated with any code changes or dependencies.
-
----
-
-## 🔗 相关 Issues / Related Issues
-
-> Ref #xxx（如有关联）
+- 实际分支名及中文名称：
+- 分支用途与创建原因：
+- 关联 Issue（问题记录）：
+- 完成后如何处理分支：
+- 合并到 main 需要项目负责人确认。
