@@ -1,9 +1,10 @@
+import './services/appIdentity.js';
 import { app, ipcMain, globalShortcut, dialog, Notification, shell, session, powerSaveBlocker, nativeImage, screen } from 'electron';
 import {
     createWindow, createTray, createTouchBar, startApiServer,
     stopApiServer, registerShortcut,
     playStartupSound, createLyricsWindow, setThumbarButtons,
-    registerProtocolHandler, sendHashAfterLoad, getTray, createMvWindow
+    getTray, createMvWindow, getRuntimeApiBaseUrl
 } from './appServices.js';
 import { initializeExtensions, cleanupExtensions } from './extensions/extensions.js';
 import { setupAutoUpdater, startUpdateDownload } from './services/updater.js';
@@ -13,6 +14,7 @@ import customTrayMenuService from './services/customTrayMenuService.js';
 import { setupDesktopShortcutIcon } from './services/desktopShortcutIcon.js';
 import { openLogPath, exportLog } from './services/logHelper.js';
 import Store from 'electron-store';
+import { initializeProtocolHandler, attachProtocolWindow } from './services/protocolHandler.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { t } from './language/i18n.js';
@@ -27,18 +29,7 @@ if (!gotTheLock) {
     app.quit();
     process.exit(0);
 } else {
-    let protocolHandler;
-    app.on('second-instance', (event, commandLine) => {
-        if (!protocolHandler) {
-            protocolHandler = registerProtocolHandler(null);
-        }
-        if (mainWindow) {
-            if (mainWindow.isMinimized()) mainWindow.restore();
-            mainWindow.show();
-            mainWindow.focus();
-        }
-        protocolHandler.handleProtocolArgv(commandLine);
-    });
+    initializeProtocolHandler();
 }
 
 app.on('ready', () => {
@@ -52,6 +43,7 @@ app.on('ready', () => {
     startApiServer().then(() => {
         try {
             mainWindow = createWindow();
+            attachProtocolWindow(mainWindow);
             createTray(mainWindow);
             customTrayMenuService.init(() => mainWindow, getTray);
 
@@ -63,8 +55,6 @@ app.on('ready', () => {
             registerShortcut();
             setupAutoUpdater(mainWindow);
             apiService.init(mainWindow);
-            registerProtocolHandler(mainWindow);
-            sendHashAfterLoad(mainWindow);
             void initializeExtensions();
             setupDesktopShortcutIcon();
         } catch (error) {
@@ -154,6 +144,7 @@ app.on('activate', () => {
         mainWindow.show();
     } else if (!mainWindow) {
         mainWindow = createWindow();
+        attachProtocolWindow(mainWindow);
     }
 });
 
@@ -200,6 +191,8 @@ ipcMain.on('window-control', (event, action) => {
 app.on('will-quit', () => {
     globalShortcut.unregisterAll();
 });
+ipcMain.handle('get-api-endpoints', () => ({ apiBaseUrl: getRuntimeApiBaseUrl(), websocketUrl: apiService.getUrl() }));
+
 ipcMain.on('save-settings', (event, settings) => {
     store.set('settings', settings);
     if (['on', 'off'].includes(settings?.autoStart)) {

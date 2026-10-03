@@ -1,7 +1,7 @@
 {
-  "name": "moekoemusic",
+  "name": "micomusic",
   "version": "1.7.0",
-  "homepage": "https://music.moekoe.cn/",
+  "homepage": "https://github.com/yifulin114514143/MicoMusic",
   "main": "electron/main.js",
   "scripts": {
     "install-all": "npm install && cd api && npm install",
@@ -23,17 +23,18 @@
     "electron:build:macos:universal": "run-s build:api:macos \"electron:build -- --mac --universal --publish never\"",
     "electron:build:macos:x64": "run-s build:api:macos \"electron:build -- --mac --x64 --publish never\"",
     "electron:build:macos:arm64": "run-s build:api:macos \"electron:build -- --mac --arm64 --publish never\"",
-    "electron:build": "cross-env NODE_ENV=production electron-builder"
+    "electron:build": "cross-env NODE_ENV=production electron-builder",
+    "test:identity": "node --test tests/identity.test.js tests/deepLinks.test.js tests/loopbackApi.test.js tests/apiBaseUrl.test.js"
   },
   "engines": {
     "node": ">=20"
   },
-  "desktopName": "cn.MoeKoe.Music",
+  "desktopName": "io.github.yifulin114514143.micomusic",
   "build": {
     "publish": {
       "provider": "github",
-      "owner": "MoeKoeMusic",
-      "repo": "MoeKoeMusic"
+      "owner": "yifulin114514143",
+      "repo": "MicoMusic"
     },
     "compression": "normal",
     "extraResources": [
@@ -58,8 +59,8 @@
         "to": "assets"
       }
     ],
-    "appId": "cn.MoeKoe.Music",
-    "productName": "MoeKoe Music",
+    "appId": "io.github.yifulin114514143.micomusic",
+    "productName": "MicoMusic",
     "copyright": "© 2024 MoeKoe",
     "directories": {
       "output": "dist_electron"
@@ -70,14 +71,6 @@
       "package.json"
     ],
     "icon": "build/icons/icon",
-    "protocols": [
-      {
-        "name": "MoeKoe Music Protocol",
-        "schemes": [
-          "moekoe"
-        ]
-      }
-    ],
     "win": {
       "icon": "build/icons/icon.ico",
       "target": [
@@ -89,7 +82,7 @@
           ]
         }
       ],
-      "artifactName": "MoeKoe_Music_Setup_v${version}-${arch}.${ext}"
+      "artifactName": "MicoMusic_Setup_v${version}-${arch}.${ext}"
     },
     "nsis": {
       "oneClick": false,
@@ -102,9 +95,9 @@
       "uninstallerSidebar": "build/uninstallerSidebar.bmp",
       "createDesktopShortcut": false,
       "createStartMenuShortcut": true,
-      "shortcutName": "MoeKoe Music",
+      "shortcutName": "MicoMusic",
       "include": "build/installer.nsh",
-      "license": "build/license.txt",
+      "license": "LICENSE",
       "language": "2052",
       "warningsAsErrors": true
     },
@@ -116,15 +109,7 @@
         "zip"
       ],
       "identity": null,
-      "artifactName": "MoeKoe_Music_v${version}-${arch}.${ext}",
-      "protocols": [
-        {
-          "name": "MoeKoe Music Protocol",
-          "schemes": [
-            "moekoe"
-          ]
-        }
-      ]
+      "artifactName": "MicoMusic_v${version}-${arch}.${ext}"
     },
     "dmg": {
       "sign": false
@@ -136,8 +121,16 @@
         "deb"
       ],
       "category": "Utility",
-      "artifactName": "MoeKoe_Music_v${version}-${arch}.${ext}"
-    }
+      "artifactName": "MicoMusic_v${version}-${arch}.${ext}"
+    },
+    "protocols": [
+      {
+        "name": "MicoMusic 应用链接",
+        "schemes": [
+          "micomusic"
+        ]
+      }
+    ]
   },
   "type": "module",
   "author": {
@@ -146,7 +139,7 @@
   },
   "blog": "MoeJue.cn",
   "license": "GPL-2.0-only",
-  "description": "MoeKoe Music",
+  "description": "MicoMusic，一款以米可为主题的第三方音乐播放器",
   "devDependencies": {
     "@types/node": "^24.10.1",
     "@vitejs/plugin-vue": "^6.0.2",
@@ -177,5 +170,6 @@
     "vue-router": "^4.4.5",
     "vue3-virtual-scroller": "^0.2.3",
     "ws": "^8.18.1"
-  }
+  },
+  "productName": "MicoMusic"
 }

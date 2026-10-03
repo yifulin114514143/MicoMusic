@@ -124,7 +124,7 @@
                     </div>
                     <div class="api-setting-item">
                         <label>{{ $t('websocket-di-zhi') }}</label>
-                        <input type="text" value="ws://127.0.0.1:6520" readonly class="api-input" />
+                        <input type="text" :value="websocketUrl || '未启动；开启后重启应用'" readonly class="api-input" />
                     </div>
                     <div class="api-hint">
                         {{ $t('mo-ren-api-ti-shi') }}
@@ -216,6 +216,7 @@ const appVersion = ref('');
 const platform = ref('');
 const activeTab = ref(0);
 const defaultApiBaseUrl = DEFAULT_API_BASE_URL;
+const websocketUrl = ref('');
 
 const {
     settingSections,
@@ -654,6 +655,9 @@ onMounted(() => {
     if (isElectron()) {
         appVersion.value = localStorage.getItem('version');
         platform.value = window.electron.platform;
+        window.electron.ipcRenderer.invoke('get-api-endpoints').then(endpoints => {
+            websocketUrl.value = endpoints.websocketUrl;
+        }).catch(error => console.error('读取本地 API 地址失败:', error));
     } else {
         appVersion.value = __VERSION__ || '';
         platform.value = 'Web';

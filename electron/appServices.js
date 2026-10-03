@@ -1,6 +1,5 @@
 import { app, ipcMain, BrowserWindow, screen, Tray, Menu, TouchBar, globalShortcut, dialog, shell, nativeImage } from 'electron';
 import path from 'path';
-import { spawn } from 'child_process';
 import log from 'electron-log';
 import Store from 'electron-store';
 import { fileURLToPath } from 'url';
@@ -12,11 +11,15 @@ import { Notification } from 'electron';
 import { t } from './language/i18n.js';
 import { bindExternalLinkHandler } from './services/externalLinkHandler.js';
 import customTrayMenuService from './services/customTrayMenuService.js';
+import { startLoopbackApi } from './services/loopbackApi.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const store = new Store();
 const { TouchBarLabel, TouchBarButton, TouchBarGroup, TouchBarSpacer } = TouchBar;
 let mainWindow = null;
 let apiProcess = null;
+let runtimeApiBaseUrl = 'http://127.0.0.1:6521';
+export const getRuntimeApiBaseUrl = () => runtimeApiBaseUrl;
+ipcMain.on('get-api-base-url', event => { event.returnValue = runtimeApiBaseUrl; });
 let tray = null;
 
 // 创建主窗口
@@ -68,6 +71,7 @@ export function createWindow() {
             backgroundThrottling: savedConfig?.backgroundThrottling !== 'on',
             zoomFactor: 1.0
         },
+        title: 'MicoMusic',
         icon: getIconPath('icon.ico')
     });
     bindExternalLinkHandler(mainWindow);
@@ -85,9 +89,7 @@ export function createWindow() {
     } else {
         if (savedConfig?.networkMode == 'devnet') { //开发网
             mainWindow.loadURL('http://localhost:8080');
-        } else if (savedConfig?.networkMode == 'testnet') { //测试网
-            mainWindow.loadURL('https://app.testnet.music.moekoe.cn');
-        } else { //主网
+        } else { //主网；旧版 testnet 配置也使用本地页面
             mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
         }
     }
@@ -330,14 +332,14 @@ export function createTray(mainWindow, title = '') {
             label: t('project-home'),
             icon: getIconPath('home.png', 'menu'),
             click: () => {
-                shell.openExternal('https://Music.MoeKoe.cn');
+                shell.openExternal('https://github.com/yifulin114514143/MicoMusic');
             }
         },
         {
             label: t('report-bug'),
             icon: getIconPath('bug.png', 'menu'),
             click: () => {
-                shell.openExternal('https://github.com/iAJue/MoeKoeMusic/issues');
+                shell.openExternal('https://github.com/yifulin114514143/MicoMusic/issues');
             }
         },
         {
@@ -492,88 +494,35 @@ export function createTouchBar(mainWindow) {
     return touchBar;
 }
 
-// 启动 API 服务器
-export function startApiServer() {
-    return new Promise((resolve, reject) => {
-        let apiPath = '';
-        if (isDev) {
-            return resolve();
-            // apiPath = path.join(__dirname, '../api/app_api');
-        } else {
-            switch (process.platform) {
-                case 'win32':
-                    apiPath = path.join(process.resourcesPath, '../api', 'app_win.exe');
-                    break;
-                case 'darwin':
-                    apiPath = path.join(process.resourcesPath, '../api', 'app_macos');
-                    break;
-                case 'linux':
-                    apiPath = path.join(process.resourcesPath, '../api', 'app_linux');
-                    break;
-                default:
-                    reject(new Error(`Unsupported platform: ${process.platform}`));
-                    return;
-            }
-        }
-
-        log.info(`API路径: ${apiPath}`);
-
-        if (!fs.existsSync(apiPath)) {
-            const error = new Error(`API可执行文件未找到：${apiPath}`);
-            log.error(error.message);
-            reject(error);
-            return;
-        }
-
-        // 启动 API 服务器进程
-        const savedConfig = store.get('settings') || {};
-        const proxy = savedConfig?.proxy;
-        const proxyUrl = savedConfig?.proxyUrl;
-        const dataSource = savedConfig?.dataSource || 'concept';
-
-        const Args = [];
-        if (dataSource === 'concept') {
-            Args.push('--platform=lite');
-            log.info('API data source: concept (lite mode)');
-        }
-        if (proxy === 'on' && proxyUrl) {
-            const proxyAddress = String(proxyUrl).trim();
-            if (proxyAddress) {
-                Args.push(`--proxy=${proxyAddress}`);
-                log.info(`API proxy enabled: ${proxyAddress}`);
-            }
-        }
-        Args.push('--port=6521');
-        apiProcess = spawn(apiPath, Args, { windowsHide: true });
-
-        apiProcess.stdout.on('data', (data) => {
-            log.info(`API输出: ${data}`);
-            if (data.toString().includes('running')) {
-                console.log('API服务器已启动');
-                resolve();
-            }
-        });
-
-        apiProcess.stderr.on('data', (data) => {
-            log.error(`API 错误: ${data}`);
-            reject(data);
-        });
-
-        apiProcess.on('close', (code) => {
-            log.info(`API 关闭，退出码: ${code}`);
-        });
-
-        apiProcess.on('error', (error) => {
-            log.error('启动 API 失败:', error);
-            reject(error);
-        });
+// 启动独立的内置 API；开发模式由 npm run api 提供固定端口。
+export async function startApiServer() {
+    if (isDev) return;
+    const filenames = { win32: 'app_win.exe', darwin: 'app_macos', linux: 'app_linux' };
+    const filename = filenames[process.platform];
+    if (!filename) throw new Error(`Unsupported platform: ${process.platform}`);
+    const apiPath = path.join(process.resourcesPath, '../api', filename);
+    if (!fs.existsSync(apiPath)) throw new Error(`API可执行文件未找到：${apiPath}`);
+    const savedConfig = store.get('settings') || {};
+    const args = [];
+    if ((savedConfig.dataSource || 'concept') === 'concept') args.push('--platform=lite');
+    if (savedConfig.proxy === 'on' && savedConfig.proxyUrl) {
+        const proxyAddress = String(savedConfig.proxyUrl).trim();
+        if (proxyAddress) args.push(`--proxy=${proxyAddress}`);
+    }
+    const result = await startLoopbackApi(apiPath, args, {
+        cwd: app.getPath('userData'),
+        onOutput: (output, isError) => isError ? log.error(output) : log.info(output)
     });
+    apiProcess = result.child;
+    runtimeApiBaseUrl = result.baseUrl;
+    log.info(`MicoMusic 内置 API 地址: ${runtimeApiBaseUrl}`);
+    apiProcess.on('close', code => log.info(`API 关闭，退出码: ${code}`));
 }
 
-// 停止 API 服务器
+// 只终止 MicoMusic 创建的子进程，不按固定端口关闭其他应用。
 export function stopApiServer() {
     if (apiProcess) {
-        process.kill(apiProcess.pid, 'SIGKILL');
+        apiProcess.kill();
         apiProcess = null;
     }
 }
@@ -784,99 +733,5 @@ export function setThumbarButtons(mainWindow, isPlaying = false) {
     }
 
     mainWindow.setThumbarButtons(buttons);
-}
-
-// 处理自定义协议相关
-let hash = "";
-let listid = "";
-let teamcode;
-let protocolMainWindow = null;
-
-// 注册自定义协议
-export function registerProtocolHandler(mainWindow) {
-    const PROTOCOL = "moekoe";
-
-    // 保存mainWindow引用
-    if (mainWindow) {
-        protocolMainWindow = mainWindow;
-    }
-
-    // 注册协议
-    app.setAsDefaultProtocolClient(PROTOCOL, process.execPath);
-
-    // 处理启动参数
-    handleArgv(process.argv);
-
-    // 处理第二个实例的启动参数
-    app.on('second-instance', (event, commandLine) => {
-        if (protocolMainWindow) {
-            if (protocolMainWindow.isMinimized()) protocolMainWindow.restore();
-            protocolMainWindow.show();
-            protocolMainWindow.focus();
-            handleArgv(commandLine);
-        }
-    });
-
-    // 在macOS平台特别处理open-url事件
-    if (process.platform === 'darwin') {
-        app.on('open-url', (event, urlStr) => {
-            event.preventDefault();
-            handleUrl(urlStr);
-        });
-    }
-
-    return {
-        getHash: () => hash,
-        handleProtocolArgv: handleArgv
-    };
-}
-
-// 处理命令行参数
-function handleArgv(argv) {
-    const PROTOCOL = "moekoe";
-    const prefix = `${PROTOCOL}:`;
-    const url = argv.find(arg => arg.startsWith(prefix));
-    if (url) handleUrl(url);
-}
-
-// 处理URL
-function handleUrl(url) {
-    const urlObj = new URL(url);
-
-    // 提取所有参数并更新全局变量
-    hash = urlObj.searchParams.get("hash") || "";
-    listid = urlObj.searchParams.get("listid") || "";
-    teamcode = urlObj.searchParams.get('code') || '';
-
-    // 根据路径和参数决定发送什么数据到渲染进程
-    if (protocolMainWindow && protocolMainWindow.webContents) {
-        // 将所有参数打包发送
-        protocolMainWindow.webContents.send('url-params', {
-            hash,
-            listid,
-            teamcode,
-            urlPath: urlObj.pathname.substring(1) // 去掉前导斜杠
-        });
-    }
-}
-
-// 如果有从URL启动的hash参数，在页面加载完成后发送
-export function sendHashAfterLoad(mainWindow) {
-    if (mainWindow) {
-        protocolMainWindow = mainWindow;
-    }
-
-    if ((hash || listid || teamcode) && protocolMainWindow) {
-        protocolMainWindow.webContents.on('did-finish-load', () => {
-            setTimeout(() => {
-                protocolMainWindow.webContents.send('url-params', {
-                    hash,
-                    listid,
-                    teamcode,
-                    urlPath: teamcode? 'join': 'share'
-                });
-            }, 1000);
-        });
-    }
 }
 

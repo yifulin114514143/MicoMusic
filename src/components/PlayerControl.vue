@@ -329,7 +329,7 @@ const lyricsAlign = computed(() => fullscreenLyricsSettings.value.align);
 const lyricsBackground = computed(() => fullscreenLyricsSettings.value.background);
 const lyricsHighlightMode = computed(() => fullscreenLyricsSettings.value.highlightMode || 'char');
 const lyricsDisplayMode = computed(() => fullscreenLyricsSettings.value.displayMode || 'scroll');
-const lyricsDefaultBackgroundImage = computed(() => currentSong.value?.img || 'https://random.MoeJue.cn/randbg');
+const lyricsDefaultBackgroundImage = computed(() => currentSong.value?.img || '/assets/images/mico/mico-discover-peek.png');
 const lyricsCoverImages = ref([]);
 const lyricsBackgroundImageIndex = ref(0);
 const lyricsBackgroundImages = computed(() => {
@@ -1442,6 +1442,7 @@ const setupMediaShortcuts = () => {
             await teamEventActions.joinTeam(data.teamcode);
         }
     });
+    window.electron.ipcRenderer.send('protocol-ready');
 };
 
 // 切换静音

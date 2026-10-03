@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld('electron', {
         removeListener: (channel, listener) => ipcRenderer.removeListener(channel, listener),
         removeAllListeners: (channel) => ipcRenderer.removeAllListeners(channel)
     },
+    apiBaseUrl: ipcRenderer.sendSync('get-api-base-url'),
     platform: process.platform
 });
 

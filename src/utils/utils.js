@@ -293,31 +293,21 @@ export const openMvPlayer = async (router, hash, title = '视频播放') => {
 
 // 分享
 import { MoeAuthStore } from '../stores/store';
-export const share = (songName, id, type = 0, songDesc = '') => {
-    let text = '';
+// 当前只复制推荐信息；保留 id 和 songDesc 参数以兼容现有调用。
+export const share = async (songName, id, type = 0, songDesc = '') => {
     const MoeAuth = MoeAuthStore();
     let userName = 'MicoMusic';
     if(MoeAuth.isAuthenticated) {
         userName = MoeAuth.UserInfo?.nickname || 'MicoMusic';
     };
-    // 客户端分享
-    let shareUrl = '';
-    if (window.electron) {
-        if(type == 0){
-            // 歌曲
-            shareUrl = `https://music.moekoe.cn/share/?hash=${id}`;
-        }else{
-            // 歌单
-            shareUrl = `moekoe://share?listid=${id}`;
-        }
-    } else {
-        //  Web / H5 逻辑
-        shareUrl = (window.location.host + '/#/') + (type == 0 ? `share/?hash=${id}` : `share?listid=${id}`);
-    }
-    text = `你的好友@${userName}分享了${songDesc}《${songName}》给你,快去听听吧! ${shareUrl}`;
+    const itemType = type == 0 ? '歌曲' : '歌单';
+    const text = `你的好友 @${userName} 在 MicoMusic 推荐了${itemType}《${songName}》。`;
 
-    navigator.clipboard.writeText(text);
-    $message.success(
-        i18n.global.t('kou-ling-yi-fu-zhi,kuai-ba-ge-qu-fen-xiang-gei-peng-you-ba')
-    );
+    try {
+        await navigator.clipboard.writeText(text);
+        $message.success(i18n.global.t('share-info-copied-without-link'));
+    } catch (error) {
+        console.error('复制分享信息失败:', error);
+        $message.error(i18n.global.t('share-info-copy-failed'));
+    }
 };

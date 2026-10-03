@@ -1,5 +1,5 @@
 export const DEFAULT_API_BASE_URL =
-    import.meta.env.VITE_APP_API_URL || 'http://127.0.0.1:6521';
+    globalThis.window?.electron?.apiBaseUrl || import.meta.env?.VITE_APP_API_URL || 'http://127.0.0.1:6521';
 
 export function normalizeApiBaseUrl(input) {
     const result = validateApiBaseUrl(input);

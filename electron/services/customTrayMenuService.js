@@ -347,10 +347,10 @@ class CustomTrayMenuService {
 
         switch (action) {
             case 'project-home':
-                shell.openExternal('https://Music.MoeKoe.cn');
+                shell.openExternal('https://github.com/yifulin114514143/MicoMusic');
                 break;
             case 'report-bug':
-                shell.openExternal('https://github.com/iAJue/MoeKoeMusic/issues');
+                shell.openExternal('https://github.com/yifulin114514143/MicoMusic/issues');
                 break;
             case 'prev-track':
                 mainWindow?.webContents.send('play-previous-track');
