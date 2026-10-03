@@ -8,7 +8,7 @@
 
 MicoMusic 基于 [MoeKoeMusic](https://github.com/MoeKoeMusic/MoeKoeMusic) 独立维护，使用 Electron 桌面框架和 Vue 页面框架，保留上游音乐功能并持续跟进上游源码更新。角色视觉以已经确认的米可素材为基准：黑长直、蓝紫色眼睛、黑白主体服装、金属 M 标识，以及温柔安静的陪伴感。
 
-当前完成 **Phase 1 — 品牌初始化**。Liquid Glass（液态玻璃视觉效果）插件处于后续验证阶段，尚未作为已完成功能交付。
+当前完成 **Phase 1 — 品牌初始化**和 **Phase 2 — 插件系统审计与 Liquid Glass 可行性验证**。独立视觉插件的 CSS 注入、实时开关和设置持久化已验证；正式 Liquid Glass（液态玻璃视觉效果）插件在阶段三实现，先处理审计确认的插件生命周期缺陷。
 
 ## 当前使用方式
 
@@ -18,6 +18,8 @@ MicoMusic 暂未发布自己的安装包。目前通过源码开发或本地构�
 - [贡献与开发说明](CONTRIBUTING.md)
 - [应用身份、数据目录和上游关系](UPSTREAM.md)
 - [品牌素材与引用位置](BRAND_ASSETS.md)
+- [阶段二插件能力地图](docs/phase2/MicoMusic-Phase2-插件能力地图.md)
+- [阶段二完成报告与验证边界](docs/phase2/MicoMusic-Phase2-完成报告-2026-10-03.md)
 - [问题反馈](https://github.com/yifulin114514143/MicoMusic/issues)
 
 ## 项目能力
@@ -81,10 +83,11 @@ GitHub 工作流目前只提供手动构建和测试产物保存，不自动发�
 | `build/` | 应用图标及安装器资源 |
 | `api/` | KuGouMusicApi 子模块，保持独立来源 |
 | `plugins/extensions/` | 开发时的扩展目录 |
-| `tests/` | 安装身份、链接和 API 隔离测试 |
+| `tests/` | 安装身份、链接、API 隔离测试及阶段二视觉验证探针 |
+| `docs/phase2/` | 插件能力地图、完成报告、复现方法和隔离验证证据 |
 | `docs/README_*.md` | 多语言项目介绍入口 |
 
-本地项目的规划文档统一保存在 `/Users/mico/MicoMusic/规划文档`，角色母版和制作记录保存在 `/Users/mico/MicoMusic/看板娘`。
+已有规划文档保存在 `/Users/mico/MicoMusic/规划文档`，角色母版和制作记录保存在 `/Users/mico/MicoMusic/看板娘`。本次阶段二按照当前用户指令，将新增文件保存在 `/Users/mico/AI 事物/MicoMusic-阶段二` 工作树中；原规划目录仅同步已有总纲和索引。
 
 ## 来源与许可
 

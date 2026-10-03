@@ -1,0 +1,110 @@
+{
+  "baseline": "da5ec4a3e38961d2a60c1287f77ef19f6ae9af6e",
+  "electron": "39.2.4",
+  "chromium": "142.0.7444.177",
+  "platform": "darwin",
+  "timestamp": "2026-10-03T15:13:17.373Z",
+  "mode": "manual",
+  "checks": [
+    {
+      "name": "生产插件目录与隔离配置目录一致",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "探针通过项目真实 Manifest V3 校验",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "插件系统初始化成功",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "启动扫描加载探针",
+      "passed": true,
+      "detail": [
+        {
+          "name": "MicoMusic 阶段二视觉能力验证",
+          "id": "jjackdbfbbmphjpcmainlljbcpcmbmjb"
+        }
+      ]
+    },
+    {
+      "name": "file:// 页面注入 JS 与 CSS",
+      "passed": true,
+      "detail": {
+        "documentRuns": 1,
+        "hashEvents": 0,
+        "mutationBatches": 0,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "jjackdbfbbmphjpcmainlljbcpcmbmjb",
+        "settings": {
+          "enabled": true,
+          "proof": "initial"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      }
+    },
+    {
+      "name": "内容脚本与宿主 preload 世界隔离",
+      "passed": true,
+      "detail": {
+        "electron": "object",
+        "electronAPI": "object",
+        "require": "undefined",
+        "chromeRuntime": "undefined"
+      }
+    },
+    {
+      "name": "原生交互窗口的探针样式已开启",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "原生交互用插件弹窗已打开",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "observations": {
+    "worldBoundary": {
+      "page": {
+        "electron": "object",
+        "electronAPI": "object",
+        "require": "undefined",
+        "chromeRuntime": "undefined"
+      },
+      "content": {
+        "documentRuns": 1,
+        "hashEvents": 0,
+        "mutationBatches": 0,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "jjackdbfbbmphjpcmainlljbcpcmbmjb",
+        "settings": {
+          "enabled": true,
+          "proof": "initial"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      }
+    }
+  },
+  "scope": "真实生产 Vue 页面、真实扩展管理器与 IPC；隔离宿主不实现完整播放器主进程"
+}

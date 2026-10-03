@@ -1,0 +1,16 @@
+/* 选择器逐一取自当前 Vue 模板；颜色仅用于证明覆盖成功。 */
+html[data-phase2-visual="on"] :is(
+    .app-header, .side-navigation, .side-top-actions, .app-main-scroll,
+    .player-container, .modal, .message, .lyrics-bg, .lyrics-panel
+) {
+    --mico-phase2-css-proof: applied;
+    background-color: rgba(65, 90, 145, 0.2) !important;
+    backdrop-filter: blur(12px) !important;
+    border-radius: 16px !important;
+}
+html.dark[data-phase2-visual="on"] :is(
+    .app-header, .side-navigation, .side-top-actions, .app-main-scroll,
+    .player-container, .modal, .message, .lyrics-bg, .lyrics-panel
+) {
+    background-color: rgba(20, 30, 55, 0.4) !important;
+}

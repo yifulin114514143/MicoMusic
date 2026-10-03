@@ -1,0 +1,754 @@
+{
+  "baseline": "da5ec4a3e38961d2a60c1287f77ef19f6ae9af6e",
+  "electron": "39.2.4",
+  "chromium": "142.0.7444.177",
+  "platform": "darwin",
+  "timestamp": "2026-10-03T15:24:26.185Z",
+  "mode": "capabilities",
+  "checks": [
+    {
+      "name": "生产插件目录与隔离配置目录一致",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "探针通过项目真实 Manifest V3 校验",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "插件系统初始化成功",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "启动扫描加载探针",
+      "passed": true,
+      "detail": [
+        {
+          "name": "MicoMusic 阶段二视觉能力验证",
+          "id": "kabkkmipggaoblidfljkijfgfjfgjphk"
+        }
+      ]
+    },
+    {
+      "name": "file:// 页面注入 JS 与 CSS",
+      "passed": true,
+      "detail": {
+        "documentRuns": 1,
+        "hashEvents": 0,
+        "mutationBatches": 0,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "initial"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      }
+    },
+    {
+      "name": "内容脚本与宿主 preload 世界隔离",
+      "passed": true,
+      "detail": {
+        "electron": "object",
+        "electronAPI": "object",
+        "require": "undefined",
+        "chromeRuntime": "undefined"
+      }
+    },
+    {
+      "name": "顶部导航的 scoped 样式可由插件覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "主内容容器可由插件覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "底部播放器可由插件覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "当前 Chromium 支持 backdrop-filter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Hash 路由变化可监听且不重复注入",
+      "passed": true,
+      "detail": {
+        "documentRuns": 1,
+        "hashEvents": 2,
+        "mutationBatches": 3,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "initial"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      }
+    },
+    {
+      "name": "Vue 动态节点变化可被 MutationObserver 监听",
+      "passed": true,
+      "detail": 3
+    },
+    {
+      "name": "切换到侧栏后的新节点由同一插件 CSS 覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "侧栏顶部操作区域可覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "深色状态可使用独立规则",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(20, 30, 55, 0.4)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "独立挂载到 body 的真实弹窗可覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": true
+      }
+    },
+    {
+      "name": "弹窗覆盖不依赖 #app 内部范围",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "动态消息提示可覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": true
+      }
+    },
+    {
+      "name": "主窗口全屏歌词外层可覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "真实插件弹窗 IPC 可打开 action.default_popup",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk"
+      }
+    },
+    {
+      "name": "插件弹窗可以读取自己的 chrome.storage.local",
+      "passed": true,
+      "detail": {
+        "settings": {
+          "enabled": true,
+          "proof": "popup-seed"
+        },
+        "electronAPI": "object",
+        "electron": "object",
+        "require": "undefined"
+      }
+    },
+    {
+      "name": "插件自有开关可实时恢复原 scoped 样式",
+      "passed": true,
+      "detail": {
+        "proof": "",
+        "backdropFilter": "blur(10px)",
+        "background": "rgba(255, 255, 255, 0.7)",
+        "radius": "0px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "默认会话的独立歌词窗口可注入",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(0, 0, 0, 0)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "localhost HTTP 页面可注入 JS 与 CSS",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "本地音乐空状态可正常切换",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "视觉注入保留未登录时的搜索路由守卫",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "卸载后的当前文档内容监听仍存活，需定义清理机制",
+      "passed": true,
+      "detail": {
+        "documentRuns": 1,
+        "hashEvents": 6,
+        "mutationBatches": 20,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "performance-probe"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      }
+    },
+    {
+      "name": "真实重新加载 IPC 返回成功",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "文档刷新后只注入一次且读取插件设置",
+      "passed": true,
+      "detail": {
+        "documentRuns": 1,
+        "hashEvents": 0,
+        "mutationBatches": 0,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "performance-probe"
+        },
+        "error": null,
+        "worker": null
+      }
+    },
+    {
+      "name": "存在无效清单时重载仍报告成功，错误反馈需补齐",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "现有 restartExtensions 只完成清理而未重新初始化",
+      "passed": true,
+      "detail": {
+        "success": true
+      }
+    },
+    {
+      "name": "空目录卸载会删除插件根目录，已在隔离探针中复现",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "removedFromSession": true,
+        "removedFiles": true,
+        "path": "/Users/mico/AI 事物/MicoMusic-阶段二/artifacts/phase2-runtime/run-tIce94/extensions"
+      }
+    },
+    {
+      "name": "插件设置可保存供进程重启验证",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "observations": {
+    "worldBoundary": {
+      "page": {
+        "electron": "object",
+        "electronAPI": "object",
+        "require": "undefined",
+        "chromeRuntime": "undefined"
+      },
+      "content": {
+        "documentRuns": 1,
+        "hashEvents": 0,
+        "mutationBatches": 0,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "initial"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      }
+    },
+    "platformTitlebar": {
+      "customTitlebarPresent": false
+    },
+    "popupBoundary": {
+      "settings": {
+        "enabled": true,
+        "proof": "popup-seed"
+      },
+      "electronAPI": "object",
+      "electron": "object",
+      "require": "undefined"
+    },
+    "lyricsWindow": {
+      "documentRuns": 1,
+      "hashEvents": 0,
+      "mutationBatches": 0,
+      "electronInContentWorld": "undefined",
+      "electronAPIInContentWorld": "undefined",
+      "localStorageAvailable": "object",
+      "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+      "settings": {
+        "enabled": true,
+        "proof": "popup"
+      },
+      "error": null,
+      "worker": {
+        "serviceWorker": true
+      }
+    },
+    "performance": {
+      "baseFrames": {
+        "frames": 120,
+        "medianMs": 16.699999999999818,
+        "p95Ms": 17.300000000000182,
+        "maxMs": 17.600000000000364,
+        "over33Ms": 0
+      },
+      "probeFrames": {
+        "frames": 120,
+        "medianMs": 16.699999999999818,
+        "p95Ms": 17.099999999999454,
+        "maxMs": 17.699999999999818,
+        "over33Ms": 0
+      },
+      "baseMetrics": [
+        {
+          "cpu": {
+            "cumulativeCPUUsage": 0.678471,
+            "percentCPUUsage": 0.1511843284706853,
+            "idleWakeupsPerSecond": 23
+          },
+          "pid": 46594,
+          "type": "Browser",
+          "creationTime": 1791041066069.883,
+          "memory": {
+            "workingSetSize": 196432,
+            "peakWorkingSetSize": 207792
+          },
+          "sandboxed": false
+        },
+        {
+          "cpu": {
+            "cumulativeCPUUsage": 0.973071,
+            "percentCPUUsage": 0.9820094823666949,
+            "idleWakeupsPerSecond": 135
+          },
+          "pid": 46601,
+          "type": "GPU",
+          "creationTime": 1791041066191.773,
+          "serviceName": "GPU",
+          "memory": {
+            "workingSetSize": 183584,
+            "peakWorkingSetSize": 186832
+          },
+          "sandboxed": true
+        },
+        {
+          "cpu": {
+            "cumulativeCPUUsage": 0.198145,
+            "percentCPUUsage": 0.000664351681999639,
+            "idleWakeupsPerSecond": 0
+          },
+          "pid": 46602,
+          "type": "Utility",
+          "creationTime": 1791041066192.292,
+          "serviceName": "network.mojom.NetworkService",
+          "name": "Network Service",
+          "memory": {
+            "workingSetSize": 56048,
+            "peakWorkingSetSize": 58752
+          },
+          "sandboxed": true
+        },
+        {
+          "cpu": {
+            "cumulativeCPUUsage": 0.069461,
+            "percentCPUUsage": 0.0006891398988699592,
+            "idleWakeupsPerSecond": 1
+          },
+          "pid": 46611,
+          "type": "Tab",
+          "creationTime": 1791041066305.213,
+          "memory": {
+            "workingSetSize": 104336,
+            "peakWorkingSetSize": 104368
+          },
+          "sandboxed": true
+        },
+        {
+          "cpu": {
+            "cumulativeCPUUsage": 0.664757,
+            "percentCPUUsage": 0.6966807750295364,
+            "idleWakeupsPerSecond": 47
+          },
+          "pid": 46617,
+          "type": "Tab",
+          "creationTime": 1791041066513.05,
+          "memory": {
+            "workingSetSize": 251952,
+            "peakWorkingSetSize": 259024
+          },
+          "sandboxed": false
+        }
+      ],
+      "processMetrics": [
+        {
+          "cpu": {
+            "cumulativeCPUUsage": 0.686468,
+            "percentCPUUsage": 0.03809775167526252,
+            "idleWakeupsPerSecond": 6
+          },
+          "pid": 46594,
+          "type": "Browser",
+          "creationTime": 1791041066069.883,
+          "memory": {
+            "workingSetSize": 196496,
+            "peakWorkingSetSize": 207792
+          },
+          "sandboxed": false
+        },
+        {
+          "cpu": {
+            "cumulativeCPUUsage": 1.297819,
+            "percentCPUUsage": 1.5471027196780291,
+            "idleWakeupsPerSecond": 130
+          },
+          "pid": 46601,
+          "type": "GPU",
+          "creationTime": 1791041066191.773,
+          "serviceName": "GPU",
+          "memory": {
+            "workingSetSize": 135072,
+            "peakWorkingSetSize": 186832
+          },
+          "sandboxed": true
+        },
+        {
+          "cpu": {
+            "cumulativeCPUUsage": 0.198208,
+            "percentCPUUsage": 0.000300132487055,
+            "idleWakeupsPerSecond": 1
+          },
+          "pid": 46602,
+          "type": "Utility",
+          "creationTime": 1791041066192.292,
+          "serviceName": "network.mojom.NetworkService",
+          "name": "Network Service",
+          "memory": {
+            "workingSetSize": 56048,
+            "peakWorkingSetSize": 58752
+          },
+          "sandboxed": true
+        },
+        {
+          "cpu": {
+            "cumulativeCPUUsage": 0.069565,
+            "percentCPUUsage": 0.000495457512136327,
+            "idleWakeupsPerSecond": 1
+          },
+          "pid": 46611,
+          "type": "Tab",
+          "creationTime": 1791041066305.213,
+          "memory": {
+            "workingSetSize": 104320,
+            "peakWorkingSetSize": 104368
+          },
+          "sandboxed": true
+        },
+        {
+          "cpu": {
+            "cumulativeCPUUsage": 0.754211,
+            "percentCPUUsage": 0.4261599536175765,
+            "idleWakeupsPerSecond": 44
+          },
+          "pid": 46617,
+          "type": "Tab",
+          "creationTime": 1791041066513.05,
+          "memory": {
+            "workingSetSize": 244144,
+            "peakWorkingSetSize": 259024
+          },
+          "sandboxed": false
+        }
+      ],
+      "gpuFeatureStatus": {
+        "2d_canvas": "enabled",
+        "direct_rendering_display_compositor": "disabled_off_ok",
+        "gpu_compositing": "enabled",
+        "multiple_raster_threads": "enabled_on",
+        "opengl": "enabled_on",
+        "rasterization": "enabled",
+        "raw_draw": "disabled_off_ok",
+        "skia_graphite": "enabled_on",
+        "trees_in_viz": "disabled_off",
+        "video_decode": "enabled",
+        "video_encode": "enabled",
+        "webgl": "enabled",
+        "webgl2": "enabled",
+        "webgpu": "enabled",
+        "webnn": "disabled_off"
+      },
+      "acceptance": "短样本可行性记录，不是正式主题性能验收"
+    },
+    "management": {
+      "list": {
+        "success": true,
+        "extensions": [
+          {
+            "id": "kabkkmipggaoblidfljkijfgfjfgjphk",
+            "pluginId": "mico-phase2-visual-probe",
+            "name": "MicoMusic 阶段二视觉能力验证",
+            "directory": "phase2-visual-probe",
+            "version": "0.0.1",
+            "enabled": true,
+            "description": "隔离环境中的能力探针，不是正式液态玻璃主题",
+            "author": "",
+            "authorUrl": "",
+            "permissions": [
+              "storage"
+            ],
+            "iconData": null,
+            "moeKoeAdapted": true,
+            "minversion": "",
+            "popupPath": "popup.html",
+            "hasPopup": true,
+            "nativeHosts": []
+          }
+        ]
+      },
+      "scanned": [
+        {
+          "directory": "phase2-visual-probe",
+          "installed": true
+        }
+      ],
+      "toggleAPI": [
+        "getExtensions",
+        "getExtensionsDetailed",
+        "reloadExtensions",
+        "openExtensionsDir",
+        "openExtensionPopup",
+        "installExtension",
+        "uninstallExtension",
+        "validateExtension",
+        "getExtensionsDirectory",
+        "ensureExtensionsDirectory",
+        "installPluginFromZip",
+        "installPluginFromUrl",
+        "setNativeHostAuthorization",
+        "nativeHost",
+        "startUpdateDownload",
+        "showOpenDialog",
+        "openMvWindow",
+        "openLogPath",
+        "exportLog"
+      ]
+    },
+    "removeExtension": {
+      "loadedCount": 0,
+      "before": {
+        "documentRuns": 1,
+        "hashEvents": 5,
+        "mutationBatches": 19,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "performance-probe"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      },
+      "after": {
+        "documentRuns": 1,
+        "hashEvents": 6,
+        "mutationBatches": 20,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "performance-probe"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      },
+      "style": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    "loadIntoExistingDocument": {
+      "documentRuns": 1,
+      "hashEvents": 6,
+      "mutationBatches": 21,
+      "electronInContentWorld": "undefined",
+      "electronAPIInContentWorld": "undefined",
+      "localStorageAvailable": "object",
+      "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+      "settings": {
+        "enabled": true,
+        "proof": "performance-probe"
+      },
+      "error": null,
+      "worker": {
+        "serviceWorker": true
+      }
+    },
+    "reload": {
+      "result": {
+        "success": true,
+        "message": "插件重新加载成功"
+      },
+      "currentDocument": {
+        "documentRuns": 1,
+        "hashEvents": 6,
+        "mutationBatches": 21,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "performance-probe"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      },
+      "loadedCount": 1
+    },
+    "partialLoad": {
+      "result": {
+        "success": true,
+        "message": "插件重新加载成功"
+      },
+      "loadedCount": 1,
+      "invalidValidation": {
+        "valid": false,
+        "error": "解析 manifest.json 失败: Expected double-quoted property name in JSON at position 22 (line 1 column 23)"
+      }
+    },
+    "restart": {
+      "result": {
+        "success": true
+      },
+      "loadedCount": 0
+    },
+    "emptyDirectoryUninstall": {
+      "result": {
+        "success": true,
+        "removedFromSession": true,
+        "removedFiles": true,
+        "path": "/Users/mico/AI 事物/MicoMusic-阶段二/artifacts/phase2-runtime/run-tIce94/extensions"
+      },
+      "extensionsRootExists": false,
+      "otherDirectoryExists": false
+    }
+  },
+  "scope": "真实生产 Vue 页面、真实扩展管理器与 IPC；隔离宿主不实现完整播放器主进程"
+}
