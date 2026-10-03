@@ -309,7 +309,7 @@ export default function useOnlineMusicQueue(t, musicQueueStore, currentSong, tim
                 id: songs.length + list.length + 1,
                 hash: song.hash,
                 name: song.name,
-                img: song.cover?.replace("{size}", 480) || './assets/images/ico.png',
+                img: song.cover?.replace("{size}", 480) || './assets/images/mico/mico-app-icon-512.png',
                 author: song.author,
                 timeLength: song.timelen
             });

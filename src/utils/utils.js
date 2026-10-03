@@ -88,7 +88,7 @@ export const applyColorTheme = (theme) => {
 
 
 export const getCover = (coverUrl, size) => {
-    if (!coverUrl) return './assets/images/ico.png';
+    if (!coverUrl) return './assets/images/mico/mico-app-icon-512.png';
     return coverUrl.replace("{size}", size);
 };
 

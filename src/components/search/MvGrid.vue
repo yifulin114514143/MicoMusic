@@ -33,7 +33,7 @@ const onMvClick = (mv) => {
 };
 
 const getImage = (url, size) => {
-  if (!url) return './assets/images/ico.png';
+  if (!url) return './assets/images/mico/mico-app-icon-512.png';
 
   if (/^https?:\/\//.test(url)) {
     return url.replace('{size}', size);

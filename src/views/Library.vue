@@ -121,7 +121,7 @@
                         query: { global_collection_id: item.list_create_gid || item.global_collection_id, listid: item.listid }
                     }">
                         <div class="album-image-wrap">
-                            <img :src="item.pic ? $getCover(item.pic, 480) : '/assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png'"
+                            <img :src="item.pic ? $getCover(item.pic, 480) : './assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png'"
                                 class="album-image" :class="{ 'mico-illustration': !item.pic }" />
                         </div>
                         <div class="album-info">
@@ -290,7 +290,7 @@ const getUserDetail = async () => {
         const detailResponse = await get('/user/detail');
         if (detailResponse.status === 1) {
             userDetail.value = detailResponse.data;
-            updateProfileBackground(userDetail.value.bg_pic || '/assets/images/mico/mico-discover-peek.png');
+            updateProfileBackground(userDetail.value.bg_pic || './assets/images/mico/mico-discover-peek.png');
         }
     } catch (error) {
         console.error('Failed to get user details:', error);

@@ -224,7 +224,7 @@ const listMode = ref(localStorage.getItem('localMusicListMode') || 'list');
 
 // 支持的音乐文件格式
 const supportedFormats = ['.mp3', '.flac', '.wav', '.aac', '.ogg', '.m4a', '.wma'];
-const DEFAULT_COVER = './assets/images/ico.png';
+const DEFAULT_COVER = './assets/images/mico/mico-app-icon-512.png';
 
 // IndexedDB 相关
 const DB_NAME = 'LocalMusicDB';

@@ -2,7 +2,7 @@
   <div class="playlist-grid">
     <div v-for="(playlist, index) in playlists" :key="index" class="playlist-card" @click="onPlaylistClick(playlist)">
       <div class="playlist-cover">
-        <img :src="(playlist.img || './assets/images/ico.png').replace('/150/', '/480/')" />
+        <img :src="(playlist.img || './assets/images/mico/mico-app-icon-512.png').replace('/150/', '/480/')" />
         <div class="playlist-overlay">
           <button class="play-button">
             <i class="fas fa-play"></i>

@@ -79,11 +79,11 @@
                 <div class="article-grid">
                     <article v-for="(item, index) in musicPhotoSection.lists"
                         :key="`${item.article_id || item.title}-${index}`" class="article-card">
-                        <img :src="item.cover || './assets/images/ico.png'" class="article-cover" />
+                        <img :src="item.cover || './assets/images/mico/mico-app-icon-512.png'" class="article-cover" />
                         <div class="article-info">
                             <h4 :title="item.title">{{ item.title }}</h4>
                             <div class="article-author">
-                                <img :src="item.header || './assets/images/ico.png'" class="author-avatar" />
+                                <img :src="item.header || './assets/images/mico/mico-app-icon-512.png'" class="author-avatar" />
                                 <span>{{ item.nickname }}</span>
                             </div>
                             <div class="article-meta">
@@ -170,7 +170,7 @@ const visibleSectionCount = computed(() => {
 });
 
 const getImage = (url, size) => {
-    if (!url) return './assets/images/ico.png';
+    if (!url) return './assets/images/mico/mico-app-icon-512.png';
     return url.replace('{size}', size);
 };
 

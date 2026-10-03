@@ -105,7 +105,7 @@ const getAuthorNames = (authors = []) => {
 };
 
 const mapNewSongToSearchSong = (song) => {
-    const image = song.album_sizable_cover || song.trans_param?.union_cover || song.authors?.[0]?.sizable_avatar || './assets/images/ico.png';
+    const image = song.album_sizable_cover || song.trans_param?.union_cover || song.authors?.[0]?.sizable_avatar || './assets/images/mico/mico-app-icon-512.png';
     const singerName = song.author_name || getAuthorNames(song.authors) || '未知歌手';
     const displayName = song.filename || `${singerName} - ${song.songname || ''}`;
 
@@ -171,7 +171,7 @@ const playSong = (hash, name, img, author) => {
 const showContextMenu = (event, song) => {
     if (!contextMenuRef.value) return;
 
-    song.cover = song.Image?.replace("{size}", 480) || './assets/images/ico.png';
+    song.cover = song.Image?.replace("{size}", 480) || './assets/images/mico/mico-app-icon-512.png';
     song.timeLength = song.Duration;
     song.OriSongName = song.FileName || song.OriSongName || song.SongName;
     contextMenuRef.value.openContextMenu(event, song);
@@ -181,7 +181,7 @@ const handleSongClick = (song) => {
     playSong(
         song?.HQFileHash || song?.SQFileHash || song?.FileHash,
         song?.OriSongName,
-        song?.Image?.replace('{size}', 480) || './assets/images/ico.png',
+        song?.Image?.replace('{size}', 480) || './assets/images/mico/mico-app-icon-512.png',
         song?.SingerName
     );
 };

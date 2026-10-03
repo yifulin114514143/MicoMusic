@@ -34,7 +34,7 @@ const badgeLabel = computed(() => {
     <div class="popup" ref="popup">
         <div class="my-info">
             <div class="avatar-and-info">
-                <img class="avatar" draggable="false" :src="moeAuthStore.UserInfo?.pic || './assets/images/profile.jpg'" />
+                <img class="avatar" draggable="false" :src="moeAuthStore.UserInfo?.pic || './assets/images/mico/mico-app-icon-512.png'" />
                 <span class="info">
                     <span class="nick">{{ moeAuthStore.UserInfo?.nickname || '未登录' }}</span>
                     <span class="badge">{{ badgeLabel }}</span>

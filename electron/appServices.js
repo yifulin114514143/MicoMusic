@@ -277,14 +277,16 @@ export function createTray(mainWindow, title = '') {
 
     let trayIconName
     if (process.platform === 'linux') {
-        trayIconName = 'linux-icon.png'
+        trayIconName = 'logo.png'
     } else if (process.platform === 'darwin') {
-        trayIconName = 'tray-icon.png'
+        trayIconName = 'mico-trayTemplate.png'
     } else {
-        trayIconName = 'tray-icon.ico'
+        trayIconName = 'icon.ico'
     }
 
-    tray = new Tray(getIconPath(trayIconName));
+    const trayImage = nativeImage.createFromPath(getIconPath(trayIconName));
+    if (process.platform === 'darwin') trayImage.setTemplateImage(true);
+    tray = new Tray(trayImage);
     tray.setToolTip('MicoMusic');
 
     const contextMenu = Menu.buildFromTemplate([

@@ -27,7 +27,7 @@
     <aside class="side-navigation" :class="{ collapsed: isCollapsed }">
         <div class="side-profile">
             <router-link :to="!isCollapsed ? '/library' : '/settings'" class="side-profile-link">
-                <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/profile.jpg'"
+                <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/mico/mico-app-icon-512.png'"
                     alt="Profile Picture">
                 <div class="side-profile-info">
                     <span>{{ MoeAuth.UserInfo?.nickname || $t('deng-lu') }}</span>

@@ -65,7 +65,7 @@ const showContextMenu = (event, song) => {
         contextMenuRef.value.openContextMenu(event, {
             OriSongName: song.filename,
             FileHash: song.hash,
-            cover: song.sizable_cover?.replace("{size}", 480) || './assets/images/ico.png',
+            cover: song.sizable_cover?.replace("{size}", 480) || './assets/images/mico/mico-app-icon-512.png',
             timeLength: song.time_length
         });
     }

@@ -61,13 +61,13 @@ const isLastStep = computed(() => !isIntroStep.value && currentIndex.value === c
 const hasTarget = computed(() => !isIntroStep.value && !!targetRect.value);
 const progressText = computed(() => isIntroStep.value ? '新手引导' : `${currentIndex.value + 1} / ${currentSteps.value.length}`);
 const mascotImages = Object.freeze({
-    front: '/assets/images/mico/onboarding/mico-chibi-approved-front-v0.4.png',
-    welcome: '/assets/images/mico/onboarding/mico-onboarding-chibi-welcome-v1.png',
-    point: '/assets/images/mico/onboarding/mico-onboarding-chibi-point-v1.png',
-    search: '/assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png',
-    play: '/assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png',
-    favorite: '/assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png',
-    settings: '/assets/images/mico/onboarding/mico-onboarding-chibi-settings-v1.png'
+    front: './assets/images/mico/onboarding/mico-chibi-approved-front-v0.4.png',
+    welcome: './assets/images/mico/onboarding/mico-onboarding-chibi-welcome-v1.png',
+    point: './assets/images/mico/onboarding/mico-onboarding-chibi-point-v1.png',
+    search: './assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png',
+    play: './assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png',
+    favorite: './assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png',
+    settings: './assets/images/mico/onboarding/mico-onboarding-chibi-settings-v1.png'
 });
 const mascotSrc = computed(() => {
     const pose = isIntroStep.value ? 'welcome' : currentStep.value.mascotPose || currentGuide.value?.mascotPose || 'front';

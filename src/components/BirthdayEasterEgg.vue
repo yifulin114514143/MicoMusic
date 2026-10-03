@@ -109,7 +109,7 @@ const tryAutoPlay = async () => {
     const add = props.playerControl?.addSongToQueue;
     if (typeof add !== 'function') return;
     try {
-        await add(props.songHash, `祝${props.nickname || '你'}生日快乐 🎉`, './assets/images/ico.png');
+        await add(props.songHash, `祝${props.nickname || '你'}生日快乐 🎉`, './assets/images/mico/mico-app-icon-512.png');
     } catch {
     }
 };

@@ -32,7 +32,7 @@
                     </router-link>
                 </div>
                 <div class="profile" @click="toggleProfile">
-                    <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/profile.jpg'" alt="Profile Picture">
+                    <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/mico/mico-app-icon-512.png'" alt="Profile Picture">
                     <div v-if="showProfile" class="profile-menu">
                         <ul>
                             <li>

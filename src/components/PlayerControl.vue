@@ -329,7 +329,7 @@ const lyricsAlign = computed(() => fullscreenLyricsSettings.value.align);
 const lyricsBackground = computed(() => fullscreenLyricsSettings.value.background);
 const lyricsHighlightMode = computed(() => fullscreenLyricsSettings.value.highlightMode || 'char');
 const lyricsDisplayMode = computed(() => fullscreenLyricsSettings.value.displayMode || 'scroll');
-const lyricsDefaultBackgroundImage = computed(() => currentSong.value?.img || '/assets/images/mico/mico-discover-peek.png');
+const lyricsDefaultBackgroundImage = computed(() => currentSong.value?.img || './assets/images/mico/mico-discover-peek.png');
 const lyricsCoverImages = ref([]);
 const lyricsBackgroundImageIndex = ref(0);
 const lyricsBackgroundImages = computed(() => {
@@ -1634,7 +1634,7 @@ onMounted(() => {
                 savedSong.isLocal = true;
                 savedSong.url = '';
                 if (isBlobUrl(savedSong.img)) {
-                    savedSong.img = './assets/images/ico.png';
+                    savedSong.img = './assets/images/mico/mico-app-icon-512.png';
                 }
             }
             currentSong.value = savedSong;
