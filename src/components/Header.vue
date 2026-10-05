@@ -32,7 +32,11 @@
                     </router-link>
                 </div>
                 <div class="profile" @click="toggleProfile">
-                    <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/mico/mico-app-icon-512.png'" alt="用户头像，未登录时显示米可">
+                    <span class="profile-avatar">
+                        <img :class="{ 'mico-placeholder': !MoeAuth.UserInfo }"
+                            :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/mico/mico-app-icon-512.png'"
+                            alt="用户头像，未登录时显示米可">
+                    </span>
                     <div v-if="showProfile" class="profile-menu">
                         <ul>
                             <li>
@@ -415,9 +419,16 @@ header::before {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--secondary-color);
     cursor: pointer;
     position: relative;
+
+    .profile-avatar {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 50%;
+    }
 
     img {
         display: block;
@@ -425,6 +436,11 @@ header::before {
         height: 100%;
         object-fit: cover;
         border-radius: 50%;
+    }
+
+    .mico-placeholder {
+        // 512px 图标的非透明区域为 462px，放大后由头像框裁掉透明留白。
+        transform: scale(1.11);
     }
 }
 
