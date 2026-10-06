@@ -59,6 +59,9 @@ class NativeHostManager {
         this.processes = new Map();
         // `${extensionId}:${hostId}` -> 隐藏 bridge 窗口。
         this.bridgeWindows = new Map();
+        // 重叠的退出、重载和单插件停止，共享真实进程退出的等待。
+        this.stoppingProcesses = new Map();
+        this.stopAllPromise = null;
     }
 
     syncExtensions(loadedExtensions = [], scannedExtensions = []) {
@@ -142,7 +145,8 @@ class NativeHostManager {
             }
             this.openBridge(record, host);
         } else {
-            this.stopHostByKey(this.getKey(record.extensionId, host.id), true);
+            this.stopHostByKey(this.getKey(record.extensionId, host.id), true)
+                .catch(error => log.warn(`取消授权后停止本地程序失败 ${extensionId}/${hostId}:`, error));
             this.closeBridge(this.getKey(record.extensionId, host.id));
         }
 
@@ -217,73 +221,53 @@ class NativeHostManager {
         // 插件卸载/重载时停止其所有 host；卸载时还会清理授权记录。
         const record = this.extensions.get(extensionId);
         if (!record) {
-            return;
+            return Promise.resolve();
         }
 
+        const waiters = [];
         for (const host of this.getHosts(record)) {
             const key = this.getKey(record.extensionId, host.id);
-            this.stopHostByKey(key, true);
+            waiters.push(this.stopHostByKey(key, true));
             this.closeBridge(key);
             if (clearAuthorization) {
                 this.store.delete(this.getPermissionKey(record.pluginId, host.id));
             }
         }
+        const stopped = Promise.allSettled(waiters).then(results => {
+            const errors = results.filter(result => result.status === 'rejected').map(result => result.reason.message);
+            if (errors.length) throw new Error(`插件本地程序停止失败 ${extensionId}: ` + errors.join('；'));
+        });
+        stopped.catch(error => log.warn('停止插件本地程序失败:', error));
+        return stopped;
     }
 
-    async stopAll() {
-        // 应用退出或插件系统清理时调用，统一关闭所有托管进程和 bridge。
-        // 异步等待所有进程真正退出后再返回，防止 restartExtensions 中
-        // 旧进程未退出时新进程竞态启动导致端口冲突。
-        const waiters = [];
+    stopAll() {
+        if (this.stopAllPromise) return this.stopAllPromise;
+        const stopping = this.stopManagedProcesses();
+        this.stopAllPromise = stopping.finally(() => { this.stopAllPromise = null; });
+        return this.stopAllPromise;
+    }
 
-        for (const key of [...this.processes.keys()]) {
-            const processInfo = this.processes.get(key);
-            if (!processInfo?.process) continue;
-
-            const child = processInfo.process;
-
-            // 删除 Map 记录，但保留 child 引用用于等待退出
-            if (this.processes.get(key) === processInfo) {
-                this.processes.delete(key);
-            }
-
-            this.writeToHost(processInfo, { type: 'shutdown' }, true);
-
-            // 等待进程退出（exit 事件 或 SHUTDOWN_TIMEOUT + 500ms 兜底）
-            waiters.push(new Promise(resolve => {
-                let settled = false;
-                const done = () => { if (!settled) { settled = true; resolve(); } };
-
-                child.on('exit', done);
-                child.on('error', done);
-
-                setTimeout(() => {
-                    if (!settled) {
-                        if (!child.killed && child.exitCode === null) {
-                            treeKill(child.pid, 'SIGKILL', err => {
-                                if (err) log.warn(`强制结束本地程序失败 ${key}:`, err);
-                            });
-                        }
-                        done();
-                    }
-                }, SHUTDOWN_TIMEOUT + 500);
-            }));
-        }
-
-        for (const key of [...this.bridgeWindows.keys()]) {
-            this.closeBridge(key);
-        }
-
-        if (waiters.length > 0) {
-            await Promise.all(waiters);
-        }
+    async stopManagedProcesses() {
+        const waiters = new Set([...this.stoppingProcesses.values()].map(item => item.promise));
+        for (const key of [...this.processes.keys()]) waiters.add(this.stopHostByKey(key, true));
+        for (const key of [...this.bridgeWindows.keys()]) this.closeBridge(key);
+        // 某个进程失败时仍等待其余进程完成；不能提前重启并漏掉旧进程。
+        const results = await Promise.allSettled([...waiters]);
+        const errors = results.filter(result => result.status === 'rejected').map(result => result.reason.message);
+        if (errors.length) throw new Error('本地程序停止失败：' + errors.join('；'));
     }
 
     startHost(record, host) {
+        if (this.stopAllPromise) {
+            log.warn('本地程序正在统一退出，暂不启动新的进程');
+            return null;
+        }
         // 同一个 host 已经在运行时复用进程，避免重复启动多个 exe。
         const key = this.getKey(record.extensionId, host.id);
+        if (this.stoppingProcesses.has(key)) return null;
         const existing = this.processes.get(key);
-        if (existing?.process && !existing.process.killed && existing.process.exitCode === null) {
+        if (existing?.process && existing.process.exitCode === null && existing.process.signalCode === null) {
             return existing;
         }
         if (existing) {
@@ -329,7 +313,7 @@ class NativeHostManager {
             });
             child.on('error', error => {
                 log.error(`本地程序运行错误 ${record.pluginId}/${host.id}:`, error);
-                if (this.processes.get(key) === processInfo) {
+                if ((!child.pid || child.exitCode !== null || child.signalCode !== null) && this.processes.get(key) === processInfo) {
                     this.processes.delete(key);
                 }
             });
@@ -342,30 +326,62 @@ class NativeHostManager {
     }
 
     stopHostByKey(key, forceKill) {
-        // 先给 exe 一个正常退出机会；超时后再 tree-kill 兜底清理子进程树。
+        const alreadyStopping = this.stoppingProcesses.get(key);
+        if (alreadyStopping) return alreadyStopping.promise;
         const processInfo = this.processes.get(key);
-        if (!processInfo?.process) {
-            return;
-        }
-
+        if (!processInfo?.process) return Promise.resolve();
         const child = processInfo.process;
-        if (this.processes.get(key) === processInfo) {
-            this.processes.delete(key);
-        }
-
-        this.writeToHost(processInfo, { type: 'shutdown' }, true);
-
-        setTimeout(() => {
-            if (!forceKill || child.killed || child.exitCode !== null) {
-                return;
-            }
-
-            treeKill(child.pid, 'SIGKILL', error => {
-                if (error) {
-                    log.warn(`强制结束本地程序失败 ${key}:`, error);
+        const hasExited = () => child.exitCode !== null || child.signalCode !== null;
+        const stopping = new Promise((resolve, reject) => {
+            let finished = false;
+            let shutdownTimer;
+            let confirmationTimer;
+            const done = error => {
+                if (finished) return;
+                finished = true;
+                clearTimeout(shutdownTimer);
+                clearTimeout(confirmationTimer);
+                child.removeListener('exit', onExit);
+                child.removeListener('close', onExit);
+                child.removeListener('error', onError);
+                if (hasExited() && this.processes.get(key) === processInfo) this.processes.delete(key);
+                if (error) reject(error);
+                else resolve();
+            };
+            const onExit = () => done();
+            const onError = error => {
+                // error 可能是管道/信号错误，不等同于进程退出；仍等待 exit/close。
+                log.warn(`停止本地程序期间发生错误 ${key}:`, error);
+                if (hasExited()) done();
+            };
+            child.once('exit', onExit);
+            child.once('close', onExit);
+            child.once('error', onError);
+            if (hasExited()) { done(); return; }
+            this.writeToHost(processInfo, { type: 'shutdown' }, true);
+            shutdownTimer = setTimeout(() => {
+                if (hasExited()) { done(); return; }
+                if (!forceKill) { done(new Error(`本地程序未按时退出 ${key}`)); return; }
+                if (!Number.isInteger(child.pid) || child.pid <= 0) {
+                    done(new Error(`本地程序缺少可终止的进程 ID ${key}`)); return;
                 }
-            });
-        }, SHUTDOWN_TIMEOUT);
+                // killed 仅代表已发送信号；只有实际 exit/close 才算结束。
+                confirmationTimer = setTimeout(() => {
+                    if (hasExited()) done();
+                    else done(new Error(`强制结束后未收到进程退出确认 ${key}`));
+                }, SHUTDOWN_TIMEOUT + 500);
+                treeKill(child.pid, 'SIGKILL', error => {
+                    if (finished) return;
+                    if (hasExited()) { done(); return; }
+                    if (error) { done(new Error(`强制结束本地程序失败 ${key}: ${error.message}`)); return; }
+                });
+            }, SHUTDOWN_TIMEOUT);
+        });
+        const tracked = stopping.finally(() => {
+            if (this.stoppingProcesses.get(key)?.promise === tracked) this.stoppingProcesses.delete(key);
+        });
+        this.stoppingProcesses.set(key, { child, promise: tracked });
+        return tracked;
     }
 
     // 安全写入 exe 标准输入。退出阶段 exe 可能已经先关闭管道，
@@ -396,6 +412,7 @@ class NativeHostManager {
     }
 
     openBridge(record, host) {
+        if (this.stopAllPromise) return;
         // bridge 是一个隐藏扩展页，既能访问 chrome.runtime，又能通过 preload 访问 electronAPI。
         // background/service worker 不能直接拿到 Electron preload，因此需要这个中转页。
         if (!host.bridge) {
@@ -632,7 +649,7 @@ function validateNativeHostDeclaration(manifest, host) {
 const nativeHostManager = new NativeHostManager();
 
 app.on('before-quit', () => {
-    nativeHostManager.stopAll();
+    nativeHostManager.stopAll().catch(error => log.error('退出时停止本地程序失败:', error));
 });
 
 export default nativeHostManager;
