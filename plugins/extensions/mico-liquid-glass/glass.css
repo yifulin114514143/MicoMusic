@@ -56,7 +56,8 @@ html[data-mico-liquid-glass="on"][data-mico-liquid-glass-theme] .player-bar .con
     color: var(--mico-glass-text) !important;
 }
 html[data-mico-liquid-glass="on"][data-mico-liquid-glass-theme] .player-bar .artist,
-html[data-mico-liquid-glass="on"][data-mico-liquid-glass-theme] .player-bar .extra-btn {
+html[data-mico-liquid-glass="on"][data-mico-liquid-glass-theme] .player-bar .extra-btn,
+html[data-mico-liquid-glass="on"][data-mico-liquid-glass-theme] .player-bar .volume-control > i {
     color: var(--mico-glass-muted) !important;
 }
 html[data-mico-liquid-glass="on"] :is(.app-header .nav-arrow, .player-bar .control-btn, .player-bar .extra-btn):hover:not(:disabled) {
