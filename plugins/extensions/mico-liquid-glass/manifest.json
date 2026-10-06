@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "MicoMusic 液态玻璃",
+  "version": "1.0.0",
+  "description": "可随时关闭的顶部导航与底部播放器玻璃材质样板。",
+  "author": "MicoMusic",
+  "permissions": ["storage", "scripting", "tabs"],
+  "host_permissions": ["file:///*", "http://localhost/*", "http://127.0.0.1/*"],
+  "content_scripts": [
+    {
+      "matches": ["file:///*", "http://localhost/*", "http://127.0.0.1/*"],
+      "js": ["settings.js", "content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["glass.css"],
+      "matches": ["file:///*", "http://localhost/*", "http://127.0.0.1/*"]
+    }
+  ],
+  "action": { "default_popup": "popup.html" },
+  "moekoe": true,
+  "plugin_id": "mico-liquid-glass"
+}

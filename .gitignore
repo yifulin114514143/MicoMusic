@@ -35,6 +35,8 @@ pnpm-workspace.yaml
 vite.config.js*
 
 plugins/extensions/*
+!plugins/extensions/mico-liquid-glass/
+!plugins/extensions/mico-liquid-glass/**
 
 # 阶段二隔离运行数据；审计结论与证据另存于 docs/phase2/
 artifacts/phase2-runtime/
