@@ -6,6 +6,8 @@ import { fileURLToPath } from 'url';
 import extensionManager from './extensionManager.js';
 import nativeHostManager from './nativeHostManager.js';
 import { bindExternalLinkHandler } from '../services/externalLinkHandler.js';
+import { getBuiltinVisualPluginState, restoreBuiltinVisualPlugin, markBuiltinVisualUninstalled } from './builtinVisualPlugin.js';
+import { isBuiltinVisualPlugin, getVisualPluginRuntimeStatus } from './visualPluginHost.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -61,6 +63,10 @@ function getExtensionIconData(extension, extensionPath) {
  * 注册插件相关的 IPC 处理程序
  */
 export function registerExtensionIPC() {
+    ipcMain.handle('restore-builtin-visual-plugin', async event => {
+        if (getSenderExtensionId(event)) return { success: false, message: '请在 MicoMusic 插件管理页恢复主题' };
+        return restoreBuiltinVisualPlugin();
+    });
     // 管理页调用：用户授权或取消授权某个插件声明的本地程序。
     ipcMain.handle('set-native-host-authorization', (event, extensionId, hostId, authorized) => {
         try {
@@ -107,7 +113,7 @@ export function registerExtensionIPC() {
         }
     });
     // 获取插件列表
-    ipcMain.handle('get-extensions', () => {
+    ipcMain.handle('get-extensions', async () => {
         try {
             const loadedExtensions = extensionManager.getLoadedExtensions();
             const scannedExtensions = extensionManager.scanExtensions();
@@ -157,7 +163,9 @@ export function registerExtensionIPC() {
             return {
                 success: true,
                 extensions: extensions,
-                loadResults: extensionManager.getLastLoadResults()
+                loadResults: extensionManager.getLastLoadResults(),
+                builtinVisual: getBuiltinVisualPluginState(),
+                visualRuntime: await getVisualPluginRuntimeStatus()
             };
         } catch (error) {
             log.error('获取插件列表失败:', error);
@@ -218,7 +226,7 @@ export function registerExtensionIPC() {
                 width: 400,
                 height: 600,
                 webPreferences: {
-                    preload: path.join(__dirname, '../preload.cjs'),
+                    preload: isBuiltinVisualPlugin(extension) ? undefined : path.join(__dirname, '../preload.cjs'),
                     nodeIntegration: false,
                     contextIsolation: true,
                     enableRemoteModule: false,
@@ -275,8 +283,12 @@ export function registerExtensionIPC() {
     // 卸载插件
     ipcMain.handle('uninstall-extension', async (event, extensionId, extensionDir) => {
         try {
+            const extension = extensionManager.getLoadedExtensions().find(item => item.id === extensionId);
+            if (isBuiltinVisualPlugin(extension) && getBuiltinVisualPluginState().development) {
+                return { success: false, message: '开发版主题来自源码，请通过主题设置关闭材质' };
+            }
             const result = await extensionManager.uninstallExtension(extensionId, extensionDir);
-            if (result.success) syncNativeHosts();
+            if (result.success) { markBuiltinVisualUninstalled(extension); syncNativeHosts(); }
             return result;
         } catch (error) {
             log.error('卸载插件失败:', error);
@@ -379,6 +391,7 @@ export function registerExtensionIPC() {
  */
 export function unregisterExtensionIPC() {
     const channels = [
+        'restore-builtin-visual-plugin',
         'get-extensions',
         'get-extensions-detailed',
         'reload-extensions',

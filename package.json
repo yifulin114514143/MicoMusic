@@ -24,7 +24,9 @@
     "electron:build:macos:x64": "run-s build:api:macos \"electron:build -- --mac --x64 --publish never\"",
     "electron:build:macos:arm64": "run-s build:api:macos \"electron:build -- --mac --arm64 --publish never\"",
     "electron:build": "cross-env NODE_ENV=production electron-builder",
-    "test:identity": "node --test tests/identity.test.js tests/deepLinks.test.js tests/loopbackApi.test.js tests/apiBaseUrl.test.js"
+    "test:identity": "node --test tests/identity.test.js tests/deepLinks.test.js tests/loopbackApi.test.js tests/apiBaseUrl.test.js",
+    "test:phase3": "node --test tests/extensionLifecycle.test.js tests/extensionManagerRuntime.test.js tests/liquidGlassPlugin.test.js tests/builtinVisualPluginFiles.test.js tests/nativeHostShutdownRuntime.test.js",
+    "validate:phase3": "node scripts/run-phase3-validation.mjs"
   },
   "engines": {
     "node": ">=20"
@@ -44,6 +46,11 @@
         "filter": [
           "**/*"
         ]
+      },
+      {
+        "from": "plugins/extensions/mico-liquid-glass",
+        "to": "visual-plugins/mico-liquid-glass",
+        "filter": ["**/*"]
       }
     ],
     "extraFiles": [

@@ -6,7 +6,7 @@ import {
     playStartupSound, createLyricsWindow, setThumbarButtons,
     getTray, createMvWindow, getRuntimeApiBaseUrl
 } from './appServices.js';
-import { initializeExtensions, cleanupExtensions } from './extensions/extensions.js';
+import { prepareExtensionsForStartup, cleanupExtensions } from './extensions/extensions.js';
 import { setupAutoUpdater, startUpdateDownload } from './services/updater.js';
 import apiService from './services/apiService.js';
 import statusBarLyricsService from './services/statusBarLyricsService.js';
@@ -48,8 +48,10 @@ app.on('ready', () => {
         app.dock?.setIcon(dockIconPath);
     }
 
-    startApiServer().then(() => {
+    startApiServer().then(async () => {
         try {
+            const extensionResult = await prepareExtensionsForStartup();
+            if (!extensionResult.success) console.error('插件准备未全部完成，保留基础界面：', extensionResult);
             mainWindow = createWindow();
             attachProtocolWindow(mainWindow);
             createTray(mainWindow);
@@ -63,7 +65,6 @@ app.on('ready', () => {
             registerShortcut();
             setupAutoUpdater(mainWindow);
             apiService.init(mainWindow);
-            void initializeExtensions();
             setupDesktopShortcutIcon();
         } catch (error) {
             console.log('初始化应用时发生错误:', error);
@@ -118,8 +119,13 @@ if (settings?.apiMode === 'on') {
     apiService.start();
 }
 
-// 即将退出
-app.on('before-quit', () => {
+// 等待扩展与本地程序清理完成后退出，避免默认退出流程越过异步清理。
+let shutdownStarted = false;
+app.on('before-quit', event => {
+    event.preventDefault();
+    if (shutdownStarted) return;
+    shutdownStarted = true;
+    app.isQuitting = true;
     if (mainWindow && !mainWindow.isMaximized()) {
         const windowBounds = mainWindow.getBounds();
         store.set('windowState', windowBounds);
@@ -130,13 +136,15 @@ app.on('before-quit', () => {
 
     // 清理状态栏歌词服务
     setImmediate(async () => {
-        statusBarLyricsService.cleanup();
-        customTrayMenuService.cleanup();
-
-        stopApiServer();
-        apiService.stop();
-        await cleanupExtensions();
-        app.exit(0);
+        try {
+            statusBarLyricsService.cleanup();
+            customTrayMenuService.cleanup();
+            stopApiServer();
+            apiService.stop();
+            const cleaned = await cleanupExtensions();
+            if (!cleaned.success) console.error('退出时插件清理未全部完成:', cleaned);
+        } catch (error) { console.error('退出清理失败:', error); }
+        finally { app.exit(0); }
     });
 });
 // 关闭所有窗口

@@ -12,6 +12,8 @@ import { t } from './language/i18n.js';
 import { bindExternalLinkHandler } from './services/externalLinkHandler.js';
 import customTrayMenuService from './services/customTrayMenuService.js';
 import { startLoopbackApi } from './services/loopbackApi.js';
+import extensionManager from './extensions/extensionManager.js';
+import { isBuiltinVisualPlugin, waitForVisualPluginReady } from './extensions/visualPluginHost.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const store = new Store();
 const { TouchBarLabel, TouchBarButton, TouchBarGroup, TouchBarSpacer } = TouchBar;
@@ -56,7 +58,7 @@ export function createWindow() {
         y: y,
         minWidth: 890,
         minHeight: 750,
-        show: savedConfig?.startMinimized === 'on' ? false : true,
+        show: false,
         frame: useNativeTitleBar,
         titleBarStyle: useNativeTitleBar ? 'default' : 'hiddenInset',
         autoHideMenuBar: false, 
@@ -102,10 +104,13 @@ export function createWindow() {
         console.error('Failed to load:', errorCode, errorDescription);
     });
 
-    mainWindow.once('ready-to-show', () => {
-        if (savedConfig?.startMinimized === 'on') {
-            mainWindow.hide();
-        }
+    const createdWindow = mainWindow;
+    mainWindow.once('ready-to-show', async () => {
+        const visual = extensionManager.getLoadedExtensions().find(isBuiltinVisualPlugin);
+        try {
+            if (visual) await waitForVisualPluginReady(createdWindow.webContents, visual.id);
+        } catch (error) { log.warn('首屏主题未就绪，显示基础界面:', error.message); }
+        if (!createdWindow.isDestroyed() && savedConfig?.startMinimized !== 'on') createdWindow.show();
     });
 
     mainWindow.webContents.on('did-finish-load', () => {
@@ -736,4 +741,3 @@ export function setThumbarButtons(mainWindow, isPlaying = false) {
 
     mainWindow.setThumbarButtons(buttons);
 }
-

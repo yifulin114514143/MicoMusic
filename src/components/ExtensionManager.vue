@@ -23,6 +23,9 @@
                     <i class="fas fa-upload"></i>
                     {{ t('an-zhuang-cha-jian') }}
                 </button>
+                <button v-if="builtinVisualRemoved" @click="restoreVisualPlugin" class="extension-btn secondary" :disabled="extensionsLoading">
+                    恢复液态玻璃插件
+                </button>
             </div>
 
             <div v-else class="market-actions">
@@ -276,6 +279,7 @@ const extensions = ref([])
 const extensionsLoading = ref(false)
 const extensionsError = ref('')
 const extensionLoadFailures = ref([])
+const builtinVisualRemoved = ref(false)
 const currentView = ref('installed')
 const marketPlugins = ref([])
 const marketLoading = ref(false)
@@ -350,12 +354,31 @@ const refreshExtensions = async (reload = false) => {
         if (result?.success) {
             extensions.value = result.extensions || []
             extensionLoadFailures.value = (result.loadResults || []).filter(item => item.success === false)
+            builtinVisualRemoved.value = result.builtinVisual?.removed === true
+            if (result.builtinVisual?.preparationResult?.success === false) {
+                extensionsError.value = result.builtinVisual.preparationResult.message
+            }
+            const runtimeFailure = (result.visualRuntime || []).find(item => item.state?.success === false)
+            if (runtimeFailure) extensionsError.value = runtimeFailure.state.error || '液态玻璃初始化失败，已返回基础界面。'
         } else {
             extensionsError.value = result?.error || '无法读取插件加载结果。'
         }
     } catch (error) {
         extensionsError.value = error.message
         console.error('Error refreshing plugins:', error)
+    } finally {
+        extensionsLoading.value = false
+    }
+}
+
+const restoreVisualPlugin = async () => {
+    extensionsLoading.value = true
+    try {
+        const result = await window.electronAPI.restoreBuiltinVisualPlugin()
+        await refreshExtensions()
+        if (!result.success) extensionsError.value = result.message || '液态玻璃插件恢复失败。'
+    } catch (error) {
+        extensionsError.value = error.message
     } finally {
         extensionsLoading.value = false
     }

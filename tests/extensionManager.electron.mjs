@@ -111,15 +111,23 @@ try {
     assert.equal((await manager.uninstallExtension('', 'v2')).success, true);
     assert.equal((await manager.uninstallExtension('', 'native-invalid')).success, true);
     const extensions = await import('../electron/extensions/extensions.js');
+    const missingBuiltinPath = path.join(process.resourcesPath, 'visual-plugins', 'mico-liquid-glass');
+    assert.equal(fs.existsSync(missingBuiltinPath), false, '此隔离运行器使用依赖目录中的 Electron，内置分发资源应缺失');
+    const assertOrdinaryPluginsAndMissingBuiltin = status => {
+        assert.equal(status.success, false);
+        assert.equal(status.builtinResult.success, false);
+        assert.ok(status.builtinResult.message.includes(missingBuiltinPath), status.builtinResult.message);
+        assert.equal(status.results.length, 2);
+        assert.equal(status.results.every(item => item.success), true);
+        assert.equal(manager.getLoadedExtensions().length, 2);
+    };
     const initialized = await extensions.initializeExtensions();
-    assert.equal(initialized.success, true, initialized.error || initialized.message);
-    assert.equal(manager.getLoadedExtensions().length, 2);
-    check('统一入口初始化真实插件与 IPC');
+    assertOrdinaryPluginsAndMissingBuiltin(initialized);
+    check('内置资源缺失如实报告，统一入口仍初始化普通插件与 IPC');
 
     for (let index = 0; index < 3; index++) {
         const restarted = await extensions.restartExtensions();
-        assert.equal(restarted.success, true, restarted.error || restarted.message);
-        assert.equal(manager.getLoadedExtensions().length, 2);
+        assertOrdinaryPluginsAndMissingBuiltin(restarted);
         scanned = manager.scanExtensions();
         assert.equal(scanned.filter(item => item.installed).length, 2);
     }
