@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import Store from 'electron-store';
 import log from 'electron-log';
 import treeKill from 'tree-kill';
+import { pathsMatch } from './extensionLifecycle.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const NATIVE_HOST_PERMISSION = 'moekoe:nativeHost';
@@ -65,9 +66,9 @@ class NativeHostManager {
         this.extensions.clear();
 
         for (const extension of loadedExtensions) {
-            const scanned = scannedExtensions.find(item => item.name === extension.name);
+            const scanned = scannedExtensions.find(item => pathsMatch(item.path, extension.path));
             const manifest = extension.manifest || scanned?.manifest || {};
-            const extensionPath = scanned?.path || '';
+            const extensionPath = scanned?.path || extension.path || '';
             const pluginId = this.getPluginId(extension.id, scanned?.directory, manifest);
 
             this.extensions.set(extension.id, {

@@ -129,13 +129,13 @@ app.on('before-quit', () => {
     }
 
     // 清理状态栏歌词服务
-    setImmediate(() => {
+    setImmediate(async () => {
         statusBarLyricsService.cleanup();
         customTrayMenuService.cleanup();
 
         stopApiServer();
         apiService.stop();
-        cleanupExtensions();
+        await cleanupExtensions();
         app.exit(0);
     });
 });

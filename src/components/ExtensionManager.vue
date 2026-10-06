@@ -42,6 +42,12 @@
         </div>
 
         <div v-if="currentView === 'installed'">
+            <div v-if="extensionsError || extensionLoadFailures.length" class="extension-load-errors" role="alert">
+                <p v-if="extensionsError">{{ extensionsError }}</p>
+                <p v-for="failure in extensionLoadFailures" :key="failure.directory || failure.path">
+                    {{ failure.directory }}：{{ failure.message }}
+                </p>
+            </div>
             <div v-if="!extensionsLoading && extensions.length > 0" class="extensions-list">
                 <div v-for="extension in extensions" :key="extension.id" class="market-item installed-item">
                     <div class="market-item-header">
@@ -268,6 +274,8 @@ const MARKET_PAGE_SIZE = 5
 
 const extensions = ref([])
 const extensionsLoading = ref(false)
+const extensionsError = ref('')
+const extensionLoadFailures = ref([])
 const currentView = ref('installed')
 const marketPlugins = ref([])
 const marketLoading = ref(false)
@@ -328,11 +336,12 @@ watch(currentView, async view => {
 
 const refreshExtensions = async (reload = false) => {
     extensionsLoading.value = true
+    extensionsError.value = ''
     try {
         if (reload) {
             const reloadResult = await window.electronAPI?.reloadExtensions()
             if (!reloadResult?.success) {
-                console.error('Failed to reload plugins:', reloadResult?.message)
+                extensionsError.value = reloadResult?.message || '插件重新加载失败，基础界面仍可使用。'
             }
         }
 
@@ -340,10 +349,12 @@ const refreshExtensions = async (reload = false) => {
         const result = await window.electronAPI?.getExtensions()
         if (result?.success) {
             extensions.value = result.extensions || []
+            extensionLoadFailures.value = (result.loadResults || []).filter(item => item.success === false)
         } else {
-            console.error('Failed to get plugins:', result?.error)
+            extensionsError.value = result?.error || '无法读取插件加载结果。'
         }
     } catch (error) {
+        extensionsError.value = error.message
         console.error('Error refreshing plugins:', error)
     } finally {
         extensionsLoading.value = false
@@ -813,6 +824,14 @@ $danger-hover: #b91c1c;
 $text-muted: #666;
 $border-light: #e5e7eb;
 $border-dark: #232527;
+
+.extension-load-errors {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border: 1px solid $danger;
+    border-radius: 8px;
+    p { margin: 4px 0; }
+}
 
 .extensions-toolbar {
     display: flex;

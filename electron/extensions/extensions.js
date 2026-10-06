@@ -9,6 +9,9 @@ import log from 'electron-log';
  */
 export async function initializeExtensions() {
     try {
+        extensionManager.setBeforeExtensionUnloadHook(async (extension, reason) => {
+            if (reason === 'uninstall') nativeHostManager.stopExtension(extension.id, true);
+        });
         // 确保插件目录存在
         extensionManager.ensureExtensionsDirectory();
         
@@ -16,12 +19,12 @@ export async function initializeExtensions() {
         registerExtensionIPC();
         
         // 加载插件
-        await extensionManager.loadChromeExtensions();
+        const loaded = await extensionManager.loadChromeExtensions();
 
         // 同步本地程序索引
         syncNativeHosts();
         
-        return { success: true };
+        return loaded;
     } catch (error) {
         log.error('插件系统初始化失败:', error);
         return { success: false, error: error.message };
@@ -37,7 +40,8 @@ export async function cleanupExtensions() {
         // 顺序至关重要：若先卸载扩展，WebSocket 断开后 EXE 会自行退出，
         // 但 stopAll 的 await 可保证 restartExtensions 不会在旧进程存活时启动新进程。
         await nativeHostManager.stopAll();
-        extensionManager.unloadChromeExtensions();
+        const unloaded = await extensionManager.unloadChromeExtensions();
+        if (!unloaded.success) return unloaded;
         
         // 注销 IPC 处理程序
         unregisterExtensionIPC();
@@ -54,7 +58,7 @@ export async function cleanupExtensions() {
  */
 export async function restartExtensions() {
     try {
-        const cleanupResult = cleanupExtensions();
+        const cleanupResult = await cleanupExtensions();
         if (!cleanupResult.success) {
             return cleanupResult;
         }

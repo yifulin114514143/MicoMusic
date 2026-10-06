@@ -115,7 +115,7 @@ export function registerExtensionIPC() {
             nativeHostManager.syncExtensions(loadedExtensions, scannedExtensions);
             
             const extensions = loadedExtensions.map(ext => {
-                const scannedExt = scannedExtensions.find(scanned => scanned.name === ext.name);
+                const scannedExt = scannedExtensions.find(scanned => extensionManager.pathsMatch(scanned.path, ext.path));
                 let iconData = null;
                 const manifestAuthor = ext.manifest?.author ?? scannedExt?.manifest?.author;
                 const authorName = typeof manifestAuthor === 'string'
@@ -156,7 +156,8 @@ export function registerExtensionIPC() {
             
             return {
                 success: true,
-                extensions: extensions
+                extensions: extensions,
+                loadResults: extensionManager.getLastLoadResults()
             };
         } catch (error) {
             log.error('获取插件列表失败:', error);
@@ -272,10 +273,10 @@ export function registerExtensionIPC() {
     });
 
     // 卸载插件
-    ipcMain.handle('uninstall-extension', (event, extensionId, extensionDir) => {
+    ipcMain.handle('uninstall-extension', async (event, extensionId, extensionDir) => {
         try {
-            nativeHostManager.stopExtension(extensionId, true);
-            const result = extensionManager.uninstallExtension(extensionId, extensionDir);
+            const result = await extensionManager.uninstallExtension(extensionId, extensionDir);
+            if (result.success) syncNativeHosts();
             return result;
         } catch (error) {
             log.error('卸载插件失败:', error);
