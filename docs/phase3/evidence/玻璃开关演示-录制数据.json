@@ -1,0 +1,871 @@
+{
+  "format": "真实 BrowserWindow.capturePage 连续采集，不使用静态截图拼接",
+  "fps": 10,
+  "requestedFrameCount": 72,
+  "window": {
+    "width": 1180,
+    "height": 820
+  },
+  "profile": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/record-profile-dY40KH",
+  "framesDirectory": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/record-frames-tXH8u1",
+  "sourceFingerprintSha256": "74b4e7bb5f02084d14774ac5b283f375b290ad6d2426a35a3faea061bbffcc43",
+  "frames": [
+    {
+      "index": 0,
+      "actualMs": 0,
+      "stage": "off",
+      "filename": "frame-0000.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 1,
+      "actualMs": 105,
+      "stage": "off",
+      "filename": "frame-0001.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 2,
+      "actualMs": 205,
+      "stage": "off",
+      "filename": "frame-0002.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 3,
+      "actualMs": 303,
+      "stage": "off",
+      "filename": "frame-0003.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 4,
+      "actualMs": 405,
+      "stage": "off",
+      "filename": "frame-0004.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 5,
+      "actualMs": 506,
+      "stage": "off",
+      "filename": "frame-0005.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 6,
+      "actualMs": 605,
+      "stage": "off",
+      "filename": "frame-0006.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 7,
+      "actualMs": 705,
+      "stage": "off",
+      "filename": "frame-0007.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 8,
+      "actualMs": 801,
+      "stage": "off",
+      "filename": "frame-0008.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 9,
+      "actualMs": 904,
+      "stage": "off",
+      "filename": "frame-0009.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 10,
+      "actualMs": 1001,
+      "stage": "off",
+      "filename": "frame-0010.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 11,
+      "actualMs": 1105,
+      "stage": "off",
+      "filename": "frame-0011.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 12,
+      "actualMs": 1200,
+      "stage": "off",
+      "filename": "frame-0012.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 13,
+      "actualMs": 1304,
+      "stage": "off",
+      "filename": "frame-0013.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 14,
+      "actualMs": 1405,
+      "stage": "off",
+      "filename": "frame-0014.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 15,
+      "actualMs": 1505,
+      "stage": "off",
+      "filename": "frame-0015.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 16,
+      "actualMs": 1605,
+      "stage": "off",
+      "filename": "frame-0016.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 17,
+      "actualMs": 1705,
+      "stage": "off",
+      "filename": "frame-0017.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 18,
+      "actualMs": 1806,
+      "stage": "light",
+      "filename": "frame-0018.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 19,
+      "actualMs": 1905,
+      "stage": "light",
+      "filename": "frame-0019.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 20,
+      "actualMs": 2001,
+      "stage": "light",
+      "filename": "frame-0020.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 21,
+      "actualMs": 2106,
+      "stage": "light",
+      "filename": "frame-0021.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 22,
+      "actualMs": 2206,
+      "stage": "light",
+      "filename": "frame-0022.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 23,
+      "actualMs": 2306,
+      "stage": "light",
+      "filename": "frame-0023.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 24,
+      "actualMs": 2404,
+      "stage": "light",
+      "filename": "frame-0024.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 25,
+      "actualMs": 2505,
+      "stage": "light",
+      "filename": "frame-0025.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 26,
+      "actualMs": 2601,
+      "stage": "light",
+      "filename": "frame-0026.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 27,
+      "actualMs": 2705,
+      "stage": "light",
+      "filename": "frame-0027.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 28,
+      "actualMs": 2805,
+      "stage": "light",
+      "filename": "frame-0028.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 29,
+      "actualMs": 2906,
+      "stage": "light",
+      "filename": "frame-0029.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 30,
+      "actualMs": 3005,
+      "stage": "light",
+      "filename": "frame-0030.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 31,
+      "actualMs": 3105,
+      "stage": "light",
+      "filename": "frame-0031.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 32,
+      "actualMs": 3201,
+      "stage": "light",
+      "filename": "frame-0032.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 33,
+      "actualMs": 3304,
+      "stage": "light",
+      "filename": "frame-0033.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 34,
+      "actualMs": 3403,
+      "stage": "light",
+      "filename": "frame-0034.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 35,
+      "actualMs": 3505,
+      "stage": "light",
+      "filename": "frame-0035.png",
+      "state": {
+        "enabled": true,
+        "theme": "light",
+        "styles": 1
+      }
+    },
+    {
+      "index": 36,
+      "actualMs": 3605,
+      "stage": "dark",
+      "filename": "frame-0036.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 37,
+      "actualMs": 3704,
+      "stage": "dark",
+      "filename": "frame-0037.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 38,
+      "actualMs": 3805,
+      "stage": "dark",
+      "filename": "frame-0038.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 39,
+      "actualMs": 3905,
+      "stage": "dark",
+      "filename": "frame-0039.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 40,
+      "actualMs": 4005,
+      "stage": "dark",
+      "filename": "frame-0040.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 41,
+      "actualMs": 4104,
+      "stage": "dark",
+      "filename": "frame-0041.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 42,
+      "actualMs": 4205,
+      "stage": "dark",
+      "filename": "frame-0042.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 43,
+      "actualMs": 4305,
+      "stage": "dark",
+      "filename": "frame-0043.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 44,
+      "actualMs": 4405,
+      "stage": "dark",
+      "filename": "frame-0044.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 45,
+      "actualMs": 4505,
+      "stage": "dark",
+      "filename": "frame-0045.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 46,
+      "actualMs": 4605,
+      "stage": "dark",
+      "filename": "frame-0046.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 47,
+      "actualMs": 4705,
+      "stage": "dark",
+      "filename": "frame-0047.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 48,
+      "actualMs": 4805,
+      "stage": "dark",
+      "filename": "frame-0048.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 49,
+      "actualMs": 4904,
+      "stage": "dark",
+      "filename": "frame-0049.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 50,
+      "actualMs": 5005,
+      "stage": "dark",
+      "filename": "frame-0050.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 51,
+      "actualMs": 5105,
+      "stage": "dark",
+      "filename": "frame-0051.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 52,
+      "actualMs": 5205,
+      "stage": "dark",
+      "filename": "frame-0052.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 53,
+      "actualMs": 5306,
+      "stage": "dark",
+      "filename": "frame-0053.png",
+      "state": {
+        "enabled": true,
+        "theme": "dark",
+        "styles": 1
+      }
+    },
+    {
+      "index": 54,
+      "actualMs": 5406,
+      "stage": "off",
+      "filename": "frame-0054.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 55,
+      "actualMs": 5505,
+      "stage": "off",
+      "filename": "frame-0055.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 56,
+      "actualMs": 5606,
+      "stage": "off",
+      "filename": "frame-0056.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 57,
+      "actualMs": 5706,
+      "stage": "off",
+      "filename": "frame-0057.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 58,
+      "actualMs": 5805,
+      "stage": "off",
+      "filename": "frame-0058.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 59,
+      "actualMs": 5905,
+      "stage": "off",
+      "filename": "frame-0059.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 60,
+      "actualMs": 6000,
+      "stage": "off",
+      "filename": "frame-0060.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 61,
+      "actualMs": 6105,
+      "stage": "off",
+      "filename": "frame-0061.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 62,
+      "actualMs": 6205,
+      "stage": "off",
+      "filename": "frame-0062.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 63,
+      "actualMs": 6304,
+      "stage": "off",
+      "filename": "frame-0063.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 64,
+      "actualMs": 6405,
+      "stage": "off",
+      "filename": "frame-0064.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 65,
+      "actualMs": 6505,
+      "stage": "off",
+      "filename": "frame-0065.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 66,
+      "actualMs": 6605,
+      "stage": "off",
+      "filename": "frame-0066.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 67,
+      "actualMs": 6700,
+      "stage": "off",
+      "filename": "frame-0067.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 68,
+      "actualMs": 6805,
+      "stage": "off",
+      "filename": "frame-0068.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 69,
+      "actualMs": 6906,
+      "stage": "off",
+      "filename": "frame-0069.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 70,
+      "actualMs": 7004,
+      "stage": "off",
+      "filename": "frame-0070.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    },
+    {
+      "index": 71,
+      "actualMs": 7105,
+      "stage": "off",
+      "filename": "frame-0071.png",
+      "state": {
+        "enabled": false,
+        "theme": null,
+        "styles": 0
+      }
+    }
+  ],
+  "stages": [
+    {
+      "name": "off",
+      "startFrame": 0,
+      "actualMs": 0
+    },
+    {
+      "name": "light",
+      "startFrame": 18,
+      "actualMs": 1806
+    },
+    {
+      "name": "dark",
+      "startFrame": 36,
+      "actualMs": 3605
+    },
+    {
+      "name": "off",
+      "startFrame": 54,
+      "actualMs": 5406
+    }
+  ],
+  "captureSize": {
+    "width": 1180,
+    "height": 820
+  },
+  "nativeCaptureSize": {
+    "width": 2360,
+    "height": 1640
+  },
+  "actualCaptureElapsedMs": 7153,
+  "actualFrameCount": 72,
+  "success": true,
+  "cleanup": {
+    "success": true
+  },
+  "encoding": {
+    "videoPath": "/Users/mico/AI 事物/MicoMusic-阶段三/docs/phase3/evidence/玻璃开关演示.mp4",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1180,
+          "height": 820,
+          "r_frame_rate": "10/1",
+          "duration": "7.200000",
+          "nb_read_frames": "72",
+          "side_data_list": [
+            {}
+          ]
+        }
+      ],
+      "format": {
+        "duration": "7.200000",
+        "size": "121739"
+      }
+    },
+    "sha256": "ef69222c2a28951ca7cf907fbe83cd92c2b4c70b32d2b628b38880b6193ef7d1",
+    "captureIntervalMedianMs": 100,
+    "captureIntervalMaximumMs": 105,
+    "audioStreams": 0
+  }
+}

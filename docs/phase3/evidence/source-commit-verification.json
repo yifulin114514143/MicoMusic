@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-10-06T18:29:57.184Z",
+  "codeCommit": "7eb33221b07d07ef65bddc790dfda0ffa5d18a9c",
+  "runtimeEvidenceBaseline": "0c4ccf82e93cd1d82291f509dace34eee9e79f3b",
+  "sourceFiles": 155,
+  "rendererFiles": 73,
+  "sourceFingerprintSha256": "74b4e7bb5f02084d14774ac5b283f375b290ad6d2426a35a3faea061bbffcc43",
+  "rendererFingerprintSha256": "0ba662f16f2937f88e46c4bc5de1db7566a78e31e83c49131f6b5e151b17ff3e",
+  "sourceMatchesRuntime": true,
+  "rendererMatchesRuntime": true,
+  "interpretation": "提交后重新读取文件字节，核对代码与此前包含未提交工作树改动的最终运行证据一致；本文件不表示重新执行测试"
+}
