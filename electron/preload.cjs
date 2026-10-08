@@ -1,5 +1,18 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
+// 新定义的视觉只读状态，不改变网页节流设置，也不暂停音频。
+let visualWindowVisible;
+const updateVisualWindowVisibility = (value) => {
+    if (typeof value !== 'boolean') return;
+    visualWindowVisible = value;
+    document.documentElement?.setAttribute('data-mico-window-visible', String(value));
+};
+ipcRenderer.on('visual-window-visibility', (_event, value) => updateVisualWindowVisibility(value));
+ipcRenderer.invoke('get-visual-window-visibility').then(updateVisualWindowVisibility).catch(() => {});
+window.addEventListener('DOMContentLoaded', () => {
+    if (typeof visualWindowVisible === 'boolean') updateVisualWindowVisibility(visualWindowVisible);
+}, { once: true });
+
 contextBridge.exposeInMainWorld('electron', {
     ipcRenderer: {
         send: (channel, ...args) => ipcRenderer.send(channel, ...args),

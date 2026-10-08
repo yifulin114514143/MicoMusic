@@ -14,6 +14,7 @@ import customTrayMenuService from './services/customTrayMenuService.js';
 import { startLoopbackApi } from './services/loopbackApi.js';
 import extensionManager from './extensions/extensionManager.js';
 import { isBuiltinVisualPlugin, waitForVisualPluginReady } from './extensions/visualPluginHost.js';
+import { attachVisualWindowVisibility } from './services/visualWindowVisibility.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const store = new Store();
 const { TouchBarLabel, TouchBarButton, TouchBarGroup, TouchBarSpacer } = TouchBar;
@@ -77,6 +78,7 @@ export function createWindow() {
         icon: getIconPath('icon.ico')
     });
     bindExternalLinkHandler(mainWindow);
+    attachVisualWindowVisibility(mainWindow);
 
     // 隐藏菜单栏但保留默认菜单
     mainWindow.setMenuBarVisibility(false);
