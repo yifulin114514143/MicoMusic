@@ -63,7 +63,9 @@ function makeHarness({ stored, resourceFailure, storageFailure, delayStyle = fal
         fetch: async (url, options) => {
             requests.push({ url, options });
             if (delayStyle) await pendingStyle;
-            return { ok: !resourceFailure, status: resourceFailure ? 404 : 200, text: async () => read('glass.css') };
+            const name = new URL(url).pathname.slice(1);
+            const failed = resourceFailure === true || resourceFailure === name;
+            return { ok: !failed, status: failed ? 404 : 200, text: async () => read(name) };
         }
     });
     const run = (name) => vm.runInContext(read(name), context, { filename: name });
@@ -91,6 +93,7 @@ test('已关闭设置首屏不创建材质，资源通过扩展精确URL读取',
     assert.equal(harness.attrs.has('data-mico-liquid-glass'), false);
     assert.deepEqual(JSON.parse(harness.attrs.get('data-mico-visual-ready')), { extensionId, enabled: false, success: true });
     assert.equal(harness.requests[0].url, `chrome-extension://${extensionId}/glass.css`);
+    assert.deepEqual(harness.requests.map(request => new URL(request.url).pathname), ['/glass.css', '/immersive.css', '/lyrics.css']);
     assert.deepEqual(harness.store[key], { enabled: false, theme: 'light' });
 });
 
@@ -152,7 +155,7 @@ test('20 次重复注入都替换旧实例而非叠加样式或监听', async ()
 });
 
 test('资源或存储失败返回基础界面且报告错误', async () => {
-    for (const options of [{ resourceFailure: true }, { storageFailure: 'storage unavailable' }]) {
+    for (const options of [{ resourceFailure: true }, { resourceFailure: 'immersive.css' }, { resourceFailure: 'lyrics.css' }, { storageFailure: 'storage unavailable' }]) {
         const harness = makeHarness(options);
         await settle();
         const ready = JSON.parse(harness.attrs.get('data-mico-visual-ready'));

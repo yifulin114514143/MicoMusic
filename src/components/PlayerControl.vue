@@ -131,8 +131,23 @@
         @add-cloud-music-to-queue="onQueueCloudSongAdd" @add-local-music-to-queue="onQueueLocalSongAdd" ref="queueList" />
 
     <!-- 全屏歌词界面 -->
+    <!-- 新视图仅在正式视觉插件启用时挂载；关闭插件后仍使用下面的原全屏界面。 -->
+    <ImmersivePlayer v-if="showLyrics && immersiveVisual.enabled"
+        :song="currentSong" :current-time="currentTime" :duration="immersiveDuration"
+        :playing="playing" :volume="volume" :speed="currentSpeed"
+        :playback-mode-index="currentPlaybackModeIndex" :lyrics="lyricsData"
+        :lyrics-mode="lyricsMode" :tips="SongTips" :font-family="lyricsFontFamily"
+        :highlight-mode="lyricsHighlightMode" :reduce-motion="immersiveVisual.reduceMotion"
+        :low-blur="immersiveVisual.lowBlur" :window-visible="immersiveVisual.windowVisible"
+        @close="toggleLyrics(currentSong.hash, currentTime)" @toggle-play="togglePlayPause"
+        @previous="playSongFromQueue('previous')" @next="playSongFromQueue('next')"
+        @seek="seekImmersive" @volume-change="changeImmersiveVolume" @playback-mode="setPlaybackMode"
+        @like="playlistSelect.toLike()" @collect="playlistSelect.fetchPlaylists()"
+        @queue="queueList.openQueue()" @share="share(currentSong.name, currentSong.hash)"
+        @desktop-lyrics="desktopLyrics" @lyrics-mode="switchLyricsMode" @copy-lyrics="copyLyricsToClipboard"
+        @playback-speed="changePlaybackSpeed" @quality-change="switchQuality" />
     <transition name="slide-up">
-        <div v-if="showLyrics" class="lyrics-bg" :style="lyricsBackgroundStyle">
+        <div v-if="showLyrics && !immersiveVisual.enabled" class="lyrics-bg" :style="lyricsBackgroundStyle">
             <template v-if="lyricsBackground === 'cover'">
                 <div
                     v-for="(image, index) in lyricsBackgroundImages"
@@ -282,6 +297,8 @@ import { useI18n } from 'vue-i18n';
 import PlaylistSelectModal from './PlaylistSelectModal.vue';
 import QueueList from './QueueList.vue';
 import FullscreenLyricsSettings from './FullscreenLyricsSettings.vue';
+import ImmersivePlayer from './immersive/ImmersivePlayer.vue';
+import { useImmersiveVisualState } from './immersive/visualState.js';
 import { useRouter } from 'vue-router';
 import { getCover, getAudioOutputDeviceSignature, share } from '../utils/utils';
 import { get } from '../utils/request';
@@ -308,6 +325,7 @@ const router = useRouter();
 const musicQueueStore = useMusicQueueStore();
 const playlists = ref([]);
 const currentTime = ref(0);
+const immersiveVisual = useImmersiveVisualState();
 const fullscreenLyricsDefaultSettings = {
     background: 'on',
     fontSize: '24px',
@@ -594,6 +612,27 @@ const mediaSession = useMediaSession();
 
 const songQueue = useSongQueue(t, musicQueueStore, queueList);
 const { currentSong, NextSong, addSongToQueue, addCloudMusicToQueue, addLocalMusicToQueue, addLocalPlaylistToQueue, addToNext, getPlaylistAllSongs, addPlaylistToQueue, addCloudPlaylistToQueue, restoreLocalSongCover } = songQueue;
+
+// 数据与控制继续属于现有播放器；视觉组件不会创建音频对象。
+const immersiveDuration = ref(0);
+const syncImmersiveDuration = () => {
+    const mediaDuration = Number(audio.duration);
+    immersiveDuration.value = Number.isFinite(mediaDuration) && mediaDuration > 0 ? mediaDuration : 0;
+};
+const seekImmersive = (seconds) => {
+    const target = Number(seconds);
+    if (!Number.isFinite(target) || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+    audio.currentTime = Math.max(0, Math.min(target, audio.duration));
+    currentTime.value = audio.currentTime;
+    progressWidth.value = audio.currentTime / audio.duration * 100;
+    resetLyricsHighlight(audio.currentTime);
+};
+const changeImmersiveVolume = (percent) => {
+    const value = Number(percent);
+    if (!Number.isFinite(value)) return;
+    volume.value = Math.max(0, Math.min(100, value));
+    changeVolume();
+};
 
 const resetTrackTimeline = () => {
     currentTime.value = 0;
@@ -1599,6 +1638,11 @@ onMounted(() => {
 
     // 初始化音频设置
     audioController.initAudio();
+    // HTMLMediaElement 的实际时长单位为秒，避免将不同队列的 timeLength 单位混用。
+    audio.addEventListener('loadedmetadata', syncImmersiveDuration);
+    audio.addEventListener('durationchange', syncImmersiveDuration);
+    audio.addEventListener('emptied', syncImmersiveDuration);
+    syncImmersiveDuration();
 
     const savedSettings = JSON.parse(localStorage.getItem('settings') || '{}');
     syncDesktopLyricsFont(savedSettings);
@@ -1786,6 +1830,9 @@ onUnmounted(() => {
     window.removeEventListener('loudness-normalization-change', () => {});
 
     // 使用AudioController的销毁方法清理基本监听器
+    audio.removeEventListener('loadedmetadata', syncImmersiveDuration);
+    audio.removeEventListener('durationchange', syncImmersiveDuration);
+    audio.removeEventListener('emptied', syncImmersiveDuration);
     audioController.destroy();
 
     // 清理组件特定的监听器

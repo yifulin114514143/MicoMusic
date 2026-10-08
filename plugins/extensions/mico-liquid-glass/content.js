@@ -80,10 +80,13 @@
             else resolve(config.normalize(stored[config.key]));
         });
     });
-    const loadStyle = fetch(chrome.runtime.getURL('glass.css'), { signal: abortController.signal }).then((response) => {
-        if (!response.ok) throw new Error(`材质资源加载失败 (${response.status})`);
+    // 所有新播放器视觉均为插件资源，一起载入同一可撤回 style。
+    // 任一资源失败都不挂载新视图，保留原播放器界面。
+    const loadStyle = Promise.all(['glass.css', 'immersive.css', 'lyrics.css'].map(async (name) => {
+        const response = await fetch(chrome.runtime.getURL(name), { signal: abortController.signal });
+        if (!response.ok) throw new Error(`材质资源加载失败：${name} (${response.status})`);
         return response.text();
-    });
+    })).then(stylesheets => stylesheets.join('\n'));
     Promise.all([loadSettings, loadStyle]).then(([storedSettings, stylesheet]) => {
         if (disposed) return;
         if (settingsRevision === 0) settings = storedSettings;

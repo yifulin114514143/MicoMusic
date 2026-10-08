@@ -1,0 +1,2200 @@
+{
+  "timestamp": "2026-10-08T02:00:01.054Z",
+  "mode": "unthrottled",
+  "backgroundThrottling": false,
+  "electron": "39.2.4",
+  "chromium": "142.0.7444.177",
+  "platform": "darwin",
+  "sourceState": {
+    "head": "9a84463fc992d6d912306e647d520da8baee4347",
+    "gitStatusShort": "M .gitignore\n M electron/appServices.js\n M electron/preload.cjs\n M package.json\n M plugins/extensions/mico-liquid-glass/content.js\n M plugins/extensions/mico-liquid-glass/glass.css\n M plugins/extensions/mico-liquid-glass/manifest.json\n M plugins/extensions/mico-liquid-glass/popup.html\n M src/components/PlayerControl.vue\n M tests/liquidGlassPlugin.test.js\n?? docs/immersive/\n?? electron/services/visualWindowVisibility.js\n?? plugins/extensions/mico-liquid-glass/immersive.css\n?? plugins/extensions/mico-liquid-glass/lyrics.css\n?? scripts/run-immersive-validation.mjs\n?? scripts/validate-immersive.mjs\n?? src/components/immersive/\n?? tests/fixtures/immersive-preload.cjs\n?? tests/immersiveLyrics.test.js\n?? tests/immersiveVisualState.test.js",
+    "sourceFingerprintSha256": "c3e788808f6c37dffccbd65ddecbdd4ff078e4055d654944b4f9f4cb5f6d86ee",
+    "rendererFingerprintSha256": "322159231a863388a2189c4c3eb47409a021aac61e1e600c4d075c8866a11305",
+    "sourceFiles": [
+      "electron/appServices.js",
+      "electron/extensions/builtinVisualPlugin.js",
+      "electron/extensions/builtinVisualPluginFiles.js",
+      "electron/extensions/extensionIPC.js",
+      "electron/extensions/extensionLifecycle.js",
+      "electron/extensions/extensionManager.js",
+      "electron/extensions/extensions.js",
+      "electron/extensions/nativeHostManager.js",
+      "electron/extensions/visualPluginHost.js",
+      "electron/language/i18n.js",
+      "electron/main.js",
+      "electron/preload.cjs",
+      "electron/services/apiService.js",
+      "electron/services/appIdentity.js",
+      "electron/services/customTrayMenuService.js",
+      "electron/services/deepLinks.js",
+      "electron/services/desktopShortcutIcon.js",
+      "electron/services/externalLinkHandler.js",
+      "electron/services/identityConfig.js",
+      "electron/services/logHelper.js",
+      "electron/services/loopbackApi.js",
+      "electron/services/protocolHandler.js",
+      "electron/services/statusBarLyricsService.js",
+      "electron/services/updater.js",
+      "electron/services/visualWindowVisibility.js",
+      "electron/view/index.html",
+      "package.json",
+      "plugins/extensions/mico-liquid-glass/README.md",
+      "plugins/extensions/mico-liquid-glass/content.js",
+      "plugins/extensions/mico-liquid-glass/glass.css",
+      "plugins/extensions/mico-liquid-glass/host-bridge.html",
+      "plugins/extensions/mico-liquid-glass/immersive.css",
+      "plugins/extensions/mico-liquid-glass/lyrics.css",
+      "plugins/extensions/mico-liquid-glass/manifest.json",
+      "plugins/extensions/mico-liquid-glass/popup.css",
+      "plugins/extensions/mico-liquid-glass/popup.html",
+      "plugins/extensions/mico-liquid-glass/popup.js",
+      "plugins/extensions/mico-liquid-glass/settings.js",
+      "scripts/audit-extension-capabilities.mjs",
+      "scripts/build-mico-tray-icons.swift",
+      "scripts/run-extension-audit.mjs",
+      "scripts/run-immersive-validation.mjs",
+      "scripts/run-phase3-validation.mjs",
+      "scripts/validate-immersive.mjs",
+      "scripts/validate-phase3.mjs",
+      "src/App.vue",
+      "src/assets/images/tray/mico-monogram.png",
+      "src/assets/images/tray/mico-monogram@2x.png",
+      "src/assets/images/tray/tray-icon.png",
+      "src/assets/images/tray/tray-icon@2x.png",
+      "src/assets/style/PlayerControl.scss",
+      "src/assets/themes/dark.scss",
+      "src/components/AppUpdateDialog.vue",
+      "src/components/BackToTop.vue",
+      "src/components/BirthdayEasterEgg.vue",
+      "src/components/CommonSkeleton.vue",
+      "src/components/ContextMenu.vue",
+      "src/components/CustomModal.vue",
+      "src/components/Disclaimer.vue",
+      "src/components/ExtensionManager.vue",
+      "src/components/FullscreenLyricsSettings.vue",
+      "src/components/Header.vue",
+      "src/components/MarkdownContent.vue",
+      "src/components/MessageNotification.vue",
+      "src/components/MicoBrandBanner.vue",
+      "src/components/MicoProjectInfo.vue",
+      "src/components/OnboardingGuide.vue",
+      "src/components/PageScrollbar.vue",
+      "src/components/PlayerControl.vue",
+      "src/components/PlaylistSelectModal.vue",
+      "src/components/QueueList.vue",
+      "src/components/RiskVerifyModal.vue",
+      "src/components/SidebarNavigation.vue",
+      "src/components/StatusBarLyrics.vue",
+      "src/components/TeamEvent.vue",
+      "src/components/TitleBar.vue",
+      "src/components/discover/DiscoverNewAlbumContent.vue",
+      "src/components/discover/DiscoverNewSongContent.vue",
+      "src/components/discover/DiscoverPlaylistContent.vue",
+      "src/components/discover/RankingContent.vue",
+      "src/components/home/HomeRecommendations.vue",
+      "src/components/immersive/ImmersiveBackground.vue",
+      "src/components/immersive/ImmersivePlayer.vue",
+      "src/components/immersive/LyricStage.vue",
+      "src/components/immersive/lyricsTimeline.js",
+      "src/components/immersive/visualState.js",
+      "src/components/player/AudioController.js",
+      "src/components/player/AudioOutput.js",
+      "src/components/player/ClimaxPoints.js",
+      "src/components/player/Helpers.js",
+      "src/components/player/LyricsHandler.js",
+      "src/components/player/MediaSession.js",
+      "src/components/player/PlaybackMode.js",
+      "src/components/player/ProgressBar.js",
+      "src/components/player/SongQueue.js",
+      "src/components/player/index.js",
+      "src/components/player/parseKrcLine.js",
+      "src/components/player/songQueue/CloudMusicQueue.js",
+      "src/components/player/songQueue/LocalMusicQueue.js",
+      "src/components/player/songQueue/OnlineMusicQueue.js",
+      "src/components/search/AlbumGrid.vue",
+      "src/components/search/ArtistGrid.vue",
+      "src/components/search/ComplexSearchResults.vue",
+      "src/components/search/MvGrid.vue",
+      "src/components/search/PlaylistGrid.vue",
+      "src/components/search/SongSearchList.vue",
+      "src/composables/useActivatedWatch.js",
+      "src/composables/useStickyDetailHeader.js",
+      "src/config/disclaimer.js",
+      "src/config/onboardingGuide.js",
+      "src/config/settings.js",
+      "src/language/en.json",
+      "src/language/ja.json",
+      "src/language/ko.json",
+      "src/language/ru.json",
+      "src/language/zh-CN.json",
+      "src/language/zh-TW.json",
+      "src/layouts/HomeLayout.vue",
+      "src/main.js",
+      "src/plugins/MessagePlugin.js",
+      "src/plugins/ModalPlugin.js",
+      "src/router/router.js",
+      "src/stores/musicQueue.js",
+      "src/stores/store.js",
+      "src/utils/apiBaseUrl.js",
+      "src/utils/i18n.js",
+      "src/utils/recognize.js",
+      "src/utils/request.js",
+      "src/utils/riskVerify.js",
+      "src/utils/teamEvent.js",
+      "src/utils/utils.js",
+      "src/views/CloudDrive.vue",
+      "src/views/Discover.vue",
+      "src/views/Home.vue",
+      "src/views/Library.vue",
+      "src/views/LocalMusic.vue",
+      "src/views/Login.vue",
+      "src/views/Lyrics.vue",
+      "src/views/PlaylistDetail.vue",
+      "src/views/Ranking.vue",
+      "src/views/Recognize.vue",
+      "src/views/RecommendedSearch.vue",
+      "src/views/Search.vue",
+      "src/views/Settings.vue",
+      "src/views/VideoPlayer.vue",
+      "tests/apiBaseUrl.test.js",
+      "tests/builtinVisualPluginFiles.test.js",
+      "tests/deepLinks.test.js",
+      "tests/extensionLifecycle.test.js",
+      "tests/extensionManager.electron.mjs",
+      "tests/extensionManagerRuntime.test.js",
+      "tests/fixtures/api-process.cjs",
+      "tests/fixtures/immersive-preload.cjs",
+      "tests/fixtures/phase2-preload.cjs",
+      "tests/fixtures/phase2-visual-probe/background.js",
+      "tests/fixtures/phase2-visual-probe/content.js",
+      "tests/fixtures/phase2-visual-probe/manifest.json",
+      "tests/fixtures/phase2-visual-probe/popup.html",
+      "tests/fixtures/phase2-visual-probe/popup.js",
+      "tests/fixtures/phase2-visual-probe/probe.css",
+      "tests/fixtures/phase3-preload.cjs",
+      "tests/identity.test.js",
+      "tests/immersiveLyrics.test.js",
+      "tests/immersiveVisualState.test.js",
+      "tests/liquidGlassPlugin.test.js",
+      "tests/loopbackApi.test.js",
+      "tests/nativeHostShutdown.electron.mjs",
+      "tests/nativeHostShutdownRuntime.test.js",
+      "tests/parseKrcLine.test.js"
+    ],
+    "rendererFiles": [
+      "assets/AbstractID3Parser-BjAp_u7g.js",
+      "assets/AiffParser-wLiXLGxU.js",
+      "assets/AsfParser-2ueARKWz.js",
+      "assets/DsdiffParser-vp5cG5yy.js",
+      "assets/DsfParser-DTptLzcS.js",
+      "assets/FlacParser-C9uJu5RH.js",
+      "assets/ID3v2Parser-Dy_mxZL9.js",
+      "assets/MP4Parser-CLpt77Ov.js",
+      "assets/MatroskaParser-B9JYnvEf.js",
+      "assets/MpegParser-D1DErGap.js",
+      "assets/MusepackParser-BL50Lap7.js",
+      "assets/OggParser-BCDkpy0Y.js",
+      "assets/WavPackParser-C0ihFB3q.js",
+      "assets/WaveParser-DsMkCkyd.js",
+      "assets/font-awesome/css/all.min.css",
+      "assets/font-awesome/webfonts/fa-brands-400.ttf",
+      "assets/font-awesome/webfonts/fa-brands-400.woff2",
+      "assets/font-awesome/webfonts/fa-regular-400.ttf",
+      "assets/font-awesome/webfonts/fa-regular-400.woff2",
+      "assets/font-awesome/webfonts/fa-solid-900.ttf",
+      "assets/font-awesome/webfonts/fa-solid-900.woff2",
+      "assets/font-awesome/webfonts/fa-v4compatibility.ttf",
+      "assets/font-awesome/webfonts/fa-v4compatibility.woff2",
+      "assets/images/!.png",
+      "assets/images/arona.png",
+      "assets/images/banner.png",
+      "assets/images/banners.png",
+      "assets/images/cloud-disk.png",
+      "assets/images/cloud.png",
+      "assets/images/empty.png",
+      "assets/images/empty1.png",
+      "assets/images/head.png",
+      "assets/images/home/hutao.png",
+      "assets/images/home/hutao1.png",
+      "assets/images/home/hutao2.png",
+      "assets/images/home/mama.png",
+      "assets/images/ico.png",
+      "assets/images/live.png",
+      "assets/images/local-music.png",
+      "assets/images/local.png",
+      "assets/images/logo.png",
+      "assets/images/mascotGirl.png",
+      "assets/images/mico/mico-app-icon-192.png",
+      "assets/images/mico/mico-app-icon-512.png",
+      "assets/images/mico/mico-discover-peek.png",
+      "assets/images/mico/mico-mark.svg",
+      "assets/images/mico/mico-onboarding-bust.png",
+      "assets/images/mico/onboarding/mico-chibi-approved-front-v0.4.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-point-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-settings-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-welcome-v1.png",
+      "assets/images/miku.png",
+      "assets/images/miku2.png",
+      "assets/images/miku3.png",
+      "assets/images/profile.jpg",
+      "assets/images/recognize-bg.png",
+      "assets/images/ti111mg.png",
+      "assets/images/vip.png",
+      "assets/images/vip2.png",
+      "assets/index-S09Q1Ni1.js",
+      "assets/index-pjes72HZ.css",
+      "assets/sound/qiqi-jp.mp3",
+      "assets/sound/qiqi-zh.mp3",
+      "assets/sound/yise-jp.mp3",
+      "assets/workbox-window.prod.es5-BIl4cyR9.js",
+      "favicon.ico",
+      "index.html",
+      "manifest.webmanifest",
+      "sw.js",
+      "workbox-95c8c041.js"
+    ],
+    "interpretation": "当前工作树与生产构建；含未提交源码，不能只用 HEAD 标识本次运行内容"
+  },
+  "checks": [
+    {
+      "name": "正式插件及生产生命周期初始化成功",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "results": [
+          {
+            "success": true,
+            "directory": "mico-liquid-glass",
+            "path": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-unthrottled-jCfkuD/extensions/mico-liquid-glass",
+            "id": "dbdgddpojfnadnhjlllelidihcbopgjf",
+            "name": "MicoMusic 液态玻璃"
+          }
+        ],
+        "builtinResult": {
+          "success": true,
+          "path": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-unthrottled-jCfkuD/extensions/mico-liquid-glass",
+          "updated": true,
+          "fingerprint": "2aa17c265329ad097b8d0168e7ca22182da5bff0993afb2b4d8111ccde39fd5d",
+          "version": "1.1.0"
+        }
+      }
+    },
+    {
+      "name": "生产插件目录属于本次隔离 profile",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "真实宿主 helper 经生产 preload 提供可见状态",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "真实生产播放器恢复两歌曲 fixture 队列",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "沉浸界面只有一个关闭入口，旧界面未挂载",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "进入后键盘焦点落到退出按钮",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Tab 从末尾回到唯一退出按钮",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Shift+Tab 从退出按钮回到末尾工具",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "播放状态使背景动画运行",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "真实 KRC word 标记产生逐词填充，翻译来自 language 数据",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "宽屏封面与歌词起点匹配附图比例",
+      "passed": true,
+      "detail": {
+        "width": 1470,
+        "height": 848,
+        ".mico-immersive-cover": {
+          "x": 173.453125,
+          "y": 161.1171875,
+          "width": 388.078125,
+          "height": 388.078125
+        },
+        ".mico-immersive-controls": {
+          "x": 173.453125,
+          "y": 677.8203125,
+          "width": 388.078125,
+          "height": 66.1484375
+        },
+        ".mico-immersive-lyrics-pane": {
+          "x": 752.6328125,
+          "y": 0,
+          "width": 629.171875,
+          "height": 848
+        },
+        ".mico-immersive-song-title": {
+          "x": 173.453125,
+          "y": 587.3515625,
+          "width": 176.1640625,
+          "height": 21.0234375
+        },
+        ".mico-immersive-progress-track": {
+          "x": 173.453125,
+          "y": 643.3203125,
+          "width": 388.078125,
+          "height": 6
+        }
+      }
+    },
+    {
+      "name": "进度控件调整生产 Audio 当前时间",
+      "passed": true,
+      "detail": {
+        "time": 25,
+        "paused": false,
+        "src": "http://127.0.0.1:64763/fixture-a.wav",
+        "duration": 180,
+        "volume": 0.04000000000000001,
+        "speed": 1,
+        "loop": false
+      }
+    },
+    {
+      "name": "长句按原歌词结构换行且不越出歌词行",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "音量控件使用生产 AudioController 平方曲线",
+      "passed": true,
+      "detail": 0.16000000000000003
+    },
+    {
+      "name": "速度控件修改原音频 playbackRate 并持久化",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "播放模式控件修改实际 loop 与原持久化键",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "翻译开关只控制真实副文本",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "菜单打开时 Escape 只关闭菜单，保留沉浸界面",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "更多菜单打开现有真实队列并在沉浸层上方显示",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "下一首更换生产歌曲和音源但不创建 Audio",
+      "passed": true,
+      "detail": {
+        "time": 0.002834,
+        "paused": false,
+        "src": "http://127.0.0.1:64763/fixture-b.wav",
+        "duration": 180,
+        "volume": 0.16000000000000003,
+        "speed": 1,
+        "loop": false
+      }
+    },
+    {
+      "name": "上一首使用真实队列及请求流程",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "暂停后实际 CSS 动画停止",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "seek input 仅预览，不改变暂停音频",
+      "passed": true,
+      "detail": {
+        "time": 0.008522,
+        "paused": true,
+        "src": "http://127.0.0.1:64763/fixture-a.wav",
+        "duration": 180,
+        "volume": 0.16000000000000003,
+        "speed": 1,
+        "loop": false
+      }
+    },
+    {
+      "name": "暂停 seek 保持暂停，并由原播放器更新时间",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "暂停歌词不使用独立计时器继续逐词推进",
+      "passed": true,
+      "detail": {
+        "before": [
+          "100%",
+          "50%",
+          "0%",
+          "0%",
+          "0%"
+        ],
+        "after": [
+          "100%",
+          "50%",
+          "0%",
+          "0%",
+          "0%"
+        ]
+      }
+    },
+    {
+      "name": "真实歌词时间空隙显示间奏而不冒充活跃行",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "浏览歌词出现真实跟随恢复入口",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "歌词点击使用真实行开始时间并保持暂停",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "暂停时关闭主题不改原音频、进度和文档",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 12,
+          "paused": true,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "after": {
+          "time": 12,
+          "paused": true,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "audioCount": 1,
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重新开启主题不创建音频或刷新文档",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 12,
+          "paused": true,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "after": {
+          "time": 12,
+          "paused": true,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "audioCount": 1,
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "第 1 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 2 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 3 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 4 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 5 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 6 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 7 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 8 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 9 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 10 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 11 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 12 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 13 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 14 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 15 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 16 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 17 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 18 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 19 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "第 20 次关闭无监听 / 观察器增长",
+      "passed": true,
+      "detail": {
+        "baseline": {
+          "listeners": 22,
+          "observers": 1
+        },
+        "current": {
+          "listeners": 22,
+          "observers": 1
+        }
+      }
+    },
+    {
+      "name": "20 次真实存储启停后实际播放连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 12,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "after": {
+          "time": 18.748284,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "audioCount": 1,
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "第 1 次生产 IPC 重载成功",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "results": [
+          {
+            "success": true,
+            "directory": "mico-liquid-glass",
+            "path": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-unthrottled-jCfkuD/extensions/mico-liquid-glass",
+            "id": "dbdgddpojfnadnhjlllelidihcbopgjf",
+            "name": "MicoMusic 液态玻璃"
+          }
+        ],
+        "unloadResults": [
+          {
+            "success": true,
+            "id": "dbdgddpojfnadnhjlllelidihcbopgjf",
+            "path": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-unthrottled-jCfkuD/extensions/mico-liquid-glass"
+          }
+        ],
+        "message": "插件重新加载成功"
+      }
+    },
+    {
+      "name": "第 1 次重载保持当前 Audio 和文档",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 18.748729,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "after": {
+          "time": 18.952261,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "audioCount": 1,
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "第 2 次生产 IPC 重载成功",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "results": [
+          {
+            "success": true,
+            "directory": "mico-liquid-glass",
+            "path": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-unthrottled-jCfkuD/extensions/mico-liquid-glass",
+            "id": "dbdgddpojfnadnhjlllelidihcbopgjf",
+            "name": "MicoMusic 液态玻璃"
+          }
+        ],
+        "unloadResults": [
+          {
+            "success": true,
+            "id": "dbdgddpojfnadnhjlllelidihcbopgjf",
+            "path": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-unthrottled-jCfkuD/extensions/mico-liquid-glass"
+          }
+        ],
+        "message": "插件重新加载成功"
+      }
+    },
+    {
+      "name": "第 2 次重载保持当前 Audio 和文档",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 18.952444,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "after": {
+          "time": 19.052608,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "audioCount": 1,
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "第 3 次生产 IPC 重载成功",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "results": [
+          {
+            "success": true,
+            "directory": "mico-liquid-glass",
+            "path": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-unthrottled-jCfkuD/extensions/mico-liquid-glass",
+            "id": "dbdgddpojfnadnhjlllelidihcbopgjf",
+            "name": "MicoMusic 液态玻璃"
+          }
+        ],
+        "unloadResults": [
+          {
+            "success": true,
+            "id": "dbdgddpojfnadnhjlllelidihcbopgjf",
+            "path": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-unthrottled-jCfkuD/extensions/mico-liquid-glass"
+          }
+        ],
+        "message": "插件重新加载成功"
+      }
+    },
+    {
+      "name": "第 3 次重载保持当前 Audio 和文档",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 19.052756,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "after": {
+          "time": 19.152346,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "audioCount": 1,
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "低模糊模式减少图层并停止流动",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "减少动效使背景 CSS 动画停止",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "原生 hide 状态停止背景并保留实际音频",
+      "passed": true,
+      "detail": {
+        "identity": "4c99583b-8afe-4783-b1c5-939b53893b24",
+        "navigationCount": 1,
+        "ready": {
+          "extensionId": "dbdgddpojfnadnhjlllelidihcbopgjf",
+          "enabled": true,
+          "success": true
+        },
+        "styles": 1,
+        "theme": "auto",
+        "blur": "normal",
+        "motion": "normal",
+        "immersive": 1,
+        "legacy": 0,
+        "closeButtons": 1,
+        "audioCount": 1,
+        "audio": {
+          "time": 20.493256,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "song": {
+          "id": 3,
+          "hash": "immersive-a",
+          "playHash": "immersive-a",
+          "resolvedQuality": "",
+          "qualityLabel": "",
+          "qualityOptions": [],
+          "name": "隔离验收 · Warm Canvas",
+          "img": "http://127.0.0.1:64763/fixture-cover.svg",
+          "author": "MicoMusic 技术音频",
+          "timeLength": 180,
+          "url": "http://127.0.0.1:64763/fixture-a.wav",
+          "loudnessNormalization": {
+            "volume": 0,
+            "volumeGain": 0,
+            "volumePeak": 1
+          }
+        },
+        "activeListeners": 27,
+        "activeObservers": 2,
+        "visibility": "visible",
+        "nativeVisible": "false",
+        "background": {
+          "motion": "still",
+          "blur": "normal",
+          "layers": [
+            {
+              "playState": "paused",
+              "transform": "matrix(1.02993, -0.144646, 0.144646, 1.02993, -59.4832, -45.762)"
+            },
+            {
+              "playState": "paused",
+              "transform": "matrix(1.16435, 0.290248, -0.290248, 1.16435, 158.731, -91.5634)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "节流配置对应 Chromium 可见性，原生状态独立准确",
+      "passed": true,
+      "detail": {
+        "mode": "unthrottled",
+        "documentVisibility": "visible",
+        "nativeVisible": "false"
+      }
+    },
+    {
+      "name": "原生隐藏后歌词恢复计时器保持停止",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "原生 minimize 停止背景而不暂停音频",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "原生 restore 恢复流动且保留唯一音频",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "窄窗口封面、控制与歌词保持视口内",
+      "passed": true,
+      "detail": {
+        "width": 820,
+        "height": 848,
+        ".mico-immersive-cover": {
+          "x": 49.1953125,
+          "y": 169.59375,
+          "width": 278.796875,
+          "height": 278.796875
+        },
+        ".mico-immersive-controls": {
+          "x": 49.1953125,
+          "y": 554.5859375,
+          "width": 278.796875,
+          "height": 44
+        },
+        ".mico-immersive-lyrics-pane": {
+          "x": 385.3984375,
+          "y": 0,
+          "width": 393.6015625,
+          "height": 848
+        },
+        ".mico-immersive-song-title": {
+          "x": 49.1953125,
+          "y": 472.390625,
+          "width": 154.4375,
+          "height": 18.1953125
+        },
+        ".mico-immersive-progress-track": {
+          "x": 49.1953125,
+          "y": 522.0859375,
+          "width": 278.796875,
+          "height": 6
+        }
+      }
+    },
+    {
+      "name": "参考比例截图使用实际 1300×816 内容尺寸",
+      "passed": true,
+      "detail": {
+        "stage": {
+          "x": 665.59375,
+          "y": 0,
+          "width": 556.40625,
+          "height": 816
+        },
+        "row": {
+          "x": 665.59375,
+          "y": 286.203125,
+          "width": 556.40625,
+          "height": 129.34375
+        },
+        "primary": {
+          "x": 665.59375,
+          "y": 307.203125,
+          "width": 546.40625,
+          "height": 48.78125
+        },
+        "scrollTop": 0,
+        "index": "0",
+        "opacity": "1",
+        "filter": "blur(0px)",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "width": 1300,
+        "height": 816,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": 0.4299938725490196,
+        "primaryCenterRatio": 0.40636488970588236,
+        "capturedImageSize": {
+          "width": 2600,
+          "height": 1632
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      }
+    },
+    {
+      "name": "退出沉浸视图不影响实际技术音频",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 4.767814,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "after": {
+          "time": 4.769641,
+          "paused": false,
+          "src": "http://127.0.0.1:64763/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.16000000000000003,
+          "speed": 1,
+          "loop": false
+        },
+        "audioCount": 1,
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "按钮与 Escape 均退出且唯一音频仍在",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "运行期间生产源码与构建指纹稳定",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "observations": {
+    "captures": {
+      "01-base-entry-unthrottled": {
+        "stage": null,
+        "row": null,
+        "primary": null,
+        "scrollTop": 0,
+        "index": null,
+        "opacity": null,
+        "filter": null,
+        "transform": null,
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": null,
+        "primaryCenterRatio": null,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      },
+      "02-wide-word-lyrics-unthrottled": {
+        "stage": {
+          "x": 752.6328125,
+          "y": 0,
+          "width": 629.171875,
+          "height": 848
+        },
+        "row": {
+          "x": 752.6328125,
+          "y": 294.90625,
+          "width": 629.171875,
+          "height": 139.453125
+        },
+        "primary": {
+          "x": 752.6328125,
+          "y": 315.90625,
+          "width": 619.171875,
+          "height": 55.1484375
+        },
+        "scrollTop": 0,
+        "index": "0",
+        "opacity": "1",
+        "filter": "blur(0px)",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": 0.4299915241745283,
+        "primaryCenterRatio": 0.4050477225825472,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      },
+      "03-long-line-and-translation-unthrottled": {
+        "stage": {
+          "x": 752.6328125,
+          "y": 0,
+          "width": 629.171875,
+          "height": 848
+        },
+        "row": {
+          "x": 752.6328125,
+          "y": 184.8125,
+          "width": 629.171875,
+          "height": 360.046875
+        },
+        "primary": {
+          "x": 752.6328125,
+          "y": 205.8125,
+          "width": 619.171875,
+          "height": 275.7421875
+        },
+        "scrollTop": 389,
+        "index": "2",
+        "opacity": "1",
+        "filter": "blur(0px)",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": 0.43023105837264153,
+        "primaryCenterRatio": 0.40528725678066035,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      },
+      "04-options-unthrottled": {
+        "stage": {
+          "x": 752.6328125,
+          "y": 0,
+          "width": 629.171875,
+          "height": 848
+        },
+        "row": {
+          "x": 752.6328125,
+          "y": 184.8125,
+          "width": 629.171875,
+          "height": 360.046875
+        },
+        "primary": {
+          "x": 752.6328125,
+          "y": 205.8125,
+          "width": 619.171875,
+          "height": 275.7421875
+        },
+        "scrollTop": 389,
+        "index": "2",
+        "opacity": "1",
+        "filter": "blur(0px)",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": 0.43023105837264153,
+        "primaryCenterRatio": 0.40528725678066035,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      },
+      "05-queue-unthrottled": {
+        "stage": {
+          "x": 752.6328125,
+          "y": 0,
+          "width": 629.171875,
+          "height": 848
+        },
+        "row": {
+          "x": 752.6328125,
+          "y": 184.8125,
+          "width": 629.171875,
+          "height": 360.046875
+        },
+        "primary": {
+          "x": 752.6328125,
+          "y": 205.8125,
+          "width": 619.171875,
+          "height": 275.7421875
+        },
+        "scrollTop": 389,
+        "index": "2",
+        "opacity": "1",
+        "filter": "blur(0px)",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": 0.43023105837264153,
+        "primaryCenterRatio": 0.40528725678066035,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      },
+      "06-no-lyrics-bad-cover-unthrottled": {
+        "stage": {
+          "x": 752.6328125,
+          "y": 0,
+          "width": 629.171875,
+          "height": 848
+        },
+        "row": null,
+        "primary": null,
+        "scrollTop": 0,
+        "index": null,
+        "opacity": null,
+        "filter": null,
+        "transform": null,
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": null,
+        "primaryCenterRatio": null,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      },
+      "07-plugin-off-legacy-unthrottled": {
+        "stage": null,
+        "row": null,
+        "primary": null,
+        "scrollTop": 0,
+        "index": null,
+        "opacity": null,
+        "filter": null,
+        "transform": null,
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": null,
+        "primaryCenterRatio": null,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      },
+      "08-low-blur-unthrottled": {
+        "stage": {
+          "x": 752.6328125,
+          "y": 0,
+          "width": 629.171875,
+          "height": 848
+        },
+        "row": {
+          "x": 752.6328125,
+          "y": 294.859375,
+          "width": 629.171875,
+          "height": 139.453125
+        },
+        "primary": {
+          "x": 752.6328125,
+          "y": 315.859375,
+          "width": 619.171875,
+          "height": 55.1484375
+        },
+        "scrollTop": 139.5,
+        "index": "1",
+        "opacity": "1",
+        "filter": "blur(0px)",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": 0.42993624705188677,
+        "primaryCenterRatio": 0.40499244545990565,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      },
+      "09-narrow-unthrottled": {
+        "stage": {
+          "x": 385.3984375,
+          "y": 0,
+          "width": 393.6015625,
+          "height": 848
+        },
+        "row": {
+          "x": 385.3984375,
+          "y": 232.9453125,
+          "width": 393.6015625,
+          "height": 262.90625
+        },
+        "primary": {
+          "x": 385.3984375,
+          "y": 253.9453125,
+          "width": 383.6015625,
+          "height": 188.7890625
+        },
+        "scrollTop": 299.5,
+        "index": "2",
+        "opacity": "1",
+        "filter": "blur(0px)",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "width": 820,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": 0.42971513856132076,
+        "primaryCenterRatio": 0.410778117629717,
+        "capturedImageSize": {
+          "width": 1640,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      },
+      "10-reference-ratio-unthrottled": {
+        "stage": {
+          "x": 665.59375,
+          "y": 0,
+          "width": 556.40625,
+          "height": 816
+        },
+        "row": {
+          "x": 665.59375,
+          "y": 286.203125,
+          "width": 556.40625,
+          "height": 129.34375
+        },
+        "primary": {
+          "x": 665.59375,
+          "y": 307.203125,
+          "width": 546.40625,
+          "height": 48.78125
+        },
+        "scrollTop": 0,
+        "index": "0",
+        "opacity": "1",
+        "filter": "blur(0px)",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "width": 1300,
+        "height": 816,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": 0.4299938725490196,
+        "primaryCenterRatio": 0.40636488970588236,
+        "capturedImageSize": {
+          "width": 2600,
+          "height": 1632
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定，背景仅封面慢流动"
+      }
+    },
+    "wideGeometry": {
+      "width": 1470,
+      "height": 848,
+      ".mico-immersive-cover": {
+        "x": 173.453125,
+        "y": 161.1171875,
+        "width": 388.078125,
+        "height": 388.078125
+      },
+      ".mico-immersive-controls": {
+        "x": 173.453125,
+        "y": 677.8203125,
+        "width": 388.078125,
+        "height": 66.1484375
+      },
+      ".mico-immersive-lyrics-pane": {
+        "x": 752.6328125,
+        "y": 0,
+        "width": 629.171875,
+        "height": 848
+      },
+      ".mico-immersive-song-title": {
+        "x": 173.453125,
+        "y": 587.3515625,
+        "width": 176.1640625,
+        "height": 21.0234375
+      },
+      ".mico-immersive-progress-track": {
+        "x": 173.453125,
+        "y": 643.3203125,
+        "width": 388.078125,
+        "height": 6
+      }
+    },
+    "performance": {
+      "normal": {
+        "frames": {
+          "frames": 180,
+          "medianMs": 16.700000000000728,
+          "p95Ms": 17.5,
+          "maxMs": 17.700000000000728,
+          "over33Ms": 0
+        },
+        "processMetrics": [
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 3.056314,
+              "percentCPUUsage": 0,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 81960,
+            "type": "Browser",
+            "creationTime": 1791424800913.09,
+            "memory": {
+              "workingSetSize": 210800,
+              "peakWorkingSetSize": 265952
+            },
+            "sandboxed": false
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 4.786512,
+              "percentCPUUsage": 0,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 81982,
+            "type": "GPU",
+            "creationTime": 1791424801102.794,
+            "serviceName": "GPU",
+            "memory": {
+              "workingSetSize": 163184,
+              "peakWorkingSetSize": 210784
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.070934,
+              "percentCPUUsage": 0,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 81983,
+            "type": "Utility",
+            "creationTime": 1791424801103.538,
+            "serviceName": "network.mojom.NetworkService",
+            "name": "Network Service",
+            "memory": {
+              "workingSetSize": 53264,
+              "peakWorkingSetSize": 54944
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 2.752786,
+              "percentCPUUsage": 0,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 81985,
+            "type": "Tab",
+            "creationTime": 1791424801280.446,
+            "memory": {
+              "workingSetSize": 250816,
+              "peakWorkingSetSize": 250816
+            },
+            "sandboxed": false
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.128174,
+              "percentCPUUsage": 0,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 81991,
+            "type": "Utility",
+            "creationTime": 1791424801804.475,
+            "serviceName": "audio.mojom.AudioService",
+            "name": "Audio Service",
+            "memory": {
+              "workingSetSize": 46832,
+              "peakWorkingSetSize": 46960
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.071498,
+              "percentCPUUsage": 0,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 82016,
+            "type": "Tab",
+            "creationTime": 1791424817221.062,
+            "memory": {
+              "workingSetSize": 106016,
+              "peakWorkingSetSize": 106096
+            },
+            "sandboxed": true
+          }
+        ]
+      },
+      "lowBlur": {
+        "frames": {
+          "frames": 180,
+          "medianMs": 16.700000000000728,
+          "p95Ms": 17.5,
+          "maxMs": 17.599999999998545,
+          "over33Ms": 0
+        },
+        "processMetrics": [
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 3.157881,
+              "percentCPUUsage": 0.3366896105463172,
+              "idleWakeupsPerSecond": 40
+            },
+            "pid": 81960,
+            "type": "Browser",
+            "creationTime": 1791424800913.09,
+            "memory": {
+              "workingSetSize": 210816,
+              "peakWorkingSetSize": 265952
+            },
+            "sandboxed": false
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 5.197116,
+              "percentCPUUsage": 1.3611176304452461,
+              "idleWakeupsPerSecond": 129
+            },
+            "pid": 81982,
+            "type": "GPU",
+            "creationTime": 1791424801102.794,
+            "serviceName": "GPU",
+            "memory": {
+              "workingSetSize": 161568,
+              "peakWorkingSetSize": 210784
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.071317,
+              "percentCPUUsage": 0.0012696072272805775,
+              "idleWakeupsPerSecond": 1
+            },
+            "pid": 81983,
+            "type": "Utility",
+            "creationTime": 1791424801103.538,
+            "serviceName": "network.mojom.NetworkService",
+            "name": "Network Service",
+            "memory": {
+              "workingSetSize": 53216,
+              "peakWorkingSetSize": 54944
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 3.035863,
+              "percentCPUUsage": 0.9383686042961614,
+              "idleWakeupsPerSecond": 77
+            },
+            "pid": 81985,
+            "type": "Tab",
+            "creationTime": 1791424801280.446,
+            "memory": {
+              "workingSetSize": 252784,
+              "peakWorkingSetSize": 252784
+            },
+            "sandboxed": false
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.137189,
+              "percentCPUUsage": 0.02988366750665794,
+              "idleWakeupsPerSecond": 15
+            },
+            "pid": 81991,
+            "type": "Utility",
+            "creationTime": 1791424801804.475,
+            "serviceName": "audio.mojom.AudioService",
+            "name": "Audio Service",
+            "memory": {
+              "workingSetSize": 46848,
+              "peakWorkingSetSize": 46960
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.072135,
+              "percentCPUUsage": 0.0021115648784109896,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 82016,
+            "type": "Tab",
+            "creationTime": 1791424817221.062,
+            "memory": {
+              "workingSetSize": 106016,
+              "peakWorkingSetSize": 106096
+            },
+            "sandboxed": true
+          }
+        ]
+      },
+      "gpuFeatureStatus": {
+        "2d_canvas": "enabled",
+        "direct_rendering_display_compositor": "disabled_off_ok",
+        "gpu_compositing": "enabled",
+        "multiple_raster_threads": "enabled_on",
+        "opengl": "enabled_on",
+        "rasterization": "enabled",
+        "raw_draw": "disabled_off_ok",
+        "skia_graphite": "enabled_on",
+        "trees_in_viz": "disabled_off",
+        "video_decode": "enabled",
+        "video_encode": "enabled",
+        "webgl": "enabled",
+        "webgl2": "enabled",
+        "webgpu": "enabled",
+        "webnn": "disabled_off"
+      },
+      "interpretation": "180 帧短样本；非长期性能门槛，GPU 进程 CPU 非硬件 GPU 利用率"
+    },
+    "narrowGeometry": {
+      "width": 820,
+      "height": 848,
+      ".mico-immersive-cover": {
+        "x": 49.1953125,
+        "y": 169.59375,
+        "width": 278.796875,
+        "height": 278.796875
+      },
+      ".mico-immersive-controls": {
+        "x": 49.1953125,
+        "y": 554.5859375,
+        "width": 278.796875,
+        "height": 44
+      },
+      ".mico-immersive-lyrics-pane": {
+        "x": 385.3984375,
+        "y": 0,
+        "width": 393.6015625,
+        "height": 848
+      },
+      ".mico-immersive-song-title": {
+        "x": 49.1953125,
+        "y": 472.390625,
+        "width": 154.4375,
+        "height": 18.1953125
+      },
+      ".mico-immersive-progress-track": {
+        "x": 49.1953125,
+        "y": 522.0859375,
+        "width": 278.796875,
+        "height": 6
+      }
+    },
+    "referenceFocus": {
+      "rowCenterRatio": 0.4299938725490196,
+      "primaryCenterRatio": 0.40636488970588236,
+      "screenshotPrimaryTargetRatio": 0.417,
+      "interpretation": "附图当前正文中心约41.7%；当前行组含真实翻译，正文与行组比例分开记录，不以构建通过代替视觉审阅"
+    },
+    "requests": [
+      {
+        "path": "/fixture-cover.svg",
+        "query": ""
+      },
+      {
+        "path": "/fixture-a.wav",
+        "query": ""
+      },
+      {
+        "path": "/search/lyric",
+        "query": "?hash=immersive-a"
+      },
+      {
+        "path": "/lyric",
+        "query": "?id=fixture-krc-a&accesskey=fixture-access-key&fmt=krc&decode=true"
+      },
+      {
+        "path": "/fixture-cover.svg",
+        "query": ""
+      },
+      {
+        "path": "/fixture-cover-missing.svg",
+        "query": ""
+      },
+      {
+        "path": "/song/url",
+        "query": "?hash=immersive-b&free_part=1"
+      },
+      {
+        "path": "/fixture-cover-missing.svg",
+        "query": ""
+      },
+      {
+        "path": "/fixture-b.wav",
+        "query": ""
+      },
+      {
+        "path": "/search/lyric",
+        "query": "?hash=immersive-b"
+      },
+      {
+        "path": "/song/climax",
+        "query": "?hash=immersive-b"
+      },
+      {
+        "path": "/fixture-cover.svg",
+        "query": ""
+      },
+      {
+        "path": "/song/url",
+        "query": "?hash=immersive-a&free_part=1"
+      },
+      {
+        "path": "/fixture-a.wav",
+        "query": ""
+      },
+      {
+        "path": "/search/lyric",
+        "query": "?hash=immersive-a"
+      },
+      {
+        "path": "/lyric",
+        "query": "?id=fixture-krc-a&accesskey=fixture-access-key&fmt=krc&decode=true"
+      },
+      {
+        "path": "/search/lyric",
+        "query": "?hash=immersive-a"
+      },
+      {
+        "path": "/fixture-cover.svg",
+        "query": ""
+      },
+      {
+        "path": "/song/climax",
+        "query": "?hash=immersive-a"
+      },
+      {
+        "path": "/lyric",
+        "query": "?id=fixture-krc-a&accesskey=fixture-access-key&fmt=krc&decode=true"
+      },
+      {
+        "path": "/fixture-cover.svg",
+        "query": ""
+      }
+    ],
+    "blockedExternal": [],
+    "rendererMessages": [
+      "%cElectron Security Warning (Disabled webSecurity) font-weight: bold; This renderer process has \"webSecurity\" disabled. This\n  exposes users of this app to severe security risks.\n\nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged.",
+      "%cElectron Security Warning (allowRunningInsecureContent) font-weight: bold; This renderer process has \"allowRunningInsecureContent\"\n  enabled. This exposes users of this app to severe security risks.\n\n  \nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged.",
+      "%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security\n  Policy set or a policy with \"unsafe-eval\" enabled. This exposes users of\n  this app to unnecessary security risks.\n\nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged.",
+      "MediaImage src can only be of http/https/data/blob scheme: file:///Users/mico/AI%20%E4%BA%8B%E7%89%A9/MicoMusic-%E6%B2%89%E6%B5%B8%E6%92%AD%E6%94%BE%E5%99%A8/dist/assets/images/mico/mico-app-icon-512.png"
+    ],
+    "finalCleanup": {
+      "success": true
+    },
+    "loopbackClosed": true
+  },
+  "limitations": [
+    "真实生产 Vue/PlayerControl/AudioController/插件加载器的隔离 Electron 宿主；不是完整发行版主进程",
+    "loopback WAV、原创 SVG 和 KRC 为技术 fixtures；不代表真实酷狗账号或真实酷狗歌曲播放验收",
+    "截图与性能仅覆盖当前 macOS 设备；视觉通过仍须用户实际评审"
+  ],
+  "finalSourceState": {
+    "head": "9a84463fc992d6d912306e647d520da8baee4347",
+    "gitStatusShort": "M .gitignore\n M electron/appServices.js\n M electron/preload.cjs\n M package.json\n M plugins/extensions/mico-liquid-glass/content.js\n M plugins/extensions/mico-liquid-glass/glass.css\n M plugins/extensions/mico-liquid-glass/manifest.json\n M plugins/extensions/mico-liquid-glass/popup.html\n M src/components/PlayerControl.vue\n M tests/liquidGlassPlugin.test.js\n?? docs/immersive/\n?? electron/services/visualWindowVisibility.js\n?? plugins/extensions/mico-liquid-glass/immersive.css\n?? plugins/extensions/mico-liquid-glass/lyrics.css\n?? scripts/run-immersive-validation.mjs\n?? scripts/validate-immersive.mjs\n?? src/components/immersive/\n?? tests/fixtures/immersive-preload.cjs\n?? tests/immersiveLyrics.test.js\n?? tests/immersiveVisualState.test.js",
+    "sourceFingerprintSha256": "c3e788808f6c37dffccbd65ddecbdd4ff078e4055d654944b4f9f4cb5f6d86ee",
+    "rendererFingerprintSha256": "322159231a863388a2189c4c3eb47409a021aac61e1e600c4d075c8866a11305",
+    "sourceFiles": [
+      "electron/appServices.js",
+      "electron/extensions/builtinVisualPlugin.js",
+      "electron/extensions/builtinVisualPluginFiles.js",
+      "electron/extensions/extensionIPC.js",
+      "electron/extensions/extensionLifecycle.js",
+      "electron/extensions/extensionManager.js",
+      "electron/extensions/extensions.js",
+      "electron/extensions/nativeHostManager.js",
+      "electron/extensions/visualPluginHost.js",
+      "electron/language/i18n.js",
+      "electron/main.js",
+      "electron/preload.cjs",
+      "electron/services/apiService.js",
+      "electron/services/appIdentity.js",
+      "electron/services/customTrayMenuService.js",
+      "electron/services/deepLinks.js",
+      "electron/services/desktopShortcutIcon.js",
+      "electron/services/externalLinkHandler.js",
+      "electron/services/identityConfig.js",
+      "electron/services/logHelper.js",
+      "electron/services/loopbackApi.js",
+      "electron/services/protocolHandler.js",
+      "electron/services/statusBarLyricsService.js",
+      "electron/services/updater.js",
+      "electron/services/visualWindowVisibility.js",
+      "electron/view/index.html",
+      "package.json",
+      "plugins/extensions/mico-liquid-glass/README.md",
+      "plugins/extensions/mico-liquid-glass/content.js",
+      "plugins/extensions/mico-liquid-glass/glass.css",
+      "plugins/extensions/mico-liquid-glass/host-bridge.html",
+      "plugins/extensions/mico-liquid-glass/immersive.css",
+      "plugins/extensions/mico-liquid-glass/lyrics.css",
+      "plugins/extensions/mico-liquid-glass/manifest.json",
+      "plugins/extensions/mico-liquid-glass/popup.css",
+      "plugins/extensions/mico-liquid-glass/popup.html",
+      "plugins/extensions/mico-liquid-glass/popup.js",
+      "plugins/extensions/mico-liquid-glass/settings.js",
+      "scripts/audit-extension-capabilities.mjs",
+      "scripts/build-mico-tray-icons.swift",
+      "scripts/run-extension-audit.mjs",
+      "scripts/run-immersive-validation.mjs",
+      "scripts/run-phase3-validation.mjs",
+      "scripts/validate-immersive.mjs",
+      "scripts/validate-phase3.mjs",
+      "src/App.vue",
+      "src/assets/images/tray/mico-monogram.png",
+      "src/assets/images/tray/mico-monogram@2x.png",
+      "src/assets/images/tray/tray-icon.png",
+      "src/assets/images/tray/tray-icon@2x.png",
+      "src/assets/style/PlayerControl.scss",
+      "src/assets/themes/dark.scss",
+      "src/components/AppUpdateDialog.vue",
+      "src/components/BackToTop.vue",
+      "src/components/BirthdayEasterEgg.vue",
+      "src/components/CommonSkeleton.vue",
+      "src/components/ContextMenu.vue",
+      "src/components/CustomModal.vue",
+      "src/components/Disclaimer.vue",
+      "src/components/ExtensionManager.vue",
+      "src/components/FullscreenLyricsSettings.vue",
+      "src/components/Header.vue",
+      "src/components/MarkdownContent.vue",
+      "src/components/MessageNotification.vue",
+      "src/components/MicoBrandBanner.vue",
+      "src/components/MicoProjectInfo.vue",
+      "src/components/OnboardingGuide.vue",
+      "src/components/PageScrollbar.vue",
+      "src/components/PlayerControl.vue",
+      "src/components/PlaylistSelectModal.vue",
+      "src/components/QueueList.vue",
+      "src/components/RiskVerifyModal.vue",
+      "src/components/SidebarNavigation.vue",
+      "src/components/StatusBarLyrics.vue",
+      "src/components/TeamEvent.vue",
+      "src/components/TitleBar.vue",
+      "src/components/discover/DiscoverNewAlbumContent.vue",
+      "src/components/discover/DiscoverNewSongContent.vue",
+      "src/components/discover/DiscoverPlaylistContent.vue",
+      "src/components/discover/RankingContent.vue",
+      "src/components/home/HomeRecommendations.vue",
+      "src/components/immersive/ImmersiveBackground.vue",
+      "src/components/immersive/ImmersivePlayer.vue",
+      "src/components/immersive/LyricStage.vue",
+      "src/components/immersive/lyricsTimeline.js",
+      "src/components/immersive/visualState.js",
+      "src/components/player/AudioController.js",
+      "src/components/player/AudioOutput.js",
+      "src/components/player/ClimaxPoints.js",
+      "src/components/player/Helpers.js",
+      "src/components/player/LyricsHandler.js",
+      "src/components/player/MediaSession.js",
+      "src/components/player/PlaybackMode.js",
+      "src/components/player/ProgressBar.js",
+      "src/components/player/SongQueue.js",
+      "src/components/player/index.js",
+      "src/components/player/parseKrcLine.js",
+      "src/components/player/songQueue/CloudMusicQueue.js",
+      "src/components/player/songQueue/LocalMusicQueue.js",
+      "src/components/player/songQueue/OnlineMusicQueue.js",
+      "src/components/search/AlbumGrid.vue",
+      "src/components/search/ArtistGrid.vue",
+      "src/components/search/ComplexSearchResults.vue",
+      "src/components/search/MvGrid.vue",
+      "src/components/search/PlaylistGrid.vue",
+      "src/components/search/SongSearchList.vue",
+      "src/composables/useActivatedWatch.js",
+      "src/composables/useStickyDetailHeader.js",
+      "src/config/disclaimer.js",
+      "src/config/onboardingGuide.js",
+      "src/config/settings.js",
+      "src/language/en.json",
+      "src/language/ja.json",
+      "src/language/ko.json",
+      "src/language/ru.json",
+      "src/language/zh-CN.json",
+      "src/language/zh-TW.json",
+      "src/layouts/HomeLayout.vue",
+      "src/main.js",
+      "src/plugins/MessagePlugin.js",
+      "src/plugins/ModalPlugin.js",
+      "src/router/router.js",
+      "src/stores/musicQueue.js",
+      "src/stores/store.js",
+      "src/utils/apiBaseUrl.js",
+      "src/utils/i18n.js",
+      "src/utils/recognize.js",
+      "src/utils/request.js",
+      "src/utils/riskVerify.js",
+      "src/utils/teamEvent.js",
+      "src/utils/utils.js",
+      "src/views/CloudDrive.vue",
+      "src/views/Discover.vue",
+      "src/views/Home.vue",
+      "src/views/Library.vue",
+      "src/views/LocalMusic.vue",
+      "src/views/Login.vue",
+      "src/views/Lyrics.vue",
+      "src/views/PlaylistDetail.vue",
+      "src/views/Ranking.vue",
+      "src/views/Recognize.vue",
+      "src/views/RecommendedSearch.vue",
+      "src/views/Search.vue",
+      "src/views/Settings.vue",
+      "src/views/VideoPlayer.vue",
+      "tests/apiBaseUrl.test.js",
+      "tests/builtinVisualPluginFiles.test.js",
+      "tests/deepLinks.test.js",
+      "tests/extensionLifecycle.test.js",
+      "tests/extensionManager.electron.mjs",
+      "tests/extensionManagerRuntime.test.js",
+      "tests/fixtures/api-process.cjs",
+      "tests/fixtures/immersive-preload.cjs",
+      "tests/fixtures/phase2-preload.cjs",
+      "tests/fixtures/phase2-visual-probe/background.js",
+      "tests/fixtures/phase2-visual-probe/content.js",
+      "tests/fixtures/phase2-visual-probe/manifest.json",
+      "tests/fixtures/phase2-visual-probe/popup.html",
+      "tests/fixtures/phase2-visual-probe/popup.js",
+      "tests/fixtures/phase2-visual-probe/probe.css",
+      "tests/fixtures/phase3-preload.cjs",
+      "tests/identity.test.js",
+      "tests/immersiveLyrics.test.js",
+      "tests/immersiveVisualState.test.js",
+      "tests/liquidGlassPlugin.test.js",
+      "tests/loopbackApi.test.js",
+      "tests/nativeHostShutdown.electron.mjs",
+      "tests/nativeHostShutdownRuntime.test.js",
+      "tests/parseKrcLine.test.js"
+    ],
+    "rendererFiles": [
+      "assets/AbstractID3Parser-BjAp_u7g.js",
+      "assets/AiffParser-wLiXLGxU.js",
+      "assets/AsfParser-2ueARKWz.js",
+      "assets/DsdiffParser-vp5cG5yy.js",
+      "assets/DsfParser-DTptLzcS.js",
+      "assets/FlacParser-C9uJu5RH.js",
+      "assets/ID3v2Parser-Dy_mxZL9.js",
+      "assets/MP4Parser-CLpt77Ov.js",
+      "assets/MatroskaParser-B9JYnvEf.js",
+      "assets/MpegParser-D1DErGap.js",
+      "assets/MusepackParser-BL50Lap7.js",
+      "assets/OggParser-BCDkpy0Y.js",
+      "assets/WavPackParser-C0ihFB3q.js",
+      "assets/WaveParser-DsMkCkyd.js",
+      "assets/font-awesome/css/all.min.css",
+      "assets/font-awesome/webfonts/fa-brands-400.ttf",
+      "assets/font-awesome/webfonts/fa-brands-400.woff2",
+      "assets/font-awesome/webfonts/fa-regular-400.ttf",
+      "assets/font-awesome/webfonts/fa-regular-400.woff2",
+      "assets/font-awesome/webfonts/fa-solid-900.ttf",
+      "assets/font-awesome/webfonts/fa-solid-900.woff2",
+      "assets/font-awesome/webfonts/fa-v4compatibility.ttf",
+      "assets/font-awesome/webfonts/fa-v4compatibility.woff2",
+      "assets/images/!.png",
+      "assets/images/arona.png",
+      "assets/images/banner.png",
+      "assets/images/banners.png",
+      "assets/images/cloud-disk.png",
+      "assets/images/cloud.png",
+      "assets/images/empty.png",
+      "assets/images/empty1.png",
+      "assets/images/head.png",
+      "assets/images/home/hutao.png",
+      "assets/images/home/hutao1.png",
+      "assets/images/home/hutao2.png",
+      "assets/images/home/mama.png",
+      "assets/images/ico.png",
+      "assets/images/live.png",
+      "assets/images/local-music.png",
+      "assets/images/local.png",
+      "assets/images/logo.png",
+      "assets/images/mascotGirl.png",
+      "assets/images/mico/mico-app-icon-192.png",
+      "assets/images/mico/mico-app-icon-512.png",
+      "assets/images/mico/mico-discover-peek.png",
+      "assets/images/mico/mico-mark.svg",
+      "assets/images/mico/mico-onboarding-bust.png",
+      "assets/images/mico/onboarding/mico-chibi-approved-front-v0.4.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-point-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-settings-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-welcome-v1.png",
+      "assets/images/miku.png",
+      "assets/images/miku2.png",
+      "assets/images/miku3.png",
+      "assets/images/profile.jpg",
+      "assets/images/recognize-bg.png",
+      "assets/images/ti111mg.png",
+      "assets/images/vip.png",
+      "assets/images/vip2.png",
+      "assets/index-S09Q1Ni1.js",
+      "assets/index-pjes72HZ.css",
+      "assets/sound/qiqi-jp.mp3",
+      "assets/sound/qiqi-zh.mp3",
+      "assets/sound/yise-jp.mp3",
+      "assets/workbox-window.prod.es5-BIl4cyR9.js",
+      "favicon.ico",
+      "index.html",
+      "manifest.webmanifest",
+      "sw.js",
+      "workbox-95c8c041.js"
+    ],
+    "interpretation": "当前工作树与生产构建；含未提交源码，不能只用 HEAD 标识本次运行内容"
+  }
+}

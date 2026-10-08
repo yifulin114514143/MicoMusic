@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "MicoMusic 液态玻璃",
-  "version": "1.0.0",
-  "description": "可随时关闭的顶部导航与底部播放器玻璃材质样板。",
+  "version": "1.1.0",
+  "description": "可随时关闭的玻璃材质与封面背景、逐词歌词沉浸播放器。",
   "author": "MicoMusic",
   "permissions": ["storage", "scripting", "tabs"],
   "host_permissions": ["file:///*", "http://localhost/*", "http://127.0.0.1/*"],
@@ -15,7 +15,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["glass.css"],
+      "resources": ["glass.css", "immersive.css", "lyrics.css"],
       "matches": ["file:///*", "http://localhost/*", "http://127.0.0.1/*"]
     }
   ],
