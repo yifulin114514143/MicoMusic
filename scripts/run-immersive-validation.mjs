@@ -6,7 +6,7 @@ import electron from 'electron';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const runtime = path.join(root, 'artifacts/immersive-runtime');
-const evidence = path.join(root, 'docs/immersive/evidence');
+const evidence = path.join(root, 'docs/immersive/evidence/webgl');
 fs.mkdirSync(runtime, { recursive: true });
 fs.mkdirSync(evidence, { recursive: true });
 if (process.platform !== 'darwin') throw new Error('本运行器仅覆盖当前 macOS 原生 Electron；其他平台需另行验收');
@@ -32,12 +32,21 @@ await new Promise((resolve, reject) => {
     let log = '';
     child.stdout.on('data', chunk => { log += chunk; process.stdout.write(chunk); });
     child.stderr.on('data', chunk => { log += chunk; });
-    const timer = setTimeout(() => { child.kill('SIGKILL'); reject(new Error('沉浸隔离验收超过 180 秒，已停止本次进程')); }, 180000);
+    const timer = setTimeout(() => { child.kill('SIGKILL'); reject(new Error('WebGL 沉浸隔离验收超过 300 秒，已停止本次进程')); }, 300000);
     child.on('error', error => { clearTimeout(timer); reject(error); });
     child.on('exit', code => {
         clearTimeout(timer);
         fs.writeFileSync(path.join(runtime, reportName + '.log'), log);
-        if (code !== 0) { reject(new Error(`隔离验收 ${mode} 失败，退出码 ${code}；详见 docs/immersive/evidence/${reportName}.json 和 artifacts/immersive-runtime/${reportName}.log`)); return; }
+        if (code !== 0) {
+            const failedAttempt = path.join(evidence, 'failed-attempts', new Date().toISOString().replace(/[:.]/g, '-') + '-' + mode);
+            fs.mkdirSync(failedAttempt, { recursive: true });
+            fs.writeFileSync(path.join(failedAttempt, reportName + '.log'), log);
+            for (const filename of [reportName + '.json', 'failure' + (mode === 'unthrottled' ? '-unthrottled' : '') + '.png']) {
+                const source = path.join(evidence, filename);
+                if (fs.existsSync(source)) fs.copyFileSync(source, path.join(failedAttempt, filename));
+            }
+            reject(new Error(`隔离验收 ${mode} 失败，退出码 ${code}；本次失败证据已保留于 ${failedAttempt}`)); return;
+        }
         const result = JSON.parse(fs.readFileSync(path.join(evidence, reportName + '.json'), 'utf8'));
         if (result.failure) reject(new Error(result.failure.message)); else resolve();
     });

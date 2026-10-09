@@ -1,0 +1,1693 @@
+{
+  "timestamp": "2026-10-09T03:16:28.059Z",
+  "mode": "default",
+  "backgroundThrottling": true,
+  "electron": "39.2.4",
+  "chromium": "142.0.7444.177",
+  "platform": "darwin",
+  "validationRevision": "webgl-hero-spring",
+  "sourceState": {
+    "head": "69604cda39655d030caece73539bbce6bc0ff0a3",
+    "gitStatusShort": "D docs/immersive/evidence/failure.png\n M package.json\n M plugins/extensions/mico-liquid-glass/README.md\n M plugins/extensions/mico-liquid-glass/content.js\n M plugins/extensions/mico-liquid-glass/immersive.css\n M plugins/extensions/mico-liquid-glass/lyrics.css\n M plugins/extensions/mico-liquid-glass/manifest.json\n M scripts/run-immersive-validation.mjs\n M scripts/validate-immersive.mjs\n M src/components/PlayerControl.vue\n M src/components/immersive/ImmersiveBackground.vue\n M src/components/immersive/ImmersivePlayer.vue\n M src/components/immersive/LyricStage.vue\n M src/components/immersive/lyricsTimeline.js\n M tests/fixtures/immersive-preload.cjs\n M tests/immersiveLyrics.test.js\n M tests/liquidGlassPlugin.test.js\n?? \"docs/immersive/WebGL-\\345\\216\\237\\347\\224\\237\\351\\252\\214\\346\\224\\266\\350\\257\\264\\346\\230\\216-2026-10-09.md\"\n?? plugins/extensions/mico-liquid-glass/WEBGL-NOTES.md\n?? plugins/extensions/mico-liquid-glass/fluid-engine.js\n?? plugins/extensions/mico-liquid-glass/fluid-palette.js\n?? plugins/extensions/mico-liquid-glass/fluid-shaders.js\n?? plugins/extensions/mico-liquid-glass/motion.css\n?? src/components/immersive/heroGeometry.js\n?? tests/fluidGlassEngine.test.js\n?? tests/immersiveHero.test.js",
+    "sourceFingerprintSha256": "d25915f5d67dc8bd67b3ae4dafba636d1aa46eaf636cec14f3b5b5219697ee41",
+    "rendererFingerprintSha256": "fca8446c3b6b5647ed842cbc0cb6c720dc8efa30155aefa26448613b5de69b62",
+    "sourceFiles": [
+      "electron/appServices.js",
+      "electron/extensions/builtinVisualPlugin.js",
+      "electron/extensions/builtinVisualPluginFiles.js",
+      "electron/extensions/extensionIPC.js",
+      "electron/extensions/extensionLifecycle.js",
+      "electron/extensions/extensionManager.js",
+      "electron/extensions/extensions.js",
+      "electron/extensions/nativeHostManager.js",
+      "electron/extensions/visualPluginHost.js",
+      "electron/language/i18n.js",
+      "electron/main.js",
+      "electron/preload.cjs",
+      "electron/services/apiService.js",
+      "electron/services/appIdentity.js",
+      "electron/services/customTrayMenuService.js",
+      "electron/services/deepLinks.js",
+      "electron/services/desktopShortcutIcon.js",
+      "electron/services/externalLinkHandler.js",
+      "electron/services/identityConfig.js",
+      "electron/services/logHelper.js",
+      "electron/services/loopbackApi.js",
+      "electron/services/protocolHandler.js",
+      "electron/services/statusBarLyricsService.js",
+      "electron/services/updater.js",
+      "electron/services/visualWindowVisibility.js",
+      "electron/view/index.html",
+      "package.json",
+      "plugins/extensions/mico-liquid-glass/README.md",
+      "plugins/extensions/mico-liquid-glass/WEBGL-NOTES.md",
+      "plugins/extensions/mico-liquid-glass/content.js",
+      "plugins/extensions/mico-liquid-glass/fluid-engine.js",
+      "plugins/extensions/mico-liquid-glass/fluid-palette.js",
+      "plugins/extensions/mico-liquid-glass/fluid-shaders.js",
+      "plugins/extensions/mico-liquid-glass/glass.css",
+      "plugins/extensions/mico-liquid-glass/host-bridge.html",
+      "plugins/extensions/mico-liquid-glass/immersive.css",
+      "plugins/extensions/mico-liquid-glass/lyrics.css",
+      "plugins/extensions/mico-liquid-glass/manifest.json",
+      "plugins/extensions/mico-liquid-glass/motion.css",
+      "plugins/extensions/mico-liquid-glass/popup.css",
+      "plugins/extensions/mico-liquid-glass/popup.html",
+      "plugins/extensions/mico-liquid-glass/popup.js",
+      "plugins/extensions/mico-liquid-glass/settings.js",
+      "scripts/audit-extension-capabilities.mjs",
+      "scripts/build-mico-tray-icons.swift",
+      "scripts/run-extension-audit.mjs",
+      "scripts/run-immersive-validation.mjs",
+      "scripts/run-phase3-validation.mjs",
+      "scripts/validate-immersive.mjs",
+      "scripts/validate-phase3.mjs",
+      "src/App.vue",
+      "src/assets/images/tray/mico-monogram.png",
+      "src/assets/images/tray/mico-monogram@2x.png",
+      "src/assets/images/tray/tray-icon.png",
+      "src/assets/images/tray/tray-icon@2x.png",
+      "src/assets/style/PlayerControl.scss",
+      "src/assets/themes/dark.scss",
+      "src/components/AppUpdateDialog.vue",
+      "src/components/BackToTop.vue",
+      "src/components/BirthdayEasterEgg.vue",
+      "src/components/CommonSkeleton.vue",
+      "src/components/ContextMenu.vue",
+      "src/components/CustomModal.vue",
+      "src/components/Disclaimer.vue",
+      "src/components/ExtensionManager.vue",
+      "src/components/FullscreenLyricsSettings.vue",
+      "src/components/Header.vue",
+      "src/components/MarkdownContent.vue",
+      "src/components/MessageNotification.vue",
+      "src/components/MicoBrandBanner.vue",
+      "src/components/MicoProjectInfo.vue",
+      "src/components/OnboardingGuide.vue",
+      "src/components/PageScrollbar.vue",
+      "src/components/PlayerControl.vue",
+      "src/components/PlaylistSelectModal.vue",
+      "src/components/QueueList.vue",
+      "src/components/RiskVerifyModal.vue",
+      "src/components/SidebarNavigation.vue",
+      "src/components/StatusBarLyrics.vue",
+      "src/components/TeamEvent.vue",
+      "src/components/TitleBar.vue",
+      "src/components/discover/DiscoverNewAlbumContent.vue",
+      "src/components/discover/DiscoverNewSongContent.vue",
+      "src/components/discover/DiscoverPlaylistContent.vue",
+      "src/components/discover/RankingContent.vue",
+      "src/components/home/HomeRecommendations.vue",
+      "src/components/immersive/ImmersiveBackground.vue",
+      "src/components/immersive/ImmersivePlayer.vue",
+      "src/components/immersive/LyricStage.vue",
+      "src/components/immersive/heroGeometry.js",
+      "src/components/immersive/lyricsTimeline.js",
+      "src/components/immersive/visualState.js",
+      "src/components/player/AudioController.js",
+      "src/components/player/AudioOutput.js",
+      "src/components/player/ClimaxPoints.js",
+      "src/components/player/Helpers.js",
+      "src/components/player/LyricsHandler.js",
+      "src/components/player/MediaSession.js",
+      "src/components/player/PlaybackMode.js",
+      "src/components/player/ProgressBar.js",
+      "src/components/player/SongQueue.js",
+      "src/components/player/index.js",
+      "src/components/player/parseKrcLine.js",
+      "src/components/player/songQueue/CloudMusicQueue.js",
+      "src/components/player/songQueue/LocalMusicQueue.js",
+      "src/components/player/songQueue/OnlineMusicQueue.js",
+      "src/components/search/AlbumGrid.vue",
+      "src/components/search/ArtistGrid.vue",
+      "src/components/search/ComplexSearchResults.vue",
+      "src/components/search/MvGrid.vue",
+      "src/components/search/PlaylistGrid.vue",
+      "src/components/search/SongSearchList.vue",
+      "src/composables/useActivatedWatch.js",
+      "src/composables/useStickyDetailHeader.js",
+      "src/config/disclaimer.js",
+      "src/config/onboardingGuide.js",
+      "src/config/settings.js",
+      "src/language/en.json",
+      "src/language/ja.json",
+      "src/language/ko.json",
+      "src/language/ru.json",
+      "src/language/zh-CN.json",
+      "src/language/zh-TW.json",
+      "src/layouts/HomeLayout.vue",
+      "src/main.js",
+      "src/plugins/MessagePlugin.js",
+      "src/plugins/ModalPlugin.js",
+      "src/router/router.js",
+      "src/stores/musicQueue.js",
+      "src/stores/store.js",
+      "src/utils/apiBaseUrl.js",
+      "src/utils/i18n.js",
+      "src/utils/recognize.js",
+      "src/utils/request.js",
+      "src/utils/riskVerify.js",
+      "src/utils/teamEvent.js",
+      "src/utils/utils.js",
+      "src/views/CloudDrive.vue",
+      "src/views/Discover.vue",
+      "src/views/Home.vue",
+      "src/views/Library.vue",
+      "src/views/LocalMusic.vue",
+      "src/views/Login.vue",
+      "src/views/Lyrics.vue",
+      "src/views/PlaylistDetail.vue",
+      "src/views/Ranking.vue",
+      "src/views/Recognize.vue",
+      "src/views/RecommendedSearch.vue",
+      "src/views/Search.vue",
+      "src/views/Settings.vue",
+      "src/views/VideoPlayer.vue",
+      "tests/apiBaseUrl.test.js",
+      "tests/builtinVisualPluginFiles.test.js",
+      "tests/deepLinks.test.js",
+      "tests/extensionLifecycle.test.js",
+      "tests/extensionManager.electron.mjs",
+      "tests/extensionManagerRuntime.test.js",
+      "tests/fixtures/api-process.cjs",
+      "tests/fixtures/immersive-preload.cjs",
+      "tests/fixtures/phase2-preload.cjs",
+      "tests/fixtures/phase2-visual-probe/background.js",
+      "tests/fixtures/phase2-visual-probe/content.js",
+      "tests/fixtures/phase2-visual-probe/manifest.json",
+      "tests/fixtures/phase2-visual-probe/popup.html",
+      "tests/fixtures/phase2-visual-probe/popup.js",
+      "tests/fixtures/phase2-visual-probe/probe.css",
+      "tests/fixtures/phase3-preload.cjs",
+      "tests/fluidGlassEngine.test.js",
+      "tests/identity.test.js",
+      "tests/immersiveHero.test.js",
+      "tests/immersiveLyrics.test.js",
+      "tests/immersiveVisualState.test.js",
+      "tests/liquidGlassPlugin.test.js",
+      "tests/loopbackApi.test.js",
+      "tests/nativeHostShutdown.electron.mjs",
+      "tests/nativeHostShutdownRuntime.test.js",
+      "tests/parseKrcLine.test.js"
+    ],
+    "rendererFiles": [
+      "assets/AbstractID3Parser-CMTNEX4H.js",
+      "assets/AiffParser-DESqFI74.js",
+      "assets/AsfParser-CPpthjNR.js",
+      "assets/DsdiffParser-De9-4u_V.js",
+      "assets/DsfParser-CFAKIZq2.js",
+      "assets/FlacParser-BV7A9Nxy.js",
+      "assets/ID3v2Parser-BMRYMoF3.js",
+      "assets/MP4Parser-DPn-mvx7.js",
+      "assets/MatroskaParser-BBVBunD4.js",
+      "assets/MpegParser-PQ-6it4t.js",
+      "assets/MusepackParser-BZ3YpqXb.js",
+      "assets/OggParser-CgVOvuUT.js",
+      "assets/WavPackParser-BgChBlPd.js",
+      "assets/WaveParser-Cl82f3MJ.js",
+      "assets/font-awesome/css/all.min.css",
+      "assets/font-awesome/webfonts/fa-brands-400.ttf",
+      "assets/font-awesome/webfonts/fa-brands-400.woff2",
+      "assets/font-awesome/webfonts/fa-regular-400.ttf",
+      "assets/font-awesome/webfonts/fa-regular-400.woff2",
+      "assets/font-awesome/webfonts/fa-solid-900.ttf",
+      "assets/font-awesome/webfonts/fa-solid-900.woff2",
+      "assets/font-awesome/webfonts/fa-v4compatibility.ttf",
+      "assets/font-awesome/webfonts/fa-v4compatibility.woff2",
+      "assets/images/!.png",
+      "assets/images/arona.png",
+      "assets/images/banner.png",
+      "assets/images/banners.png",
+      "assets/images/cloud-disk.png",
+      "assets/images/cloud.png",
+      "assets/images/empty.png",
+      "assets/images/empty1.png",
+      "assets/images/head.png",
+      "assets/images/home/hutao.png",
+      "assets/images/home/hutao1.png",
+      "assets/images/home/hutao2.png",
+      "assets/images/home/mama.png",
+      "assets/images/ico.png",
+      "assets/images/live.png",
+      "assets/images/local-music.png",
+      "assets/images/local.png",
+      "assets/images/logo.png",
+      "assets/images/mascotGirl.png",
+      "assets/images/mico/mico-app-icon-192.png",
+      "assets/images/mico/mico-app-icon-512.png",
+      "assets/images/mico/mico-discover-peek.png",
+      "assets/images/mico/mico-mark.svg",
+      "assets/images/mico/mico-onboarding-bust.png",
+      "assets/images/mico/onboarding/mico-chibi-approved-front-v0.4.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-point-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-settings-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-welcome-v1.png",
+      "assets/images/miku.png",
+      "assets/images/miku2.png",
+      "assets/images/miku3.png",
+      "assets/images/profile.jpg",
+      "assets/images/recognize-bg.png",
+      "assets/images/ti111mg.png",
+      "assets/images/vip.png",
+      "assets/images/vip2.png",
+      "assets/index-Bzpc6lsN.css",
+      "assets/index-C3F1n3kp.js",
+      "assets/sound/qiqi-jp.mp3",
+      "assets/sound/qiqi-zh.mp3",
+      "assets/sound/yise-jp.mp3",
+      "assets/workbox-window.prod.es5-BIl4cyR9.js",
+      "favicon.ico",
+      "index.html",
+      "manifest.webmanifest",
+      "sw.js",
+      "workbox-95c8c041.js"
+    ],
+    "interpretation": "当前工作树与生产构建；含未提交源码，不能只用 HEAD 标识本次运行内容"
+  },
+  "checks": [
+    {
+      "name": "正式插件及生产生命周期初始化成功",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "results": [
+          {
+            "success": true,
+            "directory": "mico-liquid-glass",
+            "path": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-SmWRNY/extensions/mico-liquid-glass",
+            "id": "iaofalpimbmhmkgiegcheajcdgknhdmj",
+            "name": "MicoMusic 液态玻璃"
+          }
+        ],
+        "builtinResult": {
+          "success": true,
+          "path": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-SmWRNY/extensions/mico-liquid-glass",
+          "updated": true,
+          "fingerprint": "0709f6a6080d4f3b7252f3211b7f8da58172fbf9ce3b9881ca6bbb24a972fa9e",
+          "version": "1.2.0"
+        }
+      }
+    },
+    {
+      "name": "生产插件目录属于本次隔离 profile",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "真实宿主 helper 经生产 preload 提供可见状态",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "真实生产播放器恢复两歌曲 fixture 队列",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Hero 入场中途退出从当前真实封面几何连续反转",
+      "passed": true,
+      "detail": {
+        "before": {
+          "x": 258.7152099609375,
+          "y": 593.844970703125,
+          "width": 157.29837036132812,
+          "height": 157.9395751953125,
+          "transform": "matrix(0.405327, 0, 0, 0.406979, 85.2621, 432.728)",
+          "animations": 1
+        },
+        "after": {
+          "x": 258.7152099609375,
+          "y": 593.84521484375,
+          "width": 157.29855346679688,
+          "height": 157.93963623046875,
+          "transform": "matrix(0.405327, 0, 0, 0.406979, 85.2621, 432.728)",
+          "animations": 1
+        },
+        "phase": "opening",
+        "maxGeometryJumpPx": 0.000244140625
+      }
+    },
+    {
+      "name": "Hero 中途反转不刷新文档、不重建或暂停 Audio",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 0,
+          "paused": true,
+          "src": "http://127.0.0.1:56839/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.04000000000000001,
+          "speed": 1,
+          "loop": false
+        },
+        "after": {
+          "time": 0,
+          "paused": true,
+          "src": "http://127.0.0.1:56839/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.04000000000000001,
+          "speed": 1,
+          "loop": false
+        },
+        "audioCount": 1,
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "Hero 入场具备真实 WAAPI 与多帧封面几何",
+      "passed": true,
+      "detail": {
+        "samples": [
+          {
+            "elapsedMs": 34,
+            "phase": "opening",
+            "cover": {
+              "x": 295,
+              "y": 778,
+              "width": 59.0859375,
+              "height": 60
+            },
+            "fadeOpacities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "animations": [
+              {
+                "currentTime": 0,
+                "playState": "running",
+                "duration": 450,
+                "progress": 0
+              }
+            ]
+          },
+          {
+            "elapsedMs": 113,
+            "phase": "opening",
+            "cover": {
+              "x": 212.2178192138672,
+              "y": 357.8583679199219,
+              "width": 283.1533203125,
+              "height": 283.4448547363281
+            },
+            "fadeOpacities": [
+              0.155074,
+              0.155074,
+              0.155074,
+              0.155074,
+              0.155074,
+              0.155074
+            ],
+            "animations": [
+              {
+                "currentTime": 83.2980000090786,
+                "playState": "running",
+                "duration": 450,
+                "progress": 0.6810720299579702
+              }
+            ]
+          },
+          {
+            "elapsedMs": 187,
+            "phase": "opening",
+            "cover": {
+              "x": 174.2130889892578,
+              "y": 164.97418212890625,
+              "width": 386.0211181640625,
+              "height": 386.02685546875
+            },
+            "fadeOpacities": [
+              0.888632,
+              0.888632,
+              0.888632,
+              0.888632,
+              0.888632,
+              0.888632
+            ],
+            "animations": [
+              {
+                "currentTime": 166.59800000907853,
+                "playState": "running",
+                "duration": 450,
+                "progress": 0.9937476096304652
+              }
+            ]
+          },
+          {
+            "elapsedMs": 259,
+            "phase": "opening",
+            "cover": {
+              "x": 169.2567901611328,
+              "y": 139.8196563720703,
+              "width": 399.4364013671875,
+              "height": 399.40484619140625
+            },
+            "fadeOpacities": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "animations": [
+              {
+                "currentTime": 233.29800000907852,
+                "playState": "running",
+                "duration": 450,
+                "progress": 1.0345244448154933
+              }
+            ]
+          },
+          {
+            "elapsedMs": 335,
+            "phase": "opening",
+            "cover": {
+              "x": 170.24932861328125,
+              "y": 144.85704040527344,
+              "width": 396.74993896484375,
+              "height": 396.72576904296875
+            },
+            "fadeOpacities": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "animations": [
+              {
+                "currentTime": 299.9980000090785,
+                "playState": "running",
+                "duration": 450,
+                "progress": 1.0263585775423876
+              }
+            ]
+          },
+          {
+            "elapsedMs": 408,
+            "phase": "opening",
+            "cover": {
+              "x": 172.44163513183594,
+              "y": 155.9835968017578,
+              "width": 390.81591796875,
+              "height": 390.808349609375
+            },
+            "fadeOpacities": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "animations": [
+              {
+                "currentTime": 383.0980000090785,
+                "playState": "running",
+                "duration": 450,
+                "progress": 1.00832183033705
+              }
+            ]
+          },
+          {
+            "elapsedMs": 482,
+            "phase": "open",
+            "cover": {
+              "x": 173.453125,
+              "y": 161.1171875,
+              "width": 388.078125,
+              "height": 388.078125
+            },
+            "fadeOpacities": [
+              0.65,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "animations": []
+          }
+        ],
+        "before": {
+          "time": 0,
+          "paused": true,
+          "src": "http://127.0.0.1:56839/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.04000000000000001,
+          "speed": 1,
+          "loop": false
+        },
+        "after": {
+          "time": 0,
+          "paused": true,
+          "src": "http://127.0.0.1:56839/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.04000000000000001,
+          "speed": 1,
+          "loop": false
+        }
+      }
+    },
+    {
+      "name": "Hero 入场复用现有 Audio",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 0,
+          "paused": true,
+          "src": "http://127.0.0.1:56839/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.04000000000000001,
+          "speed": 1,
+          "loop": false
+        },
+        "after": {
+          "time": 0,
+          "paused": true,
+          "src": "http://127.0.0.1:56839/fixture-a.wav",
+          "duration": 180,
+          "volume": 0.04000000000000001,
+          "speed": 1,
+          "loop": false
+        },
+        "audioCount": 1,
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "沉浸界面只有一个关闭入口，旧界面未挂载",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "进入后键盘焦点落到退出按钮",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Tab 从末尾回到唯一退出按钮",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Shift+Tab 从退出按钮回到末尾工具",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "播放状态使插件 WebGL 流体运行",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "真实 KRC word 标记产生逐词填充，翻译来自 language 数据",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "逐词填充由原生 Audio 时钟连续更新",
+      "passed": true,
+      "detail": [
+        {
+          "audioTime": 0.152549,
+          "clock": "running",
+          "fill": [
+            "7.03185%",
+            "0%",
+            "0%",
+            "0%",
+            "0%"
+          ]
+        },
+        {
+          "audioTime": 0.187857,
+          "clock": "running",
+          "fill": [
+            "8.69965%",
+            "0%",
+            "0%",
+            "0%",
+            "0%"
+          ]
+        },
+        {
+          "audioTime": 0.223265,
+          "clock": "running",
+          "fill": [
+            "10.38165%",
+            "0%",
+            "0%",
+            "0%",
+            "0%"
+          ]
+        },
+        {
+          "audioTime": 0.258416,
+          "clock": "running",
+          "fill": [
+            "12.8692%",
+            "0%",
+            "0%",
+            "0%",
+            "0%"
+          ]
+        },
+        {
+          "audioTime": 0.29194,
+          "clock": "running",
+          "fill": [
+            "14.548%",
+            "0%",
+            "0%",
+            "0%",
+            "0%"
+          ]
+        },
+        {
+          "audioTime": 0.32,
+          "clock": "running",
+          "fill": [
+            "16%",
+            "0%",
+            "0%",
+            "0%",
+            "0%"
+          ]
+        },
+        {
+          "audioTime": 0.32,
+          "clock": "running",
+          "fill": [
+            "16%",
+            "0%",
+            "0%",
+            "0%",
+            "0%"
+          ]
+        },
+        {
+          "audioTime": 0.32,
+          "clock": "running",
+          "fill": [
+            "16%",
+            "0%",
+            "0%",
+            "0%",
+            "0%"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "宽屏封面与歌词起点匹配附图比例",
+      "passed": true,
+      "detail": {
+        "width": 1470,
+        "height": 848,
+        ".mico-immersive-cover": {
+          "x": 173.453125,
+          "y": 161.1171875,
+          "width": 388.078125,
+          "height": 388.078125
+        },
+        ".mico-immersive-controls": {
+          "x": 173.453125,
+          "y": 677.8203125,
+          "width": 388.078125,
+          "height": 66.1484375
+        },
+        ".mico-immersive-lyrics-pane": {
+          "x": 752.6328125,
+          "y": 0,
+          "width": 629.171875,
+          "height": 848
+        },
+        ".mico-immersive-song-title": {
+          "x": 173.453125,
+          "y": 587.3515625,
+          "width": 176.1640625,
+          "height": 21.0234375
+        },
+        ".mico-immersive-progress-track": {
+          "x": 173.453125,
+          "y": 643.3203125,
+          "width": 388.078125,
+          "height": 6
+        }
+      }
+    },
+    {
+      "name": "真实 WebGL shader 编译和程序链接均成功",
+      "passed": true,
+      "detail": [
+        {
+          "id": 2,
+          "type": "webgl",
+          "canvasId": "mico-liquid-glass-canvas",
+          "creates": {
+            "shaders": 8,
+            "programs": 4,
+            "buffers": 1,
+            "textures": 2,
+            "framebuffers": 1
+          },
+          "deletes": {
+            "shaders": 8
+          },
+          "active": {
+            "shaders": 0,
+            "programs": 4,
+            "buffers": 1,
+            "textures": 2,
+            "framebuffers": 1
+          },
+          "compiles": [
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            }
+          ],
+          "links": [
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            }
+          ],
+          "draws": 916,
+          "losses": 0,
+          "restores": 0,
+          "paletteUniform": [
+            0.915436370626682,
+            0.35188389081122645,
+            0.1367743175701653,
+            0.996078431372549,
+            0.9207843137254902,
+            0.8517647058823529,
+            0.996078431372549,
+            0.9207843137254902,
+            0.8517647058823529,
+            0.41568627450980394,
+            0.21437908496732025,
+            0.3150326797385621
+          ]
+        }
+      ]
+    },
+    {
+      "name": "背景颜色来自真实暖色封面像素并传入 GL uniform",
+      "passed": true,
+      "detail": {
+        "paletteUniform": [
+          0.915436370626682,
+          0.35188389081122645,
+          0.1367743175701653,
+          0.996078431372549,
+          0.9207843137254902,
+          0.8517647058823529,
+          0.996078431372549,
+          0.9207843137254902,
+          0.8517647058823529,
+          0.41568627450980394,
+          0.21437908496732025,
+          0.3150326797385621
+        ],
+        "source": "cover",
+        "status": "loaded"
+      }
+    }
+  ],
+  "observations": {
+    "instrumentation": {
+      "mainWorld": "生产 Audio、歌词滚动、DOM 监听、RAF 的原生返回值观测",
+      "pluginWorld": "进入播放器前，通过实际插件 popup 的 chrome.scripting.executeScript 注入相同观测函数；不改业务 shader、uniforms 或音频",
+      "fixtureSha256": "5d626cbb8a77700fc852f4debf0c48e7962b2f393a45d18ce9da24490159b65a"
+    },
+    "captures": {
+      "01-base-entry": {
+        "stage": null,
+        "row": null,
+        "primary": null,
+        "scrollTop": 0,
+        "index": null,
+        "opacity": null,
+        "filter": null,
+        "transform": null,
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": null,
+        "primaryCenterRatio": null,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定；插件启用时背景来自实际 WebGL 流体输出"
+      },
+      "02-wide-word-lyrics": {
+        "stage": {
+          "x": 752.6328125,
+          "y": 0,
+          "width": 629.171875,
+          "height": 848
+        },
+        "row": {
+          "x": 752.6328125,
+          "y": 293.041015625,
+          "width": 648.0469970703125,
+          "height": 143.63671875
+        },
+        "primary": {
+          "x": 752.6328125,
+          "y": 314.6710205078125,
+          "width": 637.7470703125,
+          "height": 56.802886962890625
+        },
+        "scrollTop": 0,
+        "index": "0",
+        "opacity": "1",
+        "filter": "blur(0px)",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": 0.43025869693396224,
+        "primaryCenterRatio": 0.4045665848929927,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定；插件启用时背景来自实际 WebGL 流体输出"
+      },
+      "failure": {
+        "stage": {
+          "x": 752.6328125,
+          "y": 0,
+          "width": 629.171875,
+          "height": 848
+        },
+        "row": {
+          "x": 752.6328125,
+          "y": 293.041015625,
+          "width": 648.0469970703125,
+          "height": 143.63671875
+        },
+        "primary": {
+          "x": 752.6328125,
+          "y": 314.6710205078125,
+          "width": 637.7470703125,
+          "height": 56.802886962890625
+        },
+        "scrollTop": 0,
+        "index": "0",
+        "opacity": "1",
+        "filter": "blur(0px)",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "width": 1470,
+        "height": 848,
+        "devicePixelRatio": 2,
+        "hoveredLyric": false,
+        "rowCenterRatio": 0.43025869693396224,
+        "primaryCenterRatio": 0.4045665848929927,
+        "capturedImageSize": {
+          "width": 2940,
+          "height": 1696
+        },
+        "interpretation": "实际 CSS 视口、DPR、字形/行组框；已去除指针 hover 并等待连续5次布局稳定；插件启用时背景来自实际 WebGL 流体输出"
+      }
+    },
+    "heroOpening": [
+      {
+        "elapsedMs": 34,
+        "phase": "opening",
+        "cover": {
+          "x": 295,
+          "y": 778,
+          "width": 59.0859375,
+          "height": 60
+        },
+        "fadeOpacities": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "animations": [
+          {
+            "currentTime": 0,
+            "playState": "running",
+            "duration": 450,
+            "progress": 0
+          }
+        ]
+      },
+      {
+        "elapsedMs": 113,
+        "phase": "opening",
+        "cover": {
+          "x": 212.2178192138672,
+          "y": 357.8583679199219,
+          "width": 283.1533203125,
+          "height": 283.4448547363281
+        },
+        "fadeOpacities": [
+          0.155074,
+          0.155074,
+          0.155074,
+          0.155074,
+          0.155074,
+          0.155074
+        ],
+        "animations": [
+          {
+            "currentTime": 83.2980000090786,
+            "playState": "running",
+            "duration": 450,
+            "progress": 0.6810720299579702
+          }
+        ]
+      },
+      {
+        "elapsedMs": 187,
+        "phase": "opening",
+        "cover": {
+          "x": 174.2130889892578,
+          "y": 164.97418212890625,
+          "width": 386.0211181640625,
+          "height": 386.02685546875
+        },
+        "fadeOpacities": [
+          0.888632,
+          0.888632,
+          0.888632,
+          0.888632,
+          0.888632,
+          0.888632
+        ],
+        "animations": [
+          {
+            "currentTime": 166.59800000907853,
+            "playState": "running",
+            "duration": 450,
+            "progress": 0.9937476096304652
+          }
+        ]
+      },
+      {
+        "elapsedMs": 259,
+        "phase": "opening",
+        "cover": {
+          "x": 169.2567901611328,
+          "y": 139.8196563720703,
+          "width": 399.4364013671875,
+          "height": 399.40484619140625
+        },
+        "fadeOpacities": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "animations": [
+          {
+            "currentTime": 233.29800000907852,
+            "playState": "running",
+            "duration": 450,
+            "progress": 1.0345244448154933
+          }
+        ]
+      },
+      {
+        "elapsedMs": 335,
+        "phase": "opening",
+        "cover": {
+          "x": 170.24932861328125,
+          "y": 144.85704040527344,
+          "width": 396.74993896484375,
+          "height": 396.72576904296875
+        },
+        "fadeOpacities": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "animations": [
+          {
+            "currentTime": 299.9980000090785,
+            "playState": "running",
+            "duration": 450,
+            "progress": 1.0263585775423876
+          }
+        ]
+      },
+      {
+        "elapsedMs": 408,
+        "phase": "opening",
+        "cover": {
+          "x": 172.44163513183594,
+          "y": 155.9835968017578,
+          "width": 390.81591796875,
+          "height": 390.808349609375
+        },
+        "fadeOpacities": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "animations": [
+          {
+            "currentTime": 383.0980000090785,
+            "playState": "running",
+            "duration": 450,
+            "progress": 1.00832183033705
+          }
+        ]
+      },
+      {
+        "elapsedMs": 482,
+        "phase": "open",
+        "cover": {
+          "x": 173.453125,
+          "y": 161.1171875,
+          "width": 388.078125,
+          "height": 388.078125
+        },
+        "fadeOpacities": [
+          0.65,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "animations": []
+      }
+    ],
+    "wideGeometry": {
+      "width": 1470,
+      "height": 848,
+      ".mico-immersive-cover": {
+        "x": 173.453125,
+        "y": 161.1171875,
+        "width": 388.078125,
+        "height": 388.078125
+      },
+      ".mico-immersive-controls": {
+        "x": 173.453125,
+        "y": 677.8203125,
+        "width": 388.078125,
+        "height": 66.1484375
+      },
+      ".mico-immersive-lyrics-pane": {
+        "x": 752.6328125,
+        "y": 0,
+        "width": 629.171875,
+        "height": 848
+      },
+      ".mico-immersive-song-title": {
+        "x": 173.453125,
+        "y": 587.3515625,
+        "width": 176.1640625,
+        "height": 21.0234375
+      },
+      ".mico-immersive-progress-track": {
+        "x": 173.453125,
+        "y": 643.3203125,
+        "width": 388.078125,
+        "height": 6
+      }
+    },
+    "requests": [
+      {
+        "path": "/fixture-cover.svg",
+        "query": ""
+      },
+      {
+        "path": "/fixture-a.wav",
+        "query": ""
+      },
+      {
+        "path": "/fixture-cover.svg",
+        "query": ""
+      },
+      {
+        "path": "/search/lyric",
+        "query": "?hash=immersive-a"
+      },
+      {
+        "path": "/lyric",
+        "query": "?id=fixture-krc-a&accesskey=fixture-access-key&fmt=krc&decode=true"
+      },
+      {
+        "path": "/fixture-cover.svg",
+        "query": ""
+      },
+      {
+        "path": "/fixture-cover.svg",
+        "query": ""
+      }
+    ],
+    "blockedExternal": [],
+    "rendererMessages": [
+      "%cElectron Security Warning (Disabled webSecurity) font-weight: bold; This renderer process has \"webSecurity\" disabled. This\n  exposes users of this app to severe security risks.\n\nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged.",
+      "%cElectron Security Warning (allowRunningInsecureContent) font-weight: bold; This renderer process has \"allowRunningInsecureContent\"\n  enabled. This exposes users of this app to severe security risks.\n\n  \nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged.",
+      "%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security\n  Policy set or a policy with \"unsafe-eval\" enabled. This exposes users of\n  this app to unnecessary security risks.\n\nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged.",
+      "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ],
+    "failureState": {
+      "identity": "b0d8419e-09bf-4352-9a58-0f137d46b602",
+      "navigationCount": 1,
+      "ready": {
+        "extensionId": "iaofalpimbmhmkgiegcheajcdgknhdmj",
+        "enabled": true,
+        "success": true
+      },
+      "styles": 1,
+      "theme": "auto",
+      "blur": "normal",
+      "motion": "normal",
+      "immersive": 1,
+      "legacy": 0,
+      "closeButtons": 1,
+      "audioCount": 1,
+      "audio": {
+        "time": 1.314635,
+        "paused": true,
+        "src": "http://127.0.0.1:56839/fixture-a.wav",
+        "duration": 180,
+        "volume": 0.04000000000000001,
+        "speed": 1,
+        "loop": false
+      },
+      "song": {
+        "id": 1,
+        "hash": "immersive-a",
+        "playHash": "immersive-a",
+        "name": "隔离验收 · Warm Canvas",
+        "author": "MicoMusic 技术音频",
+        "img": "http://127.0.0.1:56839/fixture-cover.svg",
+        "url": "http://127.0.0.1:56839/fixture-a.wav",
+        "timeLength": 180
+      },
+      "activeListeners": 29,
+      "activeObservers": 2,
+      "pendingRAF": 0,
+      "pluginObservation": {
+        "listeners": 2,
+        "observers": 2,
+        "pendingRAF": 0,
+        "gl": [
+          {
+            "id": 1,
+            "type": "webgl",
+            "creates": {
+              "shaders": 8,
+              "programs": 4,
+              "buffers": 1,
+              "textures": 2,
+              "framebuffers": 1
+            },
+            "deletes": {
+              "shaders": 8,
+              "textures": 2,
+              "buffers": 1,
+              "framebuffers": 1,
+              "programs": 4
+            },
+            "active": {
+              "shaders": 0,
+              "programs": 0,
+              "buffers": 0,
+              "textures": 0,
+              "framebuffers": 0
+            },
+            "compiles": [
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              }
+            ],
+            "links": [
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              }
+            ],
+            "draws": 216,
+            "losses": 1,
+            "restores": 0,
+            "paletteUniform": [
+              0.4940611020429468,
+              0.3095459624628368,
+              0.2741387829640796,
+              0.5802147698701627,
+              0.5963852509206573,
+              0.5974654049580944,
+              0.6450021939475964,
+              0.6435033775224273,
+              0.6328039999094219,
+              0.22975445139987835,
+              0.1764613115173665,
+              0.25906065679822426
+            ]
+          },
+          {
+            "id": 2,
+            "type": "webgl",
+            "canvasId": "mico-liquid-glass-canvas",
+            "creates": {
+              "shaders": 8,
+              "programs": 4,
+              "buffers": 1,
+              "textures": 2,
+              "framebuffers": 1
+            },
+            "deletes": {
+              "shaders": 8
+            },
+            "active": {
+              "shaders": 0,
+              "programs": 4,
+              "buffers": 1,
+              "textures": 2,
+              "framebuffers": 1
+            },
+            "compiles": [
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              }
+            ],
+            "links": [
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              },
+              {
+                "success": true,
+                "info": ""
+              }
+            ],
+            "draws": 916,
+            "losses": 0,
+            "restores": 0,
+            "paletteUniform": [
+              0.915436370626682,
+              0.35188389081122645,
+              0.1367743175701653,
+              0.996078431372549,
+              0.9207843137254902,
+              0.8517647058823529,
+              0.996078431372549,
+              0.9207843137254902,
+              0.8517647058823529,
+              0.41568627450980394,
+              0.21437908496732025,
+              0.3150326797385621
+            ]
+          }
+        ]
+      },
+      "fluid": {
+        "phase": "ready",
+        "renderer": "webgl1",
+        "frameCount": 162,
+        "rafPending": false,
+        "dpr": 1.5,
+        "width": 1470,
+        "height": 848,
+        "paletteStatus": "loaded",
+        "paletteSource": "cover",
+        "paletteTransitionMs": 1500,
+        "shapes": 4,
+        "timeSeconds": 2.2165999999999983,
+        "resources": {
+          "textures": 2,
+          "buffers": 1,
+          "framebuffers": 1,
+          "programs": 4,
+          "shaders": 0
+        },
+        "outputCanvases": 2,
+        "coverSceneStatus": "ready",
+        "coverSceneError": null,
+        "coverSceneDraws": 160,
+        "allocations": 32,
+        "deletions": 24,
+        "error": null
+      },
+      "ownedCanvases": 3,
+      "fluidDisposals": [],
+      "gl": [
+        {
+          "id": 1,
+          "type": "webgl",
+          "creates": {
+            "shaders": 8,
+            "programs": 4,
+            "buffers": 1,
+            "textures": 2,
+            "framebuffers": 1
+          },
+          "deletes": {
+            "shaders": 8,
+            "textures": 2,
+            "buffers": 1,
+            "framebuffers": 1,
+            "programs": 4
+          },
+          "active": {
+            "shaders": 0,
+            "programs": 0,
+            "buffers": 0,
+            "textures": 0,
+            "framebuffers": 0
+          },
+          "compiles": [
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            }
+          ],
+          "links": [
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            }
+          ],
+          "draws": 216,
+          "losses": 1,
+          "restores": 0,
+          "paletteUniform": [
+            0.4940611020429468,
+            0.3095459624628368,
+            0.2741387829640796,
+            0.5802147698701627,
+            0.5963852509206573,
+            0.5974654049580944,
+            0.6450021939475964,
+            0.6435033775224273,
+            0.6328039999094219,
+            0.22975445139987835,
+            0.1764613115173665,
+            0.25906065679822426
+          ]
+        },
+        {
+          "id": 2,
+          "type": "webgl",
+          "canvasId": "mico-liquid-glass-canvas",
+          "creates": {
+            "shaders": 8,
+            "programs": 4,
+            "buffers": 1,
+            "textures": 2,
+            "framebuffers": 1
+          },
+          "deletes": {
+            "shaders": 8
+          },
+          "active": {
+            "shaders": 0,
+            "programs": 4,
+            "buffers": 1,
+            "textures": 2,
+            "framebuffers": 1
+          },
+          "compiles": [
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            }
+          ],
+          "links": [
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            },
+            {
+              "success": true,
+              "info": ""
+            }
+          ],
+          "draws": 916,
+          "losses": 0,
+          "restores": 0,
+          "paletteUniform": [
+            0.915436370626682,
+            0.35188389081122645,
+            0.1367743175701653,
+            0.996078431372549,
+            0.9207843137254902,
+            0.8517647058823529,
+            0.996078431372549,
+            0.9207843137254902,
+            0.8517647058823529,
+            0.41568627450980394,
+            0.21437908496732025,
+            0.3150326797385621
+          ]
+        }
+      ],
+      "visibility": "visible",
+      "nativeVisible": "true",
+      "background": {
+        "motion": "still",
+        "blur": "normal",
+        "layers": []
+      }
+    },
+    "finalCleanup": {
+      "success": true
+    },
+    "loopbackClosed": true
+  },
+  "isolation": {
+    "userData": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-SmWRNY",
+    "logs": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-SmWRNY/logs",
+    "temp": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-SmWRNY/temp",
+    "executable": "/Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-runtime/Electron.app/Contents/MacOS/Electron",
+    "interpretation": "仅本工作树 artifacts/immersive-runtime 中复制的Electron bundle与临时profile，不读取或迁移已安装音乐客户端profile"
+  },
+  "limitations": [
+    "真实生产 Vue/PlayerControl/AudioController/插件加载器的隔离 Electron 宿主；不是完整发行版主进程",
+    "loopback WAV、原创 SVG 和 KRC 为技术 fixtures；不代表真实酷狗账号或真实酷狗歌曲播放验收",
+    "截图与性能仅覆盖当前 macOS 设备；视觉通过仍须用户实际评审"
+  ],
+  "failure": {
+    "message": "真实噪声流体随播放时钟产生连续像素变化: {\"meanChannelDifference\":0,\"changedPixelFraction\":0}",
+    "stack": "AssertionError [ERR_ASSERTION]: 真实噪声流体随播放时钟产生连续像素变化: {\"meanChannelDifference\":0,\"changedPixelFraction\":0}\n    at check (file:///Users/mico/AI%20%E4%BA%8B%E7%89%A9/MicoMusic-%E6%B2%89%E6%B5%B8%E6%92%AD%E6%94%BE%E5%99%A8/scripts/validate-immersive.mjs:47:12)\n    at fluidAndGlassEvidence (file:///Users/mico/AI%20%E4%BA%8B%E7%89%A9/MicoMusic-%E6%B2%89%E6%B5%B8%E6%92%AD%E6%94%BE%E5%99%A8/scripts/validate-immersive.mjs:331:5)\n    at async audit (file:///Users/mico/AI%20%E4%BA%8B%E7%89%A9/MicoMusic-%E6%B2%89%E6%B5%B8%E6%92%AD%E6%94%BE%E5%99%A8/scripts/validate-immersive.mjs:484:9)"
+  }
+}

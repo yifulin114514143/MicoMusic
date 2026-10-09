@@ -42,3 +42,9 @@ plugins/extensions/*
 artifacts/phase2-runtime/
 artifacts/phase3-runtime/
 artifacts/immersive-runtime/
+
+# 原生验收的历史临时备份；当前通过报告与截图另行入库。
+docs/immersive/evidence/webgl/failed-attempts/
+docs/immersive/evidence/webgl/prior-to-focus-shortcut-fix/
+docs/immersive/evidence/webgl/prior-to-palette-fix/
+docs/immersive/evidence/webgl/failure.png

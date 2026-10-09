@@ -1,0 +1,30 @@
+11:16:28.213 › 创建插件目录: /Users/mico/AI 事物/MicoMusic-沉浸播放器/artifacts/immersive-runtime/validation-SmWRNY/extensions
+11:16:28.225 › 插件 IPC 处理程序已注册
+(electron) 'session.loadExtension' is deprecated and will be removed. Please use 'session.extensions.loadExtension' instead.
+11:16:28.246 › 成功加载插件: MicoMusic 液态玻璃 (iaofalpimbmhmkgiegcheajcdgknhdmj)
+(electron) 'session.getAllExtensions' is deprecated and will be removed. Please use 'session.extensions.getAllExtensions' instead.
+通过：正式插件及生产生命周期初始化成功
+通过：生产插件目录属于本次隔离 profile
+(electron) 'console-message' arguments are deprecated and will be removed. Please use Event<WebContentsConsoleMessageEventParams> object instead.
+通过：真实宿主 helper 经生产 preload 提供可见状态
+通过：真实生产播放器恢复两歌曲 fixture 队列
+通过：Hero 入场中途退出从当前真实封面几何连续反转
+通过：Hero 中途反转不刷新文档、不重建或暂停 Audio
+通过：Hero 入场具备真实 WAAPI 与多帧封面几何
+通过：Hero 入场复用现有 Audio
+通过：沉浸界面只有一个关闭入口，旧界面未挂载
+通过：进入后键盘焦点落到退出按钮
+通过：Tab 从末尾回到唯一退出按钮
+通过：Shift+Tab 从退出按钮回到末尾工具
+通过：播放状态使插件 WebGL 流体运行
+通过：真实 KRC word 标记产生逐词填充，翻译来自 language 数据
+通过：逐词填充由原生 Audio 时钟连续更新
+通过：宽屏封面与歌词起点匹配附图比例
+通过：真实 WebGL shader 编译和程序链接均成功
+通过：背景颜色来自真实暖色封面像素并传入 GL uniform
+AssertionError [ERR_ASSERTION]: 真实噪声流体随播放时钟产生连续像素变化: {"meanChannelDifference":0,"changedPixelFraction":0}
+    at check (file:///Users/mico/AI%20%E4%BA%8B%E7%89%A9/MicoMusic-%E6%B2%89%E6%B5%B8%E6%92%AD%E6%94%BE%E5%99%A8/scripts/validate-immersive.mjs:47:12)
+    at fluidAndGlassEvidence (file:///Users/mico/AI%20%E4%BA%8B%E7%89%A9/MicoMusic-%E6%B2%89%E6%B5%B8%E6%92%AD%E6%94%BE%E5%99%A8/scripts/validate-immersive.mjs:331:5)
+    at async audit (file:///Users/mico/AI%20%E4%BA%8B%E7%89%A9/MicoMusic-%E6%B2%89%E6%B5%B8%E6%92%AD%E6%94%BE%E5%99%A8/scripts/validate-immersive.mjs:484:9)
+(electron) 'session.removeExtension' is deprecated and will be removed. Please use 'session.extensions.removeExtension' instead.
+11:16:37.446 › 插件 IPC 处理程序已注销
