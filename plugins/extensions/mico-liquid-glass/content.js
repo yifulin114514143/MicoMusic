@@ -13,8 +13,11 @@
     let style = null;
     let settings = config.normalize();
     let settingsRevision = 0;
+    let fluidEngine = null;
 
     const clearMaterial = () => {
+        fluidEngine?.dispose();
+        fluidEngine = null;
         style?.remove();
         style = null;
         for (const name of markerNames) root.removeAttribute(name);
@@ -36,6 +39,8 @@
         root.setAttribute('data-mico-liquid-glass-theme', settings.theme);
         root.setAttribute('data-mico-liquid-glass-motion', settings.reduceMotion ? 'reduced' : 'normal');
         root.setAttribute('data-mico-liquid-glass-blur', settings.lowBlur ? 'low' : 'normal');
+        if (!fluidEngine && globalThis.MicoFluidGlass) fluidEngine = globalThis.MicoFluidGlass.create(settings);
+        else fluidEngine?.setSettings(settings);
     };
     const dispose = () => {
         if (disposed) return;
@@ -65,7 +70,7 @@
         settings = config.normalize(changes[config.key].newValue);
         render();
     };
-    const runtime = Object.freeze({ extensionId, dispose });
+    const runtime = Object.freeze({ extensionId, dispose, get diagnostics() { return fluidEngine?.diagnostics() || null; } });
     globalThis[singletonKey] = runtime;
     document.addEventListener('mico-visual-lifecycle', onLifecycle);
     window.addEventListener('pagehide', onPageHide);
@@ -82,7 +87,7 @@
     });
     // 所有新播放器视觉均为插件资源，一起载入同一可撤回 style。
     // 任一资源失败都不挂载新视图，保留原播放器界面。
-    const loadStyle = Promise.all(['glass.css', 'immersive.css', 'lyrics.css'].map(async (name) => {
+    const loadStyle = Promise.all(['glass.css', 'immersive.css', 'lyrics.css', 'motion.css'].map(async (name) => {
         const response = await fetch(chrome.runtime.getURL(name), { signal: abortController.signal });
         if (!response.ok) throw new Error(`材质资源加载失败：${name} (${response.status})`);
         return response.text();

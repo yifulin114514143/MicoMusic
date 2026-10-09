@@ -5,6 +5,8 @@ html[data-mico-liquid-glass="on"] .mico-immersive-lyrics {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    overflow-anchor: none;
+    scroll-behavior: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
     color: white;
@@ -36,8 +38,10 @@ html[data-mico-liquid-glass="on"] .mico-lyric-row {
     text-align: left;
     opacity: var(--mico-line-opacity, 0.3);
     filter: blur(var(--mico-line-blur, 0px));
-    transform: translateY(var(--mico-line-shift, 0px));
-    transition: opacity 480ms ease, filter 480ms ease, transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    transform-origin: left center;
+    transform: translate3d(0, calc(var(--mico-line-shift, 0px) + var(--mico-line-inertia, 0px)), 0);
+    scale: var(--mico-line-scale, 1);
+    transition: opacity 480ms ease, filter 480ms ease, scale 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
     transition-delay: var(--mico-line-delay, 0ms);
 }
 html[data-mico-liquid-glass="on"] button.mico-lyric-row { cursor: pointer; }
@@ -62,7 +66,6 @@ html[data-mico-liquid-glass="on"] .mico-lyric-token-base { color: rgba(255, 255,
 html[data-mico-liquid-glass="on"] .mico-lyric-token-fill {
     color: white;
     clip-path: inset(0 calc(100% - var(--mico-word-fill, 0%)) 0 0);
-    transition: clip-path 100ms linear;
 }
 html[data-mico-liquid-glass="on"] .mico-lyric-empty {
     position: absolute;
@@ -108,8 +111,8 @@ html[data-mico-liquid-glass="on"] .mico-lyric-resume {
 }
 html[data-mico-liquid-glass="on"] .mico-lyric-resume:focus-visible { outline: 2px solid white; outline-offset: 3px; }
 html[data-mico-liquid-glass="on"] .mico-lyrics-reduced .mico-lyric-row,
-html[data-mico-liquid-glass="on"] .mico-lyrics-reduced .mico-lyric-token-fill { transition: none; transform: none; }
+html[data-mico-liquid-glass="on"] .mico-lyrics-reduced .mico-lyric-token-fill { transition: none; transform: none; scale: 1; }
 @media (prefers-reduced-motion: reduce) {
     html[data-mico-liquid-glass="on"] .mico-lyric-row,
-    html[data-mico-liquid-glass="on"] .mico-lyric-token-fill { transition: none; transform: none; }
+    html[data-mico-liquid-glass="on"] .mico-lyric-token-fill { transition: none; transform: none; scale: 1; }
 }

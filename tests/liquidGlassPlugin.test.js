@@ -21,7 +21,7 @@ class TrackedTarget {
     get count() { return [...this.listeners.values()].reduce((sum, callbacks) => sum + callbacks.size, 0); }
 }
 
-function makeHarness({ stored, resourceFailure, storageFailure, delayStyle = false, popup = false } = {}) {
+function makeHarness({ stored, resourceFailure, storageFailure, delayStyle = false, popup = false, fluidRuntime } = {}) {
     const document = new TrackedTarget();
     const window = new TrackedTarget();
     const attrs = new Map([['class', 'host-theme-class']]);
@@ -58,7 +58,7 @@ function makeHarness({ stored, resourceFailure, storageFailure, delayStyle = fal
     const requests = [];
     const errors = [];
     const context = vm.createContext({
-        document, window, chrome, AbortController,
+        document, window, chrome, AbortController, MicoFluidGlass: fluidRuntime,
         console: { error: (...args) => errors.push(args) },
         fetch: async (url, options) => {
             requests.push({ url, options });
@@ -93,8 +93,43 @@ test('已关闭设置首屏不创建材质，资源通过扩展精确URL读取',
     assert.equal(harness.attrs.has('data-mico-liquid-glass'), false);
     assert.deepEqual(JSON.parse(harness.attrs.get('data-mico-visual-ready')), { extensionId, enabled: false, success: true });
     assert.equal(harness.requests[0].url, `chrome-extension://${extensionId}/glass.css`);
-    assert.deepEqual(harness.requests.map(request => new URL(request.url).pathname), ['/glass.css', '/immersive.css', '/lyrics.css']);
+    assert.deepEqual(harness.requests.map(request => new URL(request.url).pathname), ['/glass.css', '/immersive.css', '/lyrics.css', '/motion.css']);
     assert.deepEqual(harness.store[key], { enabled: false, theme: 'light' });
+});
+
+test('视觉开关与重注入共享GPU所有权，关闭时释放实例且不会由设置更新复活', async () => {
+    const instances = [];
+    const fluidRuntime = { create(settings) {
+        const instance = { settings: plain(settings), disposed: false, updates: 0,
+            setSettings(next) { assert.equal(this.disposed, false); this.settings = plain(next); this.updates++; },
+            dispose() { assert.equal(this.disposed, false); this.disposed = true; },
+            diagnostics() { return { disposed: this.disposed }; }
+        };
+        instances.push(instance);
+        return instance;
+    } };
+    const harness = makeHarness({ stored: { enabled: false }, fluidRuntime });
+    await settle();
+    assert.equal(instances.length, 0);
+    for (let index = 0; index < 20; index++) {
+        harness.changed({ enabled: true });
+        const current = instances.at(-1);
+        harness.changed({ enabled: true, reduceMotion: true });
+        assert.equal(instances.length, index + 1);
+        assert.equal(current.updates, 1);
+        harness.changed({ enabled: false });
+        assert.equal(current.disposed, true);
+        assert.equal(harness.context.__micoLiquidGlassRuntime.diagnostics, null);
+    }
+    harness.changed({ enabled: true });
+    const previous = instances.at(-1);
+    harness.run('content.js');
+    await settle();
+    assert.equal(previous.disposed, true);
+    assert.equal(instances.filter(instance => !instance.disposed).length, 1);
+    harness.context.__micoLiquidGlassRuntime.dispose();
+    harness.changed({ enabled: true });
+    assert.equal(instances.filter(instance => !instance.disposed).length, 0);
 });
 
 test('20 次启停撤回全部活动材质且不增长接收监听', async () => {
@@ -155,7 +190,7 @@ test('20 次重复注入都替换旧实例而非叠加样式或监听', async ()
 });
 
 test('资源或存储失败返回基础界面且报告错误', async () => {
-    for (const options of [{ resourceFailure: true }, { resourceFailure: 'immersive.css' }, { resourceFailure: 'lyrics.css' }, { storageFailure: 'storage unavailable' }]) {
+    for (const options of [{ resourceFailure: true }, { resourceFailure: 'immersive.css' }, { resourceFailure: 'lyrics.css' }, { resourceFailure: 'motion.css' }, { storageFailure: 'storage unavailable' }]) {
         const harness = makeHarness(options);
         await settle();
         const ready = JSON.parse(harness.attrs.get('data-mico-visual-ready'));
@@ -212,7 +247,7 @@ test('正式清单仅动态注入脚本，包含重载桥页面与本地访问�
     const manifest = JSON.parse(read('manifest.json'));
     assert.equal(manifest.manifest_version, 3);
     assert.equal(manifest.plugin_id, 'mico-liquid-glass');
-    assert.deepEqual(manifest.content_scripts[0].js, ['settings.js', 'content.js']);
+    assert.deepEqual(manifest.content_scripts[0].js, ['settings.js', 'fluid-palette.js', 'fluid-shaders.js', 'fluid-engine.js', 'content.js']);
     assert.equal(manifest.content_scripts[0].css, undefined);
     for (const name of manifest.content_scripts[0].js) assert.ok(fs.existsSync(new URL(name, pluginUrl)));
     assert.ok(read('host-bridge.html').includes('<body></body>'));

@@ -2,13 +2,134 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
     buildLyricTimeline, resolveLyricPosition, getTokenProgress, getSeekTime,
-    selectSecondaryText, getVirtualWindow, getLinePresentation, createFollowTimer
+    selectSecondaryText, getVirtualWindow, getLinePresentation, createFollowTimer,
+    LYRIC_SPRING, LYRIC_SPRING_LIMITS, stepLyricSpring, isLyricSpringSettled,
+    retargetLineSpring, stepLineSpring, createLyricSpring, hasWordMotion, createLyricWordClock
 } from '../src/components/immersive/lyricsTimeline.js';
 import { parseKrcLine } from '../src/components/player/parseKrcLine.js';
 
 const lyric = (start, end, text, extra = {}) => ({
     startTime: start, endTime: end, timingSource: 'word',
     characters: [{ char: text, startTime: start, endTime: end, highlighted: true }], ...extra
+});
+
+test('280/28/1 精确物理解满足时间分段连续性、衰减与轻微过冲', () => {
+    assert.deepEqual(LYRIC_SPRING, { stiffness: 280, damping: 28, mass: 1 });
+    const start = { position: 0, velocity: 0 };
+    const whole = stepLyricSpring(start, 500, 0.2);
+    const partitioned = stepLyricSpring(stepLyricSpring(start, 500, 0.08), 500, 0.12);
+    assert.ok(Math.abs(whole.position - partitioned.position) < 1e-10);
+    assert.ok(Math.abs(whole.velocity - partitioned.velocity) < 1e-9);
+    assert.ok(whole.position > 0 && whole.position < 500);
+    const overshoot = stepLyricSpring(start, 500, Math.PI / Math.sqrt(84));
+    assert.ok(overshoot.position > 500 && overshoot.position < 505);
+    assert.ok(isLyricSpringSettled(stepLyricSpring(start, 500, 1.2), 500));
+    assert.deepEqual(stepLyricSpring(start, 500, 0), start);
+    assert.deepEqual(stepLyricSpring(start, Number.NaN, 0.1), start);
+    assert.ok(Number.isFinite(stepLyricSpring(start, 500, 1000).position));
+});
+
+test('附近行使用不同延迟独立惯性，同一帧可跨过延迟边界且不丢运动时间', () => {
+    const initial = { position: 0, velocity: 0, target: 0, pendingTarget: 0, delaySeconds: 0 };
+    const active = retargetLineSpring(initial, 200, getLinePresentation(4, 4).delayMs / 1000);
+    const neighbor = retargetLineSpring(initial, 200, getLinePresentation(6, 4).delayMs / 1000);
+    assert.equal(stepLineSpring(neighbor, 0.02).position, 0);
+    assert.ok(stepLineSpring(active, 0.02).position > 0);
+    const split = stepLineSpring(stepLineSpring(neighbor, 0.02), 0.06);
+    const whole = stepLineSpring(neighbor, 0.08);
+    assert.ok(Math.abs(split.position - whole.position) < 1e-10);
+    assert.ok(Math.abs(split.velocity - whole.velocity) < 1e-9);
+    const retargeted = retargetLineSpring(whole, 400, 0.044);
+    assert.equal(retargeted.position, whole.position);
+    assert.equal(retargeted.velocity, whole.velocity);
+    assert.ok(isLyricSpringSettled(stepLineSpring(retargeted, 1.5), 400));
+});
+
+const frameHarness = ({ canAnimate = () => true, onUpdate = () => false } = {}) => {
+    const pending = new Map(); let id = 0, timestamp = 0, updates = [];
+    const spring = createLyricSpring({
+        requestFrame(callback) { pending.set(++id, callback); return id; },
+        cancelFrame(key) { pending.delete(key); }, canAnimate,
+        onUpdate(state, frame) { updates.push({ ...state, ...frame }); return onUpdate(state, frame); }
+    });
+    return { spring, pending, updates, tick(milliseconds = 1000 / 60) {
+        timestamp += milliseconds;
+        const callbacks = [...pending.values()]; pending.clear();
+        for (const callback of callbacks) callback(timestamp);
+        assert.ok(pending.size <= 1, '始终最多一个待执行 RAF');
+    } };
+};
+
+test('普通换行、resize 与虚拟窗口测量仅更新目标，保留位置和物理速度', () => {
+    const harness = frameHarness();
+    harness.spring.moveTo(500, { from: 0 });
+    for (let index = 0; index < 7; index++) harness.tick();
+    const before = harness.spring.getState();
+    assert.ok(before.position > 0 && before.velocity > 0);
+    const pendingFrame = [...harness.pending.keys()][0];
+    harness.spring.moveTo(740, { from: 999 });
+    const after = harness.spring.getState();
+    assert.equal(after.position, before.position);
+    assert.equal(after.velocity, before.velocity);
+    assert.equal(after.target, 740);
+    assert.equal([...harness.pending.keys()][0], pendingFrame);
+    harness.spring.moveTo(740, { from: -100 });
+    assert.equal(harness.spring.getState().velocity, before.velocity);
+    for (let index = 0; index < 120 && harness.pending.size; index++) harness.tick();
+    assert.equal(harness.pending.size, 0);
+    assert.deepEqual(harness.spring.getState(), { position: 740, velocity: 0, target: 740, running: false, elapsed: harness.spring.getState().elapsed });
+    const count = harness.updates.length; harness.tick();
+    assert.equal(harness.updates.length, count, '静止后没有空转 RAF');
+});
+
+test('浏览、隐藏、插件关闭、销毁与减弱动效停止帧；已取消回调不可重新安排', () => {
+    let enabled = true;
+    const harness = frameHarness({ canAnimate: () => enabled });
+    harness.spring.moveTo(100, { from: 0 }); harness.tick(); harness.tick();
+    const late = [...harness.pending.values()][0];
+    harness.spring.stop(23);
+    assert.equal(harness.pending.size, 0);
+    assert.equal(harness.spring.getState().velocity, 0);
+    late(100); assert.equal(harness.pending.size, 0);
+    assert.equal(harness.spring.getState().position, 23);
+    harness.spring.moveTo(200, { from: 23 });
+    enabled = false; harness.tick();
+    assert.equal(harness.pending.size, 0);
+    assert.equal(harness.spring.getState().running, false);
+    harness.spring.moveTo(90, { immediate: true });
+    assert.equal(harness.spring.getState().position, 90);
+    assert.equal(harness.pending.size, 0);
+    enabled = true; harness.spring.moveTo(300, { from: 90 });
+    const afterDispose = [...harness.pending.values()][0];
+    harness.spring.dispose(); afterDispose(999); harness.spring.moveTo(999);
+    assert.equal(harness.pending.size, 0);
+});
+
+test('长帧限制物理步长，辅助行最迟三秒结束，重复相同目标不能延长上界', () => {
+    const harness = frameHarness({ onUpdate: () => true });
+    harness.spring.moveTo(400, { from: 0 });
+    harness.tick(); harness.tick(1000);
+    assert.equal(harness.updates.at(-1).deltaSeconds, LYRIC_SPRING_LIMITS.frameSeconds);
+    for (let index = 0; index < 200 && harness.pending.size; index++) {
+        harness.spring.moveTo(400); harness.tick();
+    }
+    assert.equal(harness.pending.size, 0);
+    assert.equal(harness.spring.getState().position, 400);
+    assert.equal(harness.spring.getState().velocity, 0);
+    assert.ok(harness.updates.at(-1).force);
+    const stalledFrame = frameHarness({ onUpdate: () => true });
+    stalledFrame.spring.moveTo(900, { from: 0 });
+    stalledFrame.tick(); stalledFrame.tick(5000);
+    assert.equal(stalledFrame.pending.size, 0, '三秒上界使用实际帧时间，不能因64ms步长钳制拖成长动画');
+    assert.equal(stalledFrame.spring.getState().position, 900);
+});
+
+test('3秒无操作恢复跟随是唯一延时任务，手动操作不会创建第二个循环', () => {
+    let scheduledDelay = null;
+    const timer = createFollowTimer(() => {}, {
+        setTimer(callback, delay) { scheduledDelay = delay; return 1; }, clearTimer() {}
+    });
+    timer.arm(); assert.equal(scheduledDelay, 3000); timer.dispose();
 });
 
 test('真实毫秒时间控制逐组渐进填充，旧 highlighted 不影响结果', () => {
@@ -18,6 +139,76 @@ test('真实毫秒时间控制逐组渐进填充，旧 highlighted 不影响结�
     assert.equal(getTokenProgress(token, 2), 0.5);
     assert.equal(getTokenProgress(token, 3), 1);
     assert.equal(getTokenProgress(token, 10), 1);
+});
+
+test('逐词 RAF 只读取真实音频时钟，缓冲停住时不推算进度并停止空转', () => {
+    const pending = new Map(), samples = [], states = [];
+    let id = 0, timestamp = 0, audioTime = 1.1;
+    const row = buildLyricTimeline([lyric(1000, 3000, '真实词组')])[0];
+    const clock = createLyricWordClock({
+        readTime: () => audioTime, onTime: time => samples.push(time),
+        requestFrame(callback) { pending.set(++id, callback); return id; },
+        cancelFrame(key) { pending.delete(key); }, canAnimate: () => true,
+        hasMotion: time => hasWordMotion(row, time), now: () => timestamp,
+        onState: running => states.push(running)
+    });
+    const tick = (milliseconds, time = audioTime) => {
+        timestamp += milliseconds; audioTime = time;
+        const callbacks = [...pending.values()]; pending.clear();
+        for (const callback of callbacks) callback(timestamp);
+        assert.ok(pending.size <= 1);
+    };
+    clock.sync(); clock.sync(); assert.equal(pending.size, 1);
+    tick(1000 / 60, 1.115);
+    assert.equal(samples.at(-1), 1.115, 'RAF 时间不当作音乐时间');
+    tick(1000 / 60, 1.13);
+    for (let frame = 0; frame < 12; frame++) tick(1000 / 60);
+    assert.equal(samples.at(-1), 1.13);
+    assert.equal(clock.isRunning(), false);
+    assert.equal(pending.size, 0);
+    assert.deepEqual(states, [true, false]);
+    audioTime = 1.5; clock.sync(); assert.equal(pending.size, 1);
+    tick(16, 3); assert.equal(pending.size, 0, '词组已唱完立即停止帧');
+    clock.dispose();
+});
+
+test('暂停、隐藏、减弱动效及销毁可撤销逐词帧，迟到回调不能唤醒', () => {
+    const pending = new Map(), samples = [];
+    let id = 0, enabled = true, audioTime = 0.2;
+    const clock = createLyricWordClock({
+        readTime: () => audioTime, onTime: time => samples.push(time),
+        requestFrame(callback) { pending.set(++id, callback); return id; },
+        cancelFrame(key) { pending.delete(key); }, canAnimate: () => enabled,
+        hasMotion: () => true, now: () => 0
+    });
+    clock.sync(); const late = [...pending.values()][0];
+    enabled = false; audioTime = 0.3; clock.sync();
+    assert.equal(samples.at(-1), 0.3);
+    assert.equal(pending.size, 0); assert.equal(clock.isRunning(), false);
+    late(100); assert.equal(pending.size, 0);
+    enabled = true; clock.sync(); const afterDispose = [...pending.values()][0];
+    clock.dispose(); afterDispose(200); clock.sync();
+    assert.equal(pending.size, 0); assert.equal(clock.isRunning(), false);
+});
+
+test('无逐词来源、词组间长间隔、异常音乐时间均不创建空转词动画', () => {
+    const row = buildLyricTimeline([{ startTime: 0, endTime: 5000, timingSource: 'word', characters: [
+        { char: '一', startTime: 1000, endTime: 1200 }, { char: '二', startTime: 3000, endTime: 3500 }
+    ] }])[0];
+    assert.equal(hasWordMotion(row, 0), false);
+    assert.equal(hasWordMotion(row, 0.7), true);
+    assert.equal(hasWordMotion(row, 1.3), false);
+    assert.equal(hasWordMotion(row, 2.7), true);
+    assert.equal(hasWordMotion(row, 3.5), false);
+    assert.equal(hasWordMotion({ ...row, hasWordTiming: false }, 1.1), false);
+    const pending = new Map(); let id = 0;
+    const clock = createLyricWordClock({
+        readTime: () => Number.NaN, onTime: () => assert.fail('不得发布异常时间'),
+        requestFrame(callback) { pending.set(++id, callback); return id; },
+        cancelFrame(key) { pending.delete(key); }, canAnimate: () => true,
+        hasMotion: () => true, now: () => 0
+    });
+    clock.sync(); assert.equal(pending.size, 0); clock.dispose();
 });
 
 test('合成或未知来源只允许行级展示，不将等分时间伪装成逐词来源', () => {
@@ -65,6 +256,20 @@ test('重叠行取最近开始的有效行，不依赖数组顺序推断时间',
     const rows = buildLyricTimeline([lyric(3000, 6000, '后开始'), lyric(1000, 5000, '先开始')]);
     assert.equal(resolveLyricPosition(rows, 4).activeIndex, 0);
     assert.equal(resolveLyricPosition(rows, 2).activeIndex, 1);
+});
+
+test('时间索引保留同起点顺序、已结束短行后的长行及空行边界', () => {
+    const rows = buildLyricTimeline([
+        lyric(1000, 10000, '长行'), lyric(3000, 4000, '短行'), lyric(3000, 3500, '同起点后行'),
+        { startTime: 10000, endTime: 12000, characters: [] }, lyric(12000, 13000, '尾行')
+    ]);
+    assert.equal(resolveLyricPosition(rows, 3.2).activeIndex, 2);
+    assert.equal(resolveLyricPosition(rows, 3.7).activeIndex, 1);
+    assert.equal(resolveLyricPosition(rows, 4).activeIndex, 0);
+    assert.equal(resolveLyricPosition(rows, 10).phase, 'interlude');
+    assert.equal(resolveLyricPosition(rows, 12).activeIndex, 4);
+    assert.equal(resolveLyricPosition(rows, 13).phase, 'outro');
+    assert.equal(resolveLyricPosition(rows, 2).activeIndex, 0, '倒退仍直接按音乐时间查询索引');
 });
 
 test('有时间的空行表示间奏；无词与无时间词分别明确为空/不可同步', () => {
@@ -122,6 +327,8 @@ test('窗口化限制 DOM 数量但末端、向上与向下浏览均可到达', 
 
 test('可见近行才使用模糊，远离窗口的行不创建巨大滤镜开销', () => {
     assert.equal(getLinePresentation(5, 5).blurPx, 0);
+    assert.equal(getLinePresentation(6, 5).blurPx, 2.5);
+    assert.equal(getLinePresentation(6, 5).opacity, 0.45);
     assert.ok(getLinePresentation(6, 5).blurPx < getLinePresentation(8, 5).blurPx);
     assert.equal(getLinePresentation(900, 5).blurPx, 0);
     assert.ok(getLinePresentation(8, 5).delayMs > 0);

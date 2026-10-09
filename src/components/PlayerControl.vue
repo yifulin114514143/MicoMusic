@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="player-bar">
-            <div class="album-art" @click="toggleLyrics(currentSong.hash, currentTime)">
+            <div ref="compactCover" class="album-art" @click="toggleLyrics(currentSong.hash, currentTime)">
                 <img v-if="currentSong.img" :src="currentSong.img" alt="Album Art" />
                 <i v-else class="fas fa-music"></i>
                 <span class="album-art-hover-indicator" aria-hidden="true">
@@ -132,14 +132,14 @@
 
     <!-- 全屏歌词界面 -->
     <!-- 新视图仅在正式视觉插件启用时挂载；关闭插件后仍使用下面的原全屏界面。 -->
-    <ImmersivePlayer v-if="showLyrics && immersiveVisual.enabled"
+    <ImmersivePlayer v-if="showLyrics && immersiveVisual.enabled" ref="immersivePlayer" :origin-rect="immersiveOrigin" :get-origin-rect="readCompactCoverRect"
         :song="currentSong" :current-time="currentTime" :duration="immersiveDuration"
-        :playing="playing" :volume="volume" :speed="currentSpeed"
+        :playing="playing" :volume="volume" :speed="currentSpeed" :playback-clock="readPlaybackClock"
         :playback-mode-index="currentPlaybackModeIndex" :lyrics="lyricsData"
         :lyrics-mode="lyricsMode" :tips="SongTips" :font-family="lyricsFontFamily"
         :highlight-mode="lyricsHighlightMode" :reduce-motion="immersiveVisual.reduceMotion"
         :low-blur="immersiveVisual.lowBlur" :window-visible="immersiveVisual.windowVisible"
-        @close="toggleLyrics(currentSong.hash, currentTime)" @toggle-play="togglePlayPause"
+        @close="finishImmersiveClose" @toggle-play="togglePlayPause"
         @previous="playSongFromQueue('previous')" @next="playSongFromQueue('next')"
         @seek="seekImmersive" @volume-change="changeImmersiveVolume" @playback-mode="setPlaybackMode"
         @like="playlistSelect.toLike()" @collect="playlistSelect.fetchPlaylists()"
@@ -326,6 +326,9 @@ const musicQueueStore = useMusicQueueStore();
 const playlists = ref([]);
 const currentTime = ref(0);
 const immersiveVisual = useImmersiveVisualState();
+const compactCover = ref(null);
+const immersivePlayer = ref(null);
+const immersiveOrigin = ref(null);
 const fullscreenLyricsDefaultSettings = {
     background: 'on',
     fontSize: '24px',
@@ -559,7 +562,25 @@ const volumeValueStyle = computed(() => {
 });
 
 const lyricsHandler = useLyricsHandler(t);
-const { lyricsData, originalLyrics, showLyrics, scrollAmount, SongTips, lyricsMode, toggleLyrics, getLyrics, highlightCurrentChar, resetLyricsHighlight, getCurrentLineText, scrollToCurrentLine, toggleLyricsMode } = lyricsHandler;
+const { lyricsData, originalLyrics, showLyrics, scrollAmount, SongTips, lyricsMode, toggleLyrics: toggleLyricsView, getLyrics, highlightCurrentChar, resetLyricsHighlight, getCurrentLineText, scrollToCurrentLine, toggleLyricsMode } = lyricsHandler;
+const readPlaybackClock = () => audio.currentTime;
+const finishImmersiveClose = () => {
+    if (showLyrics.value) toggleLyricsView(currentSong.value.hash, audio.currentTime);
+};
+const readCompactCoverRect = () => {
+    const rect = compactCover.value?.getBoundingClientRect();
+    return rect ? { x: rect.x, y: rect.y, width: rect.width, height: rect.height } : null;
+};
+const toggleLyrics = (hash, time) => {
+    if (showLyrics.value && immersiveVisual.enabled && immersivePlayer.value) {
+        immersivePlayer.value.requestClose();
+        return true;
+    }
+    if (!showLyrics.value && immersiveVisual.enabled) {
+        immersiveOrigin.value = readCompactCoverRect();
+    }
+    return toggleLyricsView(hash, time);
+};
 
 const currentLyricsLineIndex = computed(() => {
     if (!lyricsData.value || lyricsData.value.length === 0) return -1;
@@ -1413,6 +1434,7 @@ const copyLyricsToClipboard = async () => {
 const handleKeyDown = (event) => {
     const isInputFocused = ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
     if (isInputFocused) return;
+    if (immersiveVisual.enabled && event.code !== 'KeyC' && document.activeElement.closest('.mico-immersive-player button, .mico-immersive-player select')) return;
 
     switch (event.code) {
         case 'Space':

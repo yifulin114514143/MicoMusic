@@ -27,7 +27,7 @@
     "test:identity": "node --test tests/identity.test.js tests/deepLinks.test.js tests/loopbackApi.test.js tests/apiBaseUrl.test.js",
     "test:phase3": "node --test tests/extensionLifecycle.test.js tests/extensionManagerRuntime.test.js tests/liquidGlassPlugin.test.js tests/builtinVisualPluginFiles.test.js tests/nativeHostShutdownRuntime.test.js",
     "validate:phase3": "node scripts/run-phase3-validation.mjs",
-    "test:immersive": "node --test tests/parseKrcLine.test.js tests/immersiveVisualState.test.js tests/immersiveLyrics.test.js",
+    "test:immersive": "node --test tests/parseKrcLine.test.js tests/immersiveVisualState.test.js tests/immersiveLyrics.test.js tests/immersiveHero.test.js tests/fluidGlassEngine.test.js",
     "validate:immersive": "node scripts/run-immersive-validation.mjs"
   },
   "engines": {

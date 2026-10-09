@@ -6,7 +6,7 @@
     overflow: hidden;
     isolation: isolate;
     color: #fff;
-    background: #192028;
+    background: transparent;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
     -webkit-app-region: no-drag;
 }
@@ -16,11 +16,17 @@
 .mico-immersive-player button:disabled, .mico-immersive-player input:disabled { cursor: default; opacity: 0.38; }
 .mico-immersive-player button:focus-visible, .mico-immersive-player input:focus-visible, .mico-immersive-player select:focus-visible { outline: 2px solid rgba(255,255,255,0.95); outline-offset: 4px; }
 .mico-immersive-background { position: absolute; inset: 0; z-index: -1; overflow: hidden; background: radial-gradient(ellipse at 15% 20%, #52687a, transparent 65%), radial-gradient(ellipse at 85% 80%, #3a4858, #1b2631 80%); pointer-events: none; }
-.mico-immersive-background-layer { position: absolute; width: 135%; height: 135%; left: -17.5%; top: -17.5%; object-fit: cover; filter: blur(74px) saturate(1.55); opacity: 0.94; will-change: auto; animation-play-state: paused; }
-.mico-immersive-background-layer-one { animation: mico-immersive-drift-one 28s ease-in-out infinite alternate; animation-play-state: paused; }
-.mico-immersive-background-layer-two { opacity: 0.34; mix-blend-mode: screen; animation: mico-immersive-drift-two 37s ease-in-out infinite alternate; animation-play-state: paused; }
-.mico-immersive-background[data-motion="flow"] .mico-immersive-background-layer { animation-play-state: running; will-change: transform; }
-.mico-immersive-background[data-blur="low"] .mico-immersive-background-layer { filter: blur(32px) saturate(1.2); opacity: 0.85; }
+.mico-immersive-background-fallback { position: absolute; width: 115%; height: 115%; left: -7.5%; top: -7.5%; object-fit: cover; filter: blur(60px) saturate(1.4); opacity: 0.9; }
+.mico-immersive-fluid-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.mico-immersive-fluid-source { display: none; }
+.mico-immersive-background-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.mico-immersive-glass-overlay { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+/* 封面留在玻璃后方，按钮命中与文字留在玻璃前方。 */
+.mico-immersive-song-row, .mico-immersive-progress, .mico-immersive-controls { position: relative; z-index: 3; }
+.mico-immersive-lyrics-pane, .mico-immersive-footer { z-index: 3; }
+html[data-mico-fluid-renderer="webgl"] .mico-immersive-background-fallback,
+html[data-mico-fluid-renderer="webgl"] .mico-immersive-background-wash { display: none; }
+html[data-mico-fluid-renderer="css"] :is(.mico-immersive-fluid-canvas, .mico-immersive-background-canvas, .mico-immersive-glass-overlay) { display: none; }
 .mico-immersive-background-wash { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,14,20,0.07), rgba(13,14,20,0.2) 66%, rgba(13,14,20,0.35)); }
 .mico-immersive-close { position: absolute; top: 24px; left: 28px; z-index: 4; width: 42px; height: 36px; display: grid; place-items: center; border-radius: 18px; opacity: 0.65; }
 .mico-immersive-close:hover { opacity: 1; background: rgba(255,255,255,0.12); }
@@ -73,10 +79,7 @@
 .mico-immersive-volume-range { width: 110px; }
 .mico-immersive-player[data-low-blur="true"] .mico-immersive-menu { backdrop-filter: none; background: #252b33; }
 .mico-immersive-player[data-reduced-motion="true"] .mico-immersive-control { transition: none; transform: none; }
-@keyframes mico-immersive-drift-one { from { transform: translate(-3%, -4%) scale(1.04) rotate(-8deg); } to { transform: translate(5%, 4%) scale(1.16) rotate(9deg); } }
-@keyframes mico-immersive-drift-two { from { transform: translate(8%, -8%) scale(1.2) rotate(14deg); } to { transform: translate(-5%, 8%) scale(1.04) rotate(-10deg); } }
 @media (prefers-reduced-motion: reduce) {
-    .mico-immersive-background-layer { animation: none !important; }
     .mico-immersive-control { transition: none; transform: none; }
 }
 @media (max-width: 900px) {
@@ -104,5 +107,14 @@
     .mico-immersive-lyrics-pane { top: 31%; left: 8%; right: 8%; bottom: 8%; }
     .mico-immersive-footer { left: 6%; right: 6%; bottom: 2.5%; }
     .mico-immersive-menu { position: fixed; left: 6%; right: 6%; top: 16%; bottom: auto; width: auto; max-height: 70vh; }
-    .mico-immersive-background-layer { filter: blur(42px) saturate(1.4); }
+    .mico-immersive-background-fallback { filter: blur(42px) saturate(1.4); }
 }
+/* 同一 GL 场景输出背景与透明前景玻璃；此处保留 DOM 文字、焦点与点击命中。
+   不支持/丢失 WebGL 时上述静态 CSS 材质自动接管。 */
+html[data-mico-fluid-renderer="webgl"] :is(.mico-immersive-more, .mico-immersive-close, .mico-immersive-tool, .mico-immersive-menu) {
+    background: transparent !important;
+    border-color: transparent !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+html[data-mico-fluid-renderer="webgl"] .mico-immersive-seek::-webkit-slider-thumb { background: transparent; }

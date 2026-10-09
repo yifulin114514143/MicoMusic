@@ -1,9 +1,9 @@
 <template>
     <section ref="viewport" class="mico-immersive-lyrics" :class="{ 'mico-lyrics-reduced': reduceMotion, 'mico-lyrics-browsing': !following }"
         :style="{ '--mico-lyric-font': fontFamily || 'inherit' }" :data-mico-lyric-phase="position.phase"
-        :data-mico-lyric-following="String(following)" :data-mico-lyric-active="position.activeIndex"
+        :data-mico-lyric-following="String(following)" :data-mico-lyric-active="position.activeIndex" :data-mico-lyric-clock="wordClockRunning ? 'running' : 'idle'"
         aria-label="歌词" tabindex="0" @scroll.passive="onScroll" @wheel.passive="beginBrowse"
-        @pointerdown="onPointerDown" @touchstart.passive="onTouchStart" @touchmove.passive="beginBrowse" @touchend.passive="onPointerRelease"
+        @pointerdown="onPointerDown" @touchstart.passive="onTouchStart" @touchmove.passive="beginBrowse" @touchend.passive="onPointerRelease" @touchcancel.passive="onPointerRelease"
         @keydown="onBrowseKey">
         <div v-if="hasText" class="mico-lyric-content">
             <div class="mico-lyric-spacer" aria-hidden="true" :style="{ height: `${windowed.top + topPadding}px` }"></div>
@@ -15,9 +15,9 @@
                 :type="getSeekTime(row) === null ? undefined : 'button'" :title="getSeekTime(row) === null ? undefined : '从这一句播放'"
                 @click="seekRow(row)">
                 <span class="mico-lyric-primary">
-                    <template v-if="row.hasWordTiming && highlightMode === 'char' && row.index === position.activeIndex">
+                    <template v-if="row.hasWordTiming && highlightMode === 'char'">
                         <span v-for="(token, tokenIndex) in row.tokens" :key="tokenIndex" class="mico-lyric-token"
-                            :style="{ '--mico-word-fill': `${getTokenProgress(token, time) * 100}%` }">
+                            :style="{ '--mico-word-fill': `${getTokenProgress(token, visualTime) * 100}%` }">
                             <span class="mico-lyric-token-base">{{ token.text }}</span>
                             <span class="mico-lyric-token-fill" aria-hidden="true">{{ token.text }}</span>
                         </span>
@@ -40,23 +40,27 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { buildLyricTimeline, resolveLyricPosition, getTokenProgress, getSeekTime, selectSecondaryText,
-    getVirtualWindow, getLinePresentation, createFollowTimer } from './lyricsTimeline.js';
+    getVirtualWindow, getLinePresentation, createFollowTimer, createLyricSpring,
+    retargetLineSpring, stepLineSpring, isLyricSpringSettled, hasWordMotion, createLyricWordClock } from './lyricsTimeline.js';
 
 const props = defineProps({
     lines: { type: Array, default: () => [] }, time: { type: Number, default: 0 },
     mode: { type: String, default: 'translation' }, fontFamily: { type: String, default: '' },
     reduceMotion: { type: Boolean, default: false }, highlightMode: { type: String, default: 'char' },
     windowVisible: { type: Boolean, default: true },
+    playing: { type: Boolean, default: false }, playbackClock: { type: Function, default: null },
     showTranslation: { type: Boolean, default: true }, tips: { type: String, default: '' }
 });
 const emit = defineEmits(['seek']);
 const viewport = ref(null), following = ref(true), scrollTop = ref(0), viewportHeight = ref(0);
+const visualTime = ref(props.time), wordClockRunning = ref(false);
 const measuredHeights = ref(new Map());
 const rowElements = new Map();
+const lineSprings = new Map();
 let observer = null, alive = false, pointerHeld = false, generation = 0, followQueued = false, followInstant = false, measuredWidth = 0;
 const isVisible = () => !document.hidden && props.windowVisible;
 const rows = computed(() => buildLyricTimeline(props.lines));
-const position = computed(() => resolveLyricPosition(rows.value, props.time));
+const position = computed(() => resolveLyricPosition(rows.value, visualTime.value));
 const hasText = computed(() => rows.value.some(row => row.hasText));
 const secondary = row => selectSecondaryText(row, props.mode, props.showTranslation);
 const heights = computed(() => rows.value.map(row => measuredHeights.value.get(row.index) || (secondary(row) ? 128 : 96)));
@@ -74,8 +78,58 @@ const focusIndex = computed(() => {
 const presentation = index => {
     const value = getLinePresentation(index, focusIndex.value, props.reduceMotion);
     return { '--mico-line-opacity': value.opacity, '--mico-line-blur': `${value.blurPx}px`,
-        '--mico-line-delay': `${value.delayMs}ms`, '--mico-line-shift': `${value.translateY}px` };
+        '--mico-line-delay': `${value.delayMs}ms`, '--mico-line-shift': `${value.translateY}px`,
+        '--mico-line-scale': !props.reduceMotion && index === position.value.activeIndex ? 1.03 : 1 };
 };
+const wordClock = createLyricWordClock({
+    readTime: () => props.playbackClock ? props.playbackClock() : props.time,
+    onTime: time => { visualTime.value = time; },
+    requestFrame: callback => window.requestAnimationFrame(callback), cancelFrame: frame => window.cancelAnimationFrame(frame),
+    canAnimate: () => alive && isVisible() && props.playing && typeof props.playbackClock === 'function'
+        && props.highlightMode === 'char' && !props.reduceMotion
+        && document.documentElement.getAttribute('data-mico-liquid-glass') === 'on',
+    hasMotion: time => {
+        const active = resolveLyricPosition(rows.value, time).activeIndex;
+        return rowElements.has(active) && hasWordMotion(rows.value[active], time);
+    },
+    onState: running => { wordClockRunning.value = running; }
+});
+const spring = createLyricSpring({
+    requestFrame: callback => window.requestAnimationFrame(callback),
+    cancelFrame: frame => window.cancelAnimationFrame(frame),
+    canAnimate: () => alive && isVisible() && following.value && !props.reduceMotion
+        && document.documentElement.getAttribute('data-mico-liquid-glass') === 'on',
+    onUpdate(state, { deltaSeconds, force }) {
+        const element = viewport.value;
+        if (!element || !alive) return false;
+        element.scrollTop = state.position;
+        scrollTop.value = element.scrollTop;
+        element.setAttribute('data-mico-lyric-spring', state.running ? 'running' : 'idle');
+        element.setAttribute('data-mico-lyric-spring-position', String(state.position));
+        element.setAttribute('data-mico-lyric-spring-velocity', String(state.velocity));
+        element.setAttribute('data-mico-lyric-spring-target', String(state.target));
+        if (force) {
+            lineSprings.clear();
+            for (const row of rowElements.values()) row.style.setProperty('--mico-line-inertia', '0px');
+            return false;
+        }
+        let moving = false;
+        for (const index of lineSprings.keys()) if (!rowElements.has(index)) lineSprings.delete(index);
+        for (const [index, row] of rowElements) {
+            let line = lineSprings.get(index) || { position: state.position, velocity: state.velocity,
+                target: state.position, pendingTarget: state.position, delaySeconds: 0 };
+            if (line.pendingTarget !== state.target) {
+                const delay = getLinePresentation(index, focusIndex.value).delayMs / 1000;
+                line = retargetLineSpring(line, state.target, delay);
+            }
+            line = stepLineSpring(line, deltaSeconds);
+            lineSprings.set(index, line);
+            row.style.setProperty('--mico-line-inertia', `${Math.max(-90, Math.min(90, state.position - line.position))}px`);
+            moving ||= line.delaySeconds > 0 || !isLyricSpringSettled(line, state.target);
+        }
+        return moving;
+    }
+});
 const followTimer = createFollowTimer(() => {
     if (!alive || !isVisible() || pointerHeld) return;
     resumeFollow();
@@ -93,9 +147,7 @@ function requestFollow(instant = false) {
         if (!alive || !element || !isVisible() || !following.value || position.value.focusIndex < 0) return;
         const index = position.value.focusIndex;
         const target = Math.max(0, topPadding.value + windowed.value.offsets[index] + heights.value[index] / 2 - element.clientHeight * 0.43);
-        if (Math.abs(element.scrollTop - target) < 0.75) return;
-        element.scrollTo({ top: target, behavior: immediate || props.reduceMotion ? 'auto' : 'smooth' });
-        scrollTop.value = element.scrollTop;
+        spring.moveTo(target, { immediate: immediate || props.reduceMotion, from: element.scrollTop });
     });
 }
 function measure() {
@@ -105,18 +157,19 @@ function measure() {
     measuredWidth = viewport.value.clientWidth;
     const updated = new Map(measuredHeights.value); let changed = false;
     for (const [index, element] of rowElements) {
-        const height = element.getBoundingClientRect().height;
+        // transform/scale 不参与布局测量，否则当前行的 1.03 会被误算为行高并反复改变目标。
+        const height = element.offsetHeight;
         if (height > 0 && Math.abs((updated.get(index) || 0) - height) > 0.5) { updated.set(index, height); changed = true; }
     }
     if (changed) measuredHeights.value = updated;
-    if (changed || resized) requestFollow(resized);
+    if (changed || resized) requestFollow();
 }
 function setRowElement(element, index) {
     const previous = rowElements.get(index);
     if (previous === element) return;
     if (previous) observer?.unobserve(previous);
     if (element) { rowElements.set(index, element); if (alive && isVisible()) observer?.observe(element); }
-    else rowElements.delete(index);
+    else { rowElements.delete(index); lineSprings.delete(index); }
 }
 function connectObserver() {
     if (!observer || !viewport.value || !isVisible()) return;
@@ -125,11 +178,11 @@ function connectObserver() {
 }
 function beginBrowse() {
     if (!alive) return;
-    following.value = false; cancelPendingFollow();
+    following.value = false; cancelPendingFollow(); spring.stop(viewport.value?.scrollTop);
     if (isVisible() && !pointerHeld) followTimer.arm();
 }
 function onPointerDown(event) {
-    if (event.target?.closest('.mico-lyric-resume')) return;
+    if (!event.isPrimary || event.button !== 0 || event.target?.closest('.mico-lyric-resume')) return;
     pointerHeld = true; followTimer.cancel(); beginBrowse();
 }
 function onTouchStart() { pointerHeld = true; followTimer.cancel(); beginBrowse(); }
@@ -155,21 +208,36 @@ function seekRow(row) {
     emit('seek', seconds); resumeFollow();
 }
 function visibilityChanged() {
-    if (!isVisible()) { followTimer.cancel(); cancelPendingFollow(); observer?.disconnect(); pointerHeld = false; }
-    else { connectObserver(); measure(); if (!following.value) followTimer.arm(); }
+    if (!isVisible()) {
+        followTimer.cancel(); cancelPendingFollow(); spring.stop(viewport.value?.scrollTop); wordClock.stop(); observer?.disconnect(); pointerHeld = false;
+    } else {
+        wordClock.sync(); connectObserver(); measure(); if (!following.value) followTimer.arm(); else requestFollow(true);
+    }
 }
 watch(() => props.lines, () => {
     measuredHeights.value = new Map(); following.value = true; pointerHeld = false; followTimer.cancel();
-    cancelPendingFollow(); nextTick(() => { if (alive) { measure(); requestFollow(true); } });
+    spring.stop(viewport.value?.scrollTop); wordClock.stop(); cancelPendingFollow();
+    nextTick(() => { if (alive) { wordClock.sync(); measure(); requestFollow(true); } });
 }, { flush: 'post' });
 watch(() => position.value.focusIndex, () => requestFollow(), { flush: 'post' });
 watch(() => props.time, (time, previous) => {
-    if (Number.isFinite(previous) && (time < previous || time - previous > 1.5)) requestFollow(true);
+    if (!isVisible()) return;
+    visualTime.value = time; wordClock.sync();
+    if (Number.isFinite(previous) && (time < previous || time - previous > 1.5)) requestFollow(props.reduceMotion);
+}, { flush: 'post' });
+watch(() => [props.playing, props.highlightMode, props.playbackClock], () => {
+    if (alive && isVisible()) wordClock.sync(); else wordClock.stop();
+}, { flush: 'sync' });
+watch(() => [windowed.value.start, windowed.value.end], () => {
+    nextTick(() => { if (alive && isVisible()) wordClock.sync(); });
 }, { flush: 'post' });
 watch(() => [props.mode, props.showTranslation, props.fontFamily], () => {
     measuredHeights.value = new Map(); nextTick(() => { if (alive) measure(); });
 }, { flush: 'post' });
 watch(() => props.windowVisible, visibilityChanged, { flush: 'sync' });
+watch(() => props.reduceMotion, () => {
+    spring.stop(viewport.value?.scrollTop); wordClock.sync(); cancelPendingFollow(); requestFollow(props.reduceMotion);
+}, { flush: 'sync' });
 onMounted(() => {
     alive = true;
     if (typeof ResizeObserver === 'function') { observer = new ResizeObserver(measure); connectObserver(); }
@@ -177,10 +245,11 @@ onMounted(() => {
     document.addEventListener('visibilitychange', visibilityChanged);
     window.addEventListener('pointerup', onPointerRelease, { passive: true });
     window.addEventListener('pointercancel', onPointerRelease, { passive: true });
-    measure(); requestFollow(true);
+    wordClock.sync(); measure(); requestFollow(true);
 });
 onBeforeUnmount(() => {
-    alive = false; cancelPendingFollow(); followTimer.dispose(); observer?.disconnect(); observer = null; rowElements.clear();
+    alive = false; cancelPendingFollow(); followTimer.dispose(); spring.dispose(); wordClock.dispose(); lineSprings.clear();
+    observer?.disconnect(); observer = null; rowElements.clear();
     document.removeEventListener('visibilitychange', visibilityChanged);
     window.removeEventListener('resize', measure);
     window.removeEventListener('pointerup', onPointerRelease);

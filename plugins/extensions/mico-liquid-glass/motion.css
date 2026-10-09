@@ -1,0 +1,7 @@
+/* Hero 与菜单只在插件视图挂载时运作；关闭插件撤回本文件。 */
+.mico-immersive-cover { transform-origin: 0 0; }
+.mico-immersive-player[data-mico-hero-phase="opening"] .mico-immersive-cover,
+.mico-immersive-player[data-mico-hero-phase="closing"] .mico-immersive-cover { will-change: transform; }
+.mico-immersive-player[data-mico-hero-phase="closing"] { pointer-events: none; }
+.mico-immersive-menu-anchor[data-mico-menu-phase="opening"] .mico-immersive-menu,
+.mico-immersive-menu-anchor[data-mico-menu-phase="closing"] .mico-immersive-menu { will-change: transform; }
