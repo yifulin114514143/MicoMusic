@@ -20,6 +20,7 @@ html[data-mico-liquid-glass="on"] .mico-immersive-lyrics::-webkit-scrollbar { di
 html[data-mico-liquid-glass="on"] .mico-lyric-content { width: 100%; }
 html[data-mico-liquid-glass="on"] .mico-lyric-spacer { pointer-events: none; }
 html[data-mico-liquid-glass="on"] .mico-lyric-row {
+    position: relative;
     display: block;
     box-sizing: border-box;
     width: 100%;
@@ -39,15 +40,42 @@ html[data-mico-liquid-glass="on"] .mico-lyric-row {
     opacity: var(--mico-line-opacity, 0.3);
     filter: blur(var(--mico-line-blur, 0px));
     transform-origin: left center;
-    transform: translate3d(0, calc(var(--mico-line-shift, 0px) + var(--mico-line-inertia, 0px)), 0);
+    transform: translate3d(var(--mico-line-hover-x, 0px), calc(var(--mico-line-shift, 0px) + var(--mico-line-inertia, 0px) + var(--mico-line-hover-y, 0px)), 0);
     scale: var(--mico-line-scale, 1);
     transition: opacity 480ms ease, filter 480ms ease, scale 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
     transition-delay: var(--mico-line-delay, 0ms);
 }
 html[data-mico-liquid-glass="on"] button.mico-lyric-row { cursor: pointer; }
+/* 当前句的清晰度不再等待原先的 480ms 邻行过渡；错峰延迟只留给周围行。 */
+html[data-mico-liquid-glass="on"] .mico-lyric-active {
+    transition-duration: 100ms, 100ms, 360ms;
+    transition-delay: 0ms;
+}
 html[data-mico-liquid-glass="on"] .mico-lyric-row:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.7); outline-offset: -2px; }
-html[data-mico-liquid-glass="on"] .mico-lyric-row:hover { --mico-line-opacity: 0.85 !important; --mico-line-blur: 0px !important; }
-html[data-mico-liquid-glass="on"] .mico-lyric-primary { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+html[data-mico-liquid-glass="on"] button.mico-lyric-row::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 8px 4px 8px 0;
+    border-radius: 14px;
+    background: radial-gradient(ellipse at var(--mico-line-pointer-x, 35%) var(--mico-line-pointer-y, 50%), rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.045) 72%);
+    opacity: 0;
+    transition: opacity 120ms ease-out;
+    pointer-events: none;
+}
+html[data-mico-liquid-glass="on"] button.mico-lyric-row:hover::before,
+html[data-mico-liquid-glass="on"] button.mico-lyric-row:focus-visible::before { opacity: 1; }
+html[data-mico-liquid-glass="on"] .mico-lyric-row:hover { --mico-line-opacity: 0.92 !important; --mico-line-blur: 0px !important; transition-duration: 100ms, 100ms, 360ms; transition-delay: 0ms; }
+/* 原生参考采样中，进入歌词列或浏览时周围行均变清晰；正常跟随保留距离模糊。
+   这里只调整可读性，不改变 active 判定、逐词填充或歌词源时间。 */
+html[data-mico-liquid-glass="on"] .mico-immersive-lyrics:is(:hover, .mico-lyrics-browsing) .mico-lyric-row:not(.mico-lyric-active):not(.mico-lyric-gap-row) {
+    filter: blur(0px);
+    opacity: max(0.62, var(--mico-line-opacity, 0.62));
+    transition-duration: 100ms, 100ms, 360ms;
+    transition-delay: 0ms;
+}
+/* 源词组可以覆盖整句；为最大1.025倍中心放大预留右侧空间，不裁字或拆造时间。 */
+html[data-mico-liquid-glass="on"] .mico-lyric-primary { display: block; padding-inline-end: 1.5%; white-space: pre-wrap; overflow-wrap: anywhere; }
 html[data-mico-liquid-glass="on"] .mico-lyric-secondary {
     display: block;
     margin-top: 10px;
@@ -59,10 +87,19 @@ html[data-mico-liquid-glass="on"] .mico-lyric-secondary {
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
-html[data-mico-liquid-glass="on"] .mico-lyric-token { display: inline-grid; max-width: 100%; vertical-align: baseline; white-space: pre-wrap; }
+html[data-mico-liquid-glass="on"] .mico-lyric-token {
+    display: inline-grid;
+    max-width: 100%;
+    vertical-align: baseline;
+    white-space: pre-wrap;
+    transform: translate3d(0, var(--mico-word-lift, 0px), 0) scale(var(--mico-word-scale, 1));
+    transform-origin: center bottom;
+}
 html[data-mico-liquid-glass="on"] .mico-lyric-token-base,
 html[data-mico-liquid-glass="on"] .mico-lyric-token-fill { grid-area: 1 / 1; }
 html[data-mico-liquid-glass="on"] .mico-lyric-token-base { color: rgba(255, 255, 255, 0.43); }
+html[data-mico-liquid-glass="on"] .mico-immersive-lyrics:is(:hover, .mico-lyrics-browsing) .mico-lyric-row:not(.mico-lyric-active) .mico-lyric-token-base { color: rgba(255, 255, 255, 0.72); }
+html[data-mico-liquid-glass="on"] .mico-lyric-active:hover .mico-lyric-token-base { color: rgba(255, 255, 255, 0.62); }
 html[data-mico-liquid-glass="on"] .mico-lyric-token-fill {
     color: white;
     clip-path: inset(0 calc(100% - var(--mico-word-fill, 0%)) 0 0);
@@ -127,10 +164,14 @@ html[data-mico-liquid-glass="on"] .mico-lyric-resume {
 }
 html[data-mico-liquid-glass="on"] .mico-lyric-resume:focus-visible { outline: 2px solid white; outline-offset: 3px; }
 html[data-mico-liquid-glass="on"] .mico-lyrics-reduced .mico-lyric-row,
+html[data-mico-liquid-glass="on"] .mico-lyrics-reduced .mico-lyric-token,
 html[data-mico-liquid-glass="on"] .mico-lyrics-reduced .mico-lyric-token-fill,
-html[data-mico-liquid-glass="on"] .mico-lyrics-reduced .mico-lyric-gap-dot { transition: none; transform: none; scale: 1; }
+html[data-mico-liquid-glass="on"] .mico-lyrics-reduced .mico-lyric-gap-dot { transition: none !important; transform: none; scale: 1; }
+html[data-mico-liquid-glass="on"] .mico-lyrics-reduced button.mico-lyric-row::before { transition: none; }
 @media (prefers-reduced-motion: reduce) {
     html[data-mico-liquid-glass="on"] .mico-lyric-row,
+    html[data-mico-liquid-glass="on"] .mico-lyric-token,
     html[data-mico-liquid-glass="on"] .mico-lyric-token-fill,
-    html[data-mico-liquid-glass="on"] .mico-lyric-gap-dot { transition: none; transform: none; scale: 1; }
+    html[data-mico-liquid-glass="on"] .mico-lyric-gap-dot { transition: none !important; transform: none; scale: 1; }
+    html[data-mico-liquid-glass="on"] button.mico-lyric-row::before { transition: none; }
 }

@@ -140,7 +140,7 @@ export function getTokenProgress(token, seconds) {
     return Math.max(0, Math.min(1, (time - token.startMs) / (token.endMs - token.startMs)));
 }
 
-// 只在真实词组正在填充、或即将开始时请求逐帧时钟；行级回退没有动画任务。
+// 此函数只判断词组是否正在填充，不作为播放采样钟的启停依据。
 export function hasWordMotion(row, seconds, lookAheadSeconds = 0.35) {
     if (!row?.hasWordTiming) return false;
     const time = clockMilliseconds(seconds);
@@ -148,6 +148,24 @@ export function hasWordMotion(row, seconds, lookAheadSeconds = 0.35) {
     return row.tokens.some(token => token.timed && token.endMs > time && token.startMs <= horizon);
 }
 
+// 行边界也需要逐帧采样。仅跟着当前词组启停会在前奏、换行间隙和整行模式中
+// 回到父播放器的节流 timeupdate，下一句已开始后才唤醒。保持原歌词时间不变。
+export function hasLyricClockWork(rows, seconds) {
+    if (!validTime(seconds)) return false;
+    const { voiced, blank } = getTimelineIndex(rows);
+    if (!voiced.rows.length) return false;
+    const finalEnd = Math.max(voiced.ends.at(-1) ?? -1, blank.ends.at(-1) ?? -1);
+    return clockMilliseconds(seconds) < finalEnd;
+}
+
+// 抬升只使用同一个真实词组进度，不拆分词组、不补造字符时间，也不另开动画钟。
+export function getTokenPresentation(token, seconds, reduceMotion = false) {
+    const progress = getTokenProgress(token, seconds);
+    const lift = !reduceMotion && progress > 0 && progress < 1 ? Math.sin(Math.PI * progress) : 0;
+    return { progress, translateY: lift ? -3.2 * lift : 0, scale: 1 + 0.025 * lift };
+}
+
+// 接口名保留兼容；它现在同时更新行边界、间奏和逐词进度。
 // 时钟来自真实音频元素，绝不根据歌词长度或 RAF 时间推算播放进度。
 // buffering 时 audio.currentTime 停住，最多等待 stallMs 后停止帧，新的 timeupdate 可重新唤醒。
 export function createLyricWordClock({ readTime, onTime, requestFrame, cancelFrame, canAnimate,

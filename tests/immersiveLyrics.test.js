@@ -4,7 +4,7 @@ import {
     buildLyricTimeline, buildLyricStageRows, getLyricStageFocus, LYRIC_GAP_MIN_MS, resolveLyricPosition, getTokenProgress, getSeekTime,
     selectSecondaryText, getVirtualWindow, getLinePresentation, createFollowTimer,
     LYRIC_SPRING, LYRIC_SPRING_LIMITS, stepLyricSpring, isLyricSpringSettled,
-    retargetLineSpring, stepLineSpring, createLyricSpring, hasWordMotion, createLyricWordClock
+    retargetLineSpring, stepLineSpring, createLyricSpring, hasWordMotion, hasLyricClockWork, getTokenPresentation, createLyricWordClock
 } from '../src/components/immersive/lyricsTimeline.js';
 import { parseKrcLine } from '../src/components/player/parseKrcLine.js';
 
@@ -139,6 +139,65 @@ test('真实毫秒时间控制逐组渐进填充，旧 highlighted 不影响结�
     assert.equal(getTokenProgress(token, 2), 0.5);
     assert.equal(getTokenProgress(token, 3), 1);
     assert.equal(getTokenProgress(token, 10), 1);
+});
+
+test('前奏、词组空档、整行来源和下一句边界保持采样工作，尾奏与无时间来源停止', () => {
+    const rows = buildLyricTimeline([
+        { startTime: 2000, endTime: 4000, timingSource: 'word', characters: [
+            { char: '前组', startTime: 2000, endTime: 2200 }, { char: '后组', startTime: 3500, endTime: 3700 }
+        ] },
+        lyric(6000, 7000, '整行来源', { timingSource: 'line' })
+    ]);
+    assert.equal(hasWordMotion(rows[0], 0), false);
+    assert.equal(hasLyricClockWork(rows, 0), true, '前奏保持真实时钟采样以捕获第一句起点');
+    assert.equal(hasWordMotion(rows[0], 2.3), false);
+    assert.equal(hasLyricClockWork(rows, 2.3), true, '词组之间不回到父 timeupdate');
+    assert.equal(hasLyricClockWork(rows, 5), true, '行间空档不回到父 timeupdate');
+    assert.equal(hasWordMotion(rows[1], 6.2), false);
+    assert.equal(hasLyricClockWork(rows, 6.2), true, '整行模式仍需准确捕获行边界');
+    assert.equal(hasLyricClockWork(rows, 7), false);
+    assert.equal(hasLyricClockWork(rows, Number.NaN), false);
+    assert.equal(hasLyricClockWork(buildLyricTimeline([{ characters: [{ char: '无时间' }] }]), 0), false);
+    assert.equal(hasLyricClockWork(buildLyricTimeline([]), 0), false);
+});
+
+test('真实音频刚跨过行起点便在下一帧切换，不等待下一次父时间通知或增加偏移', () => {
+    const rows = buildLyricTimeline([lyric(2000, 2400, '第一句'), lyric(3000, 3500, '第二句', { timingSource: 'line' })]);
+    const pending = new Map(), samples = []; let id = 0, timestamp = 0, audioTime = 1.95;
+    const clock = createLyricWordClock({
+        readTime: () => audioTime,
+        onTime: time => samples.push({ time, active: resolveLyricPosition(rows, time).activeIndex }),
+        requestFrame(callback) { pending.set(++id, callback); return id; },
+        cancelFrame(key) { pending.delete(key); }, canAnimate: () => true,
+        hasMotion: time => hasLyricClockWork(rows, time), now: () => timestamp
+    });
+    const tick = time => {
+        timestamp += 1000 / 60; audioTime = time;
+        const callbacks = [...pending.values()]; pending.clear();
+        for (const callback of callbacks) callback(timestamp);
+        assert.ok(pending.size <= 1);
+    };
+    clock.sync(); assert.equal(samples.at(-1).active, -1);
+    tick(1.999); assert.equal(samples.at(-1).active, -1);
+    tick(2.004); assert.deepEqual(samples.at(-1), { time: 2.004, active: 0 });
+    tick(2.45); assert.equal(samples.at(-1).active, -1);
+    tick(3.003); assert.deepEqual(samples.at(-1), { time: 3.003, active: 1 });
+    assert.equal(clock.isRunning(), true);
+    tick(3.5); assert.equal(clock.isRunning(), false); assert.equal(pending.size, 0);
+    clock.dispose();
+});
+
+test('词组抬升随真实填充同帧求值，暂停与seek可逆，减弱动效只关闭几何反馈', () => {
+    const token = buildLyricTimeline([lyric(1000, 3000, '一个词组')])[0].tokens[0];
+    const start = getTokenPresentation(token, 1), middle = getTokenPresentation(token, 2), end = getTokenPresentation(token, 3);
+    assert.equal(start.progress, 0); assert.equal(start.translateY, 0); assert.equal(start.scale, 1);
+    assert.equal(middle.progress, getTokenProgress(token, 2));
+    assert.ok(middle.translateY < 0); assert.ok(middle.scale > 1);
+    assert.deepEqual(getTokenPresentation(token, 2), middle, '相同暂停时间产生相同状态');
+    assert.equal(getTokenPresentation(token, 1.5).progress, 0.25, '倒退seek不用旧动画进度');
+    assert.equal(end.progress, 1); assert.equal(end.translateY, 0); assert.equal(end.scale, 1);
+    assert.deepEqual(getTokenPresentation(token, 2, true), { progress: 0.5, translateY: 0, scale: 1 });
+    assert.deepEqual(getTokenPresentation({ timed: false }, 2), { progress: 0, translateY: 0, scale: 1 });
 });
 
 test('逐词 RAF 只读取真实音频时钟，缓冲停住时不推算进度并停止空转', () => {

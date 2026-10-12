@@ -2,7 +2,7 @@
     <section ref="viewport" class="mico-immersive-lyrics" :class="{ 'mico-lyrics-reduced': reduceMotion, 'mico-lyrics-browsing': !following }"
         :style="{ '--mico-lyric-font': fontFamily || 'inherit' }" :data-mico-lyric-phase="position.phase"
         :data-mico-lyric-following="String(following)" :data-mico-lyric-active="position.activeIndex" :data-mico-lyric-clock="wordClockRunning ? 'running' : 'idle'"
-        :data-mico-lyric-stage-focus="followFocusIndex" :data-mico-lyric-gap-key="position.gap?.key || 'none'"
+        :data-mico-lyric-stage-focus="followFocusIndex" :data-mico-lyric-gap-key="position.gap?.key || 'none'" :data-mico-lyric-time="visualTime"
         aria-label="歌词" tabindex="0" @scroll.passive="onScroll" @wheel.passive="beginBrowse"
         @pointerdown="onPointerDown" @touchstart.passive="onTouchStart" @touchmove.passive="beginBrowse" @touchend.passive="onPointerRelease" @touchcancel.passive="onPointerRelease"
         @keydown="onBrowseKey">
@@ -27,11 +27,11 @@
                 :style="presentation(row.index)" :data-mico-lyric-index="row.sourceIndex" :data-mico-lyric-stage-index="row.index"
                 :data-mico-lyric-timing="row.hasWordTiming ? 'word' : 'line'"
                 :type="getSeekTime(row) === null ? undefined : 'button'" :title="getSeekTime(row) === null ? undefined : '从这一句播放'"
-                @click="seekRow(row)">
+                @click="seekRow(row)" @pointermove="onRowPointerMove" @pointerleave="onRowPointerLeave">
                 <span class="mico-lyric-primary">
                     <template v-if="row.hasWordTiming && highlightMode === 'char'">
                         <span v-for="(token, tokenIndex) in row.tokens" :key="tokenIndex" class="mico-lyric-token"
-                            :style="{ '--mico-word-fill': `${getTokenProgress(token, visualTime) * 100}%` }">
+                            :style="tokenPresentation(token)">
                             <span class="mico-lyric-token-base">{{ token.text }}</span>
                             <span class="mico-lyric-token-fill" aria-hidden="true">{{ token.text }}</span>
                         </span>
@@ -52,9 +52,9 @@
 
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { buildLyricTimeline, buildLyricStageRows, getLyricStageFocus, resolveLyricPosition, getTokenProgress, getSeekTime, selectSecondaryText,
+import { buildLyricTimeline, buildLyricStageRows, getLyricStageFocus, resolveLyricPosition, getTokenPresentation, getSeekTime, selectSecondaryText,
     getVirtualWindow, getLinePresentation, createFollowTimer, createLyricSpring,
-    retargetLineSpring, stepLineSpring, isLyricSpringSettled, hasWordMotion, createLyricWordClock } from './lyricsTimeline.js';
+    retargetLineSpring, stepLineSpring, isLyricSpringSettled, hasLyricClockWork, createLyricWordClock } from './lyricsTimeline.js';
 
 const props = defineProps({
     lines: { type: Array, default: () => [] }, time: { type: Number, default: 0 },
@@ -99,17 +99,18 @@ const presentation = index => {
         '--mico-line-delay': `${value.delayMs}ms`, '--mico-line-shift': `${value.translateY}px`,
         '--mico-line-scale': !props.reduceMotion && index === activeStageIndex.value ? 1.03 : 1 };
 };
+const tokenPresentation = token => {
+    const value = getTokenPresentation(token, visualTime.value, props.reduceMotion);
+    return { '--mico-word-fill': `${value.progress * 100}%`, '--mico-word-lift': `${value.translateY}px`, '--mico-word-scale': value.scale };
+};
 const wordClock = createLyricWordClock({
     readTime: () => props.playbackClock ? props.playbackClock() : props.time,
     onTime: time => { visualTime.value = time; },
     requestFrame: callback => window.requestAnimationFrame(callback), cancelFrame: frame => window.cancelAnimationFrame(frame),
     canAnimate: () => alive && isVisible() && props.playing && typeof props.playbackClock === 'function'
-        && props.highlightMode === 'char' && !props.reduceMotion
+        && !props.reduceMotion
         && document.documentElement.getAttribute('data-mico-liquid-glass') === 'on',
-    hasMotion: time => {
-        const active = resolveLyricPosition(rows.value, time).activeIndex;
-        return rowElements.has(sourceStageIndexes.value.get(active)) && hasWordMotion(rows.value[active], time);
-    },
+    hasMotion: time => hasLyricClockWork(rows.value, time),
     onState: running => { wordClockRunning.value = running; }
 });
 const spring = createLyricSpring({
@@ -225,8 +226,30 @@ function seekRow(row) {
     if (seconds === null) return;
     emit('seek', seconds); resumeFollow();
 }
+function onRowPointerMove(event) {
+    if (event.pointerType === 'touch') return;
+    const element = event.currentTarget, rect = element.getBoundingClientRect();
+    const width = element.offsetWidth, height = element.offsetHeight;
+    const x = Math.max(0, Math.min(width, rect.width ? (event.clientX - rect.left) * width / rect.width : 0));
+    const y = Math.max(0, Math.min(height, rect.height ? (event.clientY - rect.top) * height / rect.height : 0));
+    element.style.setProperty('--mico-line-pointer-x', `${x}px`);
+    element.style.setProperty('--mico-line-pointer-y', `${y}px`);
+    if (props.reduceMotion) return;
+    element.style.setProperty('--mico-line-hover-x', `${width ? (x / width - 0.5) * 5 : 0}px`);
+    element.style.setProperty('--mico-line-hover-y', `${height ? (y / height - 0.5) * 3 : 0}px`);
+}
+function onRowPointerLeave(event) {
+    clearRowPointerFeedback(event.currentTarget);
+}
+function clearRowPointerFeedback(element) {
+    element.style.removeProperty('--mico-line-hover-x');
+    element.style.removeProperty('--mico-line-hover-y');
+    element.style.removeProperty('--mico-line-pointer-x');
+    element.style.removeProperty('--mico-line-pointer-y');
+}
 function visibilityChanged() {
     if (!isVisible()) {
+        for (const element of rowElements.values()) clearRowPointerFeedback(element);
         followTimer.cancel(); cancelPendingFollow(); spring.stop(viewport.value?.scrollTop); wordClock.stop(); observer?.disconnect(); pointerHeld = false;
     } else {
         wordClock.sync(); connectObserver(); measure(); if (!following.value) followTimer.arm(); else requestFollow(true);
@@ -254,6 +277,7 @@ watch(() => [props.mode, props.showTranslation, props.fontFamily], () => {
 }, { flush: 'post' });
 watch(() => props.windowVisible, visibilityChanged, { flush: 'sync' });
 watch(() => props.reduceMotion, () => {
+    for (const element of rowElements.values()) clearRowPointerFeedback(element);
     spring.stop(viewport.value?.scrollTop); wordClock.sync(); cancelPendingFollow(); requestFollow(props.reduceMotion);
 }, { flush: 'sync' });
 onMounted(() => {
