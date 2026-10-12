@@ -50,3 +50,9 @@ docs/immersive/evidence/webgl/prior-to-palette-fix/
 docs/immersive/evidence/webgl/failure.png
 docs/immersive/evidence/2026-10-11-visual-regression/failed-attempts/
 docs/immersive/evidence/2026-10-11-visual-regression/failure.png
+artifacts/immersive-reference/
+docs/immersive/evidence/2026-10-12-sync-pointer-regression/failed-attempts/
+docs/immersive/evidence/2026-10-12-sync-pointer-regression/failure.png
+docs/immersive/evidence/2026-10-12-sync-pointer-regression/failure-unthrottled.png
+docs/immersive/evidence/2026-10-12-sync-pointer-regression/11-webgl-motion-capturePage.mp4
+docs/immersive/evidence/2026-10-12-sync-pointer-regression/11-webgl-motion-capturePage-unthrottled.mp4
