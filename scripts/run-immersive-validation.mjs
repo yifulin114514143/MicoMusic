@@ -6,7 +6,7 @@ import electron from 'electron';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const runtime = path.join(root, 'artifacts/immersive-runtime');
-const evidence = path.join(root, 'docs/immersive/evidence/webgl');
+const evidence = path.join(root, 'docs/immersive/evidence/2026-10-11-visual-regression');
 fs.mkdirSync(runtime, { recursive: true });
 fs.mkdirSync(evidence, { recursive: true });
 if (process.platform !== 'darwin') throw new Error('本运行器仅覆盖当前 macOS 原生 Electron；其他平台需另行验收');
@@ -41,7 +41,7 @@ await new Promise((resolve, reject) => {
             const failedAttempt = path.join(evidence, 'failed-attempts', new Date().toISOString().replace(/[:.]/g, '-') + '-' + mode);
             fs.mkdirSync(failedAttempt, { recursive: true });
             fs.writeFileSync(path.join(failedAttempt, reportName + '.log'), log);
-            for (const filename of [reportName + '.json', 'failure' + (mode === 'unthrottled' ? '-unthrottled' : '') + '.png']) {
+            for (const filename of fs.readdirSync(evidence).filter(name=>fs.statSync(path.join(evidence,name)).isFile()&&/\.(json|png|mp4)$/.test(name))) {
                 const source = path.join(evidence, filename);
                 if (fs.existsSync(source)) fs.copyFileSync(source, path.join(failedAttempt, filename));
             }

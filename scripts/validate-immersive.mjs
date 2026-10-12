@@ -21,7 +21,7 @@ app.setPath('logs', path.join(profile, 'logs'));
 app.setPath('temp', path.join(profile, 'temp'));
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 app.on('window-all-closed', () => {});
-const evidence = path.join(root, 'docs/immersive/evidence/webgl');
+const evidence = path.join(root, 'docs/immersive/evidence/2026-10-11-visual-regression');
 fs.mkdirSync(evidence, { recursive: true });
 function sourceState() {
     const files = execFileSync('git', ['ls-files', '-co', '--exclude-standard', '--', 'src', 'electron', 'plugins/extensions/mico-liquid-glass', 'scripts', 'tests', 'package.json'], { cwd: root, encoding: 'utf8' }).trim().split('\n').filter(Boolean);
@@ -37,7 +37,7 @@ function sourceState() {
         sourceFiles, rendererFiles, interpretation: '当前工作树与生产构建；含未提交源码，不能只用 HEAD 标识本次运行内容' };
 }
 const report = { timestamp: new Date().toISOString(), mode, backgroundThrottling: mode !== 'unthrottled', electron: process.versions.electron, chromium: process.versions.chrome,
-    platform: process.platform, validationRevision: 'webgl-hero-spring', sourceState: sourceState(), checks: [], observations: {},
+    platform: process.platform, validationRevision: 'menu-dark-lyric-gap-fluid-cadence-2026-10-11', sourceState: sourceState(), checks: [], observations: {},
     isolation: { userData: app.getPath('userData'), logs:app.getPath('logs'), temp:app.getPath('temp'), executable:app.getPath('exe'),
         interpretation:'仅本工作树 artifacts/immersive-runtime 中复制的Electron bundle与临时profile，不读取或迁移已安装音乐客户端profile' },
     limitations: ['真实生产 Vue/PlayerControl/AudioController/插件加载器的隔离 Electron 宿主；不是完整发行版主进程',
@@ -79,11 +79,13 @@ const fixtureLines = [
 const translations = fixtureLines.map((_, index) => [`技术歌词翻译 ${index + 1}：这是原创的隔离验证文本`]);
 const language = Buffer.from(JSON.stringify({ content: [{ type: 1, lyricContent: translations },
     { type: 0, lyricContent: fixtureLines.map((_, index) => [`romanization ${index + 1}`]) }] })).toString('base64');
+const fixtureStartsMs = [0, 12000, 24000, 40000, 52000, 64000, 76000, 88000, 100000];
 const krc = `[language:${language}]\n` + fixtureLines.map((words, index) => {
     const step = 10000 / words.length;
-    return `[${index * 12000},10000]` + words.map((word, token) => `<${Math.round(token * step)},${Math.round(step)},0>${word}`).join('');
+    return `[${fixtureStartsMs[index]},10000]` + words.map((word, token) => `<${Math.round(token * step)},${Math.round(step)},0>${word}`).join('');
 }).join('\n');
 const cover = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="warm" x2="1" y2="1"><stop stop-color="#ffaf36"/><stop offset=".48" stop-color="#ee5a21"/><stop offset="1" stop-color="#653552"/></linearGradient></defs><rect width="800" height="800" fill="url(#warm)"/><circle cx="560" cy="240" r="260" fill="#fbe698" opacity=".4"/><path d="M-100 690L440 120L970 830" fill="none" stroke="#f5c747" stroke-width="110" opacity=".6"/><text x="60" y="140" fill="white" font-family="sans-serif" font-size="80" font-weight="700">MICO</text><text x="62" y="208" fill="white" font-family="sans-serif" font-size="36">IMMERSIVE VALIDATION</text></svg>`;
+const brightCover = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><rect width="800" height="800" fill="#fff"/><path d="M90 730L260 270L360 360L500 680" fill="#182132"/><path d="M170 620C210 460 460 620 630 340" fill="none" stroke="#de801d" stroke-width="40"/><circle cx="550" cy="270" r="74" fill="#f2b63d"/><circle cx="550" cy="270" r="28" fill="#243443"/><circle cx="660" cy="460" r="60" fill="#e09827"/><circle cx="660" cy="460" r="24" fill="#243443"/><text x="60" y="120" fill="#172132" font-family="sans-serif" font-size="68" font-weight="700">WHITE CANVAS</text><text x="60" y="184" fill="#b36814" font-family="sans-serif" font-size="26">ORIGINAL HIGH CONTRAST FIXTURE</text></svg>`;
 async function serveFixtures() {
     const waves = [makeWav(220), makeWav(330)];
     let base;
@@ -93,6 +95,7 @@ async function serveFixtures() {
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
         if (url.pathname === '/fixture-cover.svg') { res.setHeader('Content-Type', 'image/svg+xml'); res.end(cover); return; }
+        if (url.pathname === '/fixture-cover-bright.svg') { res.setHeader('Content-Type', 'image/svg+xml'); res.end(brightCover); return; }
         if (url.pathname === '/fixture-cover-missing.svg') { res.writeHead(404); res.end('fixture: intentional missing cover'); return; }
         if (['/fixture-a.wav', '/fixture-b.wav'].includes(url.pathname)) {
             const bytes = waves[url.pathname === '/fixture-a.wav' ? 0 : 1];
@@ -103,7 +106,7 @@ async function serveFixtures() {
             res.setHeader('Content-Length', end - start + 1); res.end(bytes.subarray(start, end + 1)); return;
         }
         let data;
-        if (url.pathname === '/search/lyric') data = { status: 200, candidates: url.searchParams.get('hash') === 'immersive-a' ? [{ id: 'fixture-krc-a', accesskey: 'fixture-access-key' }] : [] };
+        if (url.pathname === '/search/lyric') data = { status: 200, candidates: ['immersive-a', 'immersive-c'].includes(url.searchParams.get('hash')) ? [{ id: 'fixture-krc-a', accesskey: 'fixture-access-key' }] : [] };
         else if (url.pathname === '/lyric') data = { status: 200, decodeContent: krc };
         else if (url.pathname === '/song/url') data = { status: 1, url: [base + (url.searchParams.get('hash') === 'immersive-b' ? '/fixture-b.wav' : '/fixture-a.wav')], timeLength: duration, extName: 'wav' };
         else if (url.pathname === '/register/dev') data = { status: 1, data: { dfid: 'isolated-technical-fixture' } };
@@ -270,8 +273,143 @@ function pixelDifference(first, second) {
     const pixels = first.pixels.length / 4;
     return { meanChannelDifference: sum / pixels / 3, changedPixelFraction: changed / pixels };
 }
+async function measuredFlowCadence() {
+    const began = await evaluate(main, 'performance.now()');
+    const hostRAF = frames();
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    const finished = await evaluate(main, 'performance.now()'), snapshot = await state();
+    const record = snapshot.gl.find(item => item.canvasId === 'mico-liquid-glass-canvas' && Object.values(item.active).some(Boolean));
+    assert.ok(record, '流畅度采样使用当前仍活动的真实 GL 上下文');
+    const times = record.frameTimesMs.filter(value => value >= began && value <= finished);
+    const intervals = times.slice(1).map((value, index) => value - times[index]);
+    const sorted = [...intervals].sort((a, b) => a - b);
+    const measured = { elapsedMs: finished - began, actualFrames: times.length,
+        actualFps: (times.length - 1) * 1000 / (times.at(-1) - times[0]),
+        medianMs: sorted[Math.floor(sorted.length * .5)], p95Ms: sorted[Math.floor(sorted.length * .95)],
+        maxMs: sorted.at(-1), over33Ms: intervals.filter(value => value > 33.4).length, frameTimestampsMs: times,
+        hostRAF: await hostRAF, audio: snapshot.audio,
+        interpretation: '插件隔离世界实际自然默认 framebuffer 绘制任务，每任务多个玻璃 draw 只计一帧；host RAF 另记，未人为调用 draw；3秒短样本仅覆盖本机可见播放' };
+    report.observations.actualFluidCadence = measured;
+    check('可见播放流体实际绘制达到至少50fps且帧间隔稳定', !snapshot.audio.paused && measured.actualFrames >= 140 &&
+        measured.actualFps >= 50 && measured.medianMs <= 22 && measured.p95Ms <= 34, measured);
+}
+async function naturalMenuGeometry(label) {
+    const measured = await evaluate(main, `(() => {
+        const menu=document.querySelector('#mico-immersive-options'), cover=document.querySelector('.mico-immersive-cover');
+        const a=menu.getBoundingClientRect(), b=cover.getBoundingClientRect();
+        const rect=r=>({x:r.x,y:r.y,width:r.width,height:r.height});
+        const action=menu.querySelector('.mico-immersive-menu-action'), r=action.getBoundingClientRect();
+        return {menu:rect(a),cover:rect(b),viewport:{width:innerWidth,height:innerHeight},
+            intersection:{width:Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left)),height:Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top))},
+            controlAboveGlass:document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.closest('.mico-immersive-menu-action')===action,
+            contentOpacity:Number(getComputedStyle(menu.querySelector('.mico-immersive-menu-content')).opacity),
+            placement:document.querySelector('.mico-immersive-player').getAttribute('data-mico-menu-placement')};
+    })()`);
+    check(label + '菜单自然布局与封面无交叠且文字控件可交互', measured.intersection.width * measured.intersection.height < 1 &&
+        measured.controlAboveGlass && measured.contentOpacity >= .99 && measured.menu.x >= 0 && measured.menu.y >= 0 &&
+        measured.menu.x + measured.menu.width <= measured.viewport.width + 1 && measured.menu.y + measured.menu.height <= measured.viewport.height + 1, measured);
+    return measured;
+}
+async function naturalMenuOpening(label) {
+    const samples=await evaluate(main,`new Promise((resolve,reject)=>{
+        const samples=[],started=performance.now();
+        const sampleFrame=()=>{
+            if(performance.now()-started>2500){reject(new Error('菜单自然液体展开超时'));return;}
+            const menu=document.querySelector('#mico-immersive-options'),cover=document.querySelector('.mico-immersive-cover');
+            if(!menu){requestAnimationFrame(sampleFrame);return;}
+            const a=menu.getBoundingClientRect(),b=cover.getBoundingClientRect(),style=getComputedStyle(menu),content=getComputedStyle(menu.querySelector('.mico-immersive-menu-content'));
+            document.dispatchEvent(new CustomEvent('mico-validation-observation-request'));
+            const gl=JSON.parse(document.documentElement.getAttribute('data-mico-validation-plugin-observation')).gl.find(record=>record.canvasId==='mico-liquid-glass-canvas'&&Object.values(record.active).some(Boolean));
+            const fluid=JSON.parse(document.querySelector('.mico-immersive-background').getAttribute('data-mico-fluid-state'));
+            const sample={elapsedMs:performance.now()-started,anchorPhase:document.querySelector('.mico-immersive-menu-anchor').getAttribute('data-mico-menu-phase'),
+                rect:{x:a.x,y:a.y,width:a.width,height:a.height},viewport:{width:innerWidth,height:innerHeight},borderRadius:style.borderRadius,transform:style.transform,
+                contentOpacity:Number(content.opacity),inert:menu.inert,
+                glFrames:fluid.frameCount,glTime:fluid.timeSeconds,rectUniforms:gl?.rectUniforms||[],
+                intersectionArea:Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left))*Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)),
+                animations:menu.getAnimations().map(animation=>({playState:animation.playState,duration:animation.effect?.getTiming().duration}))};
+            samples.push(sample);
+            if(sample.anchorPhase==='open'){resolve(samples);return;}
+            requestAnimationFrame(sampleFrame);
+        };
+        const button=document.querySelector('.mico-immersive-more');button.focus();button.click();requestAnimationFrame(sampleFrame);
+    })`);
+    const moving=samples.filter(sample=>sample.anchorPhase==='opening');
+    const final=samples.at(-1),early=moving.filter(sample=>sample.elapsedMs<=120),revealed=moving.filter(sample=>sample.contentOpacity>.05);
+    check(label+'菜单液体展开中实际轮廓持续变形且不穿过封面',moving.length>=3&&new Set(moving.map(sample=>sample.transform)).size>=3&&
+        moving.every(sample=>sample.intersectionArea<1&&sample.inert)&&early.every(sample=>sample.contentOpacity<=.01)&&
+        revealed.every(sample=>sample.rect.width/final.rect.width>=.6&&sample.rect.height/final.rect.height>=.6)&&final.contentOpacity>=.99,
+        {samples,interpretation:'读取原生WAAPI期间真实DOMRect/transform/圆角/文本opacity；未人工translate菜单，也未跳过中间帧'});
+    report.observations.menuOpeningFrames??={};report.observations.menuOpeningFrames[label]=samples;
+}
+async function nativeMenuPointer() {
+    const target=await evaluate(main,`(() => {const node=document.querySelector('.mico-immersive-menu-field > span'),r=node.getBoundingClientRect();
+        const x=r.x+r.width/2,y=r.y+r.height/2;return {x,y,hit:document.elementFromPoint(x,y)===node||node.contains(document.elementFromPoint(x,y))};})()`);
+    check('菜单原生点击坐标来自当前实测标签且命中自身',target.hit,target);
+    testActions.push({action:'native menu label pointer',...target,time:Date.now()});
+    main.webContents.sendInputEvent({type:'mouseMove',x:Math.round(target.x),y:Math.round(target.y)});
+    main.webContents.sendInputEvent({type:'mouseDown',button:'left',x:Math.round(target.x),y:Math.round(target.y),clickCount:1});
+    main.webContents.sendInputEvent({type:'mouseUp',button:'left',x:Math.round(target.x),y:Math.round(target.y),clickCount:1});
+    await new Promise(resolve=>setTimeout(resolve,80));
+    check('原生pointerdown点击菜单内部不被根层菜单误判为外部并关闭',await evaluate(main,`document.querySelector('.mico-immersive-menu-anchor')?.getAttribute('data-mico-menu-phase')==='open'&&Boolean(document.querySelector('#mico-immersive-options'))`));
+}
+async function menuContrastEvidence(label) {
+    const samples = await evaluate(main, `(() => {
+        const menu=document.querySelector('#mico-immersive-options');
+        const canvas=document.createElement('canvas');canvas.width=1;canvas.height=1;const ctx=canvas.getContext('2d');
+        return [...menu.querySelectorAll('.mico-immersive-menu-action, .mico-immersive-menu-field > span')].map((node,index)=>{
+            const r=node.getBoundingClientRect();ctx.clearRect(0,0,1,1);ctx.fillStyle=getComputedStyle(node).color;ctx.fillRect(0,0,1,1);
+            return {name:'menu-text-'+index,x:r.x+Math.min(r.width/2,60),y:r.y+r.height/2,width:3,height:3,color:Array.from(ctx.getImageData(0,0,1,1).data)};
+        });
+    })()`);
+    const background=await readOutputCanvas('.mico-immersive-background-canvas',samples), overlay=await readOutputCanvas('.mico-immersive-glass-overlay',samples);
+    const luminance=rgb=>rgb.map(value=>value/255).map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4).reduce((sum,value,index)=>sum+value*[.2126,.7152,.0722][index],0);
+    const contrasts=samples.map((sample,index)=>{
+        const under=background.regions[index].pixels, glass=overlay.regions[index].pixels, ratios=[];
+        for(let pixel=0;pixel<under.length;pixel+=4){
+            const alpha=glass[pixel+3]/255, material=[0,1,2].map(channel=>glass[pixel+channel]*alpha+under[pixel+channel]*(1-alpha));
+            const ink=[0,1,2].map(channel=>sample.color[channel]*(sample.color[3]/255)+material[channel]*(1-sample.color[3]/255));
+            const light=luminance(ink),dark=luminance(material);ratios.push((Math.max(light,dark)+.05)/(Math.min(light,dark)+.05));
+        }
+        return {name:sample.name,minContrast:Math.min(...ratios),maxContrast:Math.max(...ratios),color:sample.color};
+    });
+    report.observations.menuContrasts??={};report.observations.menuContrasts[label]={contrasts,
+        interpretation:'实际 GL 玻璃 RGBA 与实际背景 RGB 逐像素合成，再与 DOM computed color 计算 WCAG 对比度；不以 CSS tint 字符串代替实际材质，主操作与字段标签要求4.5:1'};
+    check(label+'菜单主操作及字段标签实际背景对比度至少4.5:1',contrasts.length>=8&&contrasts.every(value=>value.minContrast>=4.5),contrasts);
+}
+async function darkModeEvidence() {
+    const before=await state();
+    await evaluate(main, `document.documentElement.classList.add('dark')`);
+    await evaluate(main, `new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))`);
+    const styles=await evaluate(main, `(() => {
+        const html=getComputedStyle(document.documentElement),seek=getComputedStyle(document.querySelector('.mico-immersive-seek'));
+        const volume=getComputedStyle(document.querySelector('.mico-immersive-volume-range'));
+        return {rootFilter:html.filter,rootBlend:html.mixBlendMode,seekBackground:seek.backgroundColor,seekBorder:seek.borderWidth,
+            volumeBackground:volume.backgroundColor,volumeBorder:volume.borderWidth,menuColor:getComputedStyle(document.querySelector('#mico-immersive-options')).color};
+    })()`);
+    check('深色模式撤回整页调暗multiply且seek/音量输入无黑色背景',styles.rootFilter==='none'&&styles.rootBlend==='normal'&&
+        styles.seekBackground==='rgba(0, 0, 0, 0)'&&styles.volumeBackground==='rgba(0, 0, 0, 0)'&&styles.seekBorder==='0px'&&styles.volumeBorder==='0px',styles);
+    await naturalMenuGeometry('深色白亮封面');await menuContrastEvidence('dark-bright');
+    await capture('16-dark-bright-menu');
+    await click('.mico-immersive-more');await waitFor(()=>evaluate(main,`!document.querySelector('#mico-immersive-options')`),'深色菜单关闭');
+    await capture('17-dark-bright-player');
+    await evaluate(main,`document.documentElement.classList.remove('dark')`);
+    continuity('深色模式切换保持原歌曲音频与进度',before,await state(),before.audio.paused);
+}
 async function heroSample(action, opening) {
-    const before = await state(), samples = [], started = Date.now(); await action();
+    const before = await state(), samples = [], started = Date.now();
+    if(!opening)await evaluate(main,`(() => {
+        window.__immersiveValidationHeroEnd=null;
+        const observer=new MutationObserver(()=>{
+            const root=document.querySelector('.mico-immersive-player'),cover=root?.querySelector('.mico-immersive-cover');
+            if(root?.getAttribute('data-mico-hero-phase')!=='closing'||!cover)return;
+            const animation=cover.getAnimations().find(item=>item.effect?.getTiming().duration===450&&item.playState==='running');
+            if(!animation)return;observer.disconnect();
+            animation.finished.then(()=>{const compact=document.querySelector('.player-bar .album-art'),rect=node=>{const r=node.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};};
+                window.__immersiveValidationHeroEnd={cover:rect(cover),origin:rect(compact),coverConnected:cover.isConnected};},error=>{window.__immersiveValidationHeroEnd={error:error.message};});
+        });
+        observer.observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:['data-mico-hero-phase']});
+    })()`);
+    await action();
     await waitFor(async () => {
         const sample = await evaluate(main, `(() => { const root = document.querySelector('.mico-immersive-player'), cover = root?.querySelector('.mico-immersive-cover');
             const r = cover?.getBoundingClientRect(); return { phase: root?.getAttribute('data-mico-hero-phase') || null,
@@ -290,6 +428,12 @@ async function heroSample(action, opening) {
     if (!opening) {
         const hiddenControls = moving.filter(sample => sample.elapsedMs >= 220 && sample.elapsedMs <= 400);
         check('Hero 退场时已消失的控制和歌词保持透明至封面退出完成', hiddenControls.length > 0 && hiddenControls.every(sample => sample.fadeOpacities.every(value => value <= .05)), hiddenControls);
+        const final=await evaluate(main,'window.__immersiveValidationHeroEnd');
+        assert.ok(final?.cover&&final?.origin,'实际Hero完成末帧在DOM移除前可观察');
+        const errorPx=Math.max(...['x','y','width','height'].map(key=>Math.abs(final.cover[key]-final.origin[key])));
+        check('Hero自然完成末帧准确落到真实小封面位置',final.coverConnected&&errorPx<2,{...final,maxGeometryErrorPx:errorPx,
+            interpretation:'监听当前真实450ms WAAPI的finished；在Vue卸载前直接读取封面和生产compactCover同一DOMRect；未强制finish或猜测小封面坐标'});
+        report.observations.heroClosingFinalFrames??=[];report.observations.heroClosingFinalFrames.push({...final,maxGeometryErrorPx:errorPx});
     }
     const after = await state(); continuity(opening ? 'Hero 入场复用现有 Audio' : 'Hero 退场复用现有 Audio', before, after, before.audio.paused);
     return samples;
@@ -326,6 +470,19 @@ async function menuReversal() {
     await click('.mico-immersive-more');
     await waitFor(() => evaluate(main, `!document.querySelector('#mico-immersive-options')`), '菜单退场后实际移除');
 }
+async function menuHeroInterruption() {
+    const before=await state();
+    await click('.mico-immersive-more');
+    await waitFor(()=>evaluate(main,`document.querySelector('.mico-immersive-menu-anchor')?.getAttribute('data-mico-menu-phase')==='opening'`),'退出组合前菜单正在展开');
+    await new Promise(resolve=>setTimeout(resolve,100));
+    await heroSample(()=>click('.mico-immersive-close'),false);
+    await waitFor(async()=>{const s=await state();return s.immersive===0&&s.legacy===0;},'菜单展开途中Hero退出结束');
+    check('菜单展开中退出完整撤回菜单与全部自有canvas/GL',await evaluate(main,`!document.querySelector('#mico-immersive-options')`)&&
+        (await state()).ownedCanvases===0&&glLiveResources(await state())===0);
+    continuity('菜单展开中直接退出保留唯一Audio及暂停状态',before,await state(),before.audio.paused);
+    await heroSample(()=>click('.player-bar .album-art'),true);
+    check('组合动画退出后重入没有遗留打开菜单',await evaluate(main,`!document.querySelector('#mico-immersive-options')&&document.querySelector('.mico-immersive-more').getAttribute('aria-expanded')==='false'`));
+}
 async function fluidAndGlassEvidence() {
     await waitFor(async () => { const now = await state(); return now.fluid?.phase === 'ready' && now.fluid.paletteStatus === 'loaded' && now.fluid.paletteSource === 'cover' && now.gl.some(record => record.draws > 0); }, '插件隔离世界真实 WebGL、封面提色与自然 draw');
     await new Promise(resolve => setTimeout(resolve, 1700));
@@ -342,6 +499,7 @@ async function fluidAndGlassEvidence() {
         (await state()).fluid.timeSeconds > start.fluid.timeSeconds, difference);
     report.observations.fluidPixelReadback = { first:pixelSummary(first.regions[0]), second:pixelSummary(second.regions[0]), difference,
         interpretation:'真实GL流体绘制后复制到可见2d背景输出，读取实际像素；不调用额外draw，不以CSS animation状态代替像素运动' };
+    await measuredFlowCadence();
     check('实际封面安全上传并自然绘入单 GL 场景纹理供玻璃折射', (await state()).fluid.coverSceneStatus === 'ready' && (await state()).fluid.coverSceneDraws > 0 && !(await state()).fluid.coverSceneError && (await state()).ownedCanvases === 3, (await state()).fluid);
     await click('.mico-immersive-play'); await waitFor(async () => (await state()).audio.paused, '玻璃差分前暂停同一真实 Audio');
     await stoppedGL('暂停并完成有限过渡后 GL 帧与时间停止');
@@ -368,23 +526,16 @@ async function fluidAndGlassEvidence() {
     const unfocused=await readOutputCanvas('.mico-immersive-glass-overlay',[{name:'seek-focus',...seekBox}]), differenceFocus=pixelDifference(focused.regions[0],unfocused.regions[0]);
     check('暂停时键盘focus/blur刷新真实玻璃滑块且保持音频暂停', differenceFocus.changedPixelFraction>.01 && focusShapes>(await state()).fluid.shapes && (await state()).audio.paused,
         {focused:pixelSummary(focused.regions[0]),unfocused:pixelSummary(unfocused.regions[0]),difference:differenceFocus,focusShapes,blurShapes:(await state()).fluid.shapes});
-    await click('.mico-immersive-more');
-    await waitFor(() => evaluate(main, `document.querySelector('.mico-immersive-menu-anchor')?.getAttribute('data-mico-menu-phase') === 'open'`), '光学材质菜单打开');
+    await naturalMenuOpening('暖色');
     const box = await evaluate(main, `(() => { const r = document.querySelector('#mico-immersive-options').getBoundingClientRect(); return {x:r.x+10,y:r.y+10,width:60,height:60}; })()`);
     const pointerFrame = () => { main.webContents.sendInputEvent({ type:'mouseMove', x:8, y:10 }); };
     const open = await readGL([{name:'menu',...box}], pointerFrame);
-    const overlap = await evaluate(main, `(() => { const menu=document.querySelector('#mico-immersive-options'), cover=document.querySelector('.mico-immersive-cover');
-        const a=menu.getBoundingClientRect(), b=cover.getBoundingClientRect();
-        const left=Math.max(a.left,b.left), right=Math.min(a.right,b.right), top=Math.max(a.top,b.top), bottom=Math.min(a.bottom,b.bottom);
-        const action=menu.querySelector('.mico-immersive-menu-action'), r=action.getBoundingClientRect();
-        return {intersection:{x:left,y:top,width:Math.max(0,right-left),height:Math.max(0,bottom-top)},
-            controlAboveGlass:document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.closest('.mico-immersive-menu-action')===action,
-            overlayZ:getComputedStyle(document.querySelector('.mico-immersive-glass-overlay')).zIndex};
-    })()`);
-    check('玻璃菜单覆盖封面区域且 DOM 文本与按钮仍可交互', overlap.intersection.width > 20 && overlap.intersection.height > 20 && overlap.controlAboveGlass, overlap);
-    const overlay = await readOutputCanvas('.mico-immersive-glass-overlay', [{name:'cover-menu-intersection', x:overlap.intersection.x+4,y:overlap.intersection.y+4,width:16,height:16}]);
-    check('封面交叠区域实际透明玻璃输出含折射颜色与alpha', overlay.regions[0].pixels.some((value,index)=>index%4===3&&value>0) && overlay.regions[0].pixels.some((value,index)=>index%4!==3&&value>0), pixelSummary(overlay.regions[0]));
-    await capture('13-glass-cover-overlap');
+    await naturalMenuGeometry('暖色封面');
+    await nativeMenuPointer();
+    const overlay = await readOutputCanvas('.mico-immersive-glass-overlay', [{name:'natural-menu-glass', ...box,width:16,height:16}]);
+    check('自然菜单区域实际玻璃输出含折射颜色与alpha', overlay.regions[0].pixels.some((value,index)=>index%4===3&&value>0) && overlay.regions[0].pixels.some((value,index)=>index%4!==3&&value>0), pixelSummary(overlay.regions[0]));
+    await menuContrastEvidence('warm');
+    await capture('13-glass-natural-menu');
     await click('.mico-immersive-more'); await waitFor(() => evaluate(main, `!document.querySelector('#mico-immersive-options')`), '光学材质菜单关闭');
     const closed = await readGL([{name:'menu',...box}], () => { main.webContents.sendInputEvent({ type:'mouseMove',x:8,y:9 }); });
     const materialDifference = pixelDifference(open.regions[0], closed.regions[0]);
@@ -392,6 +543,7 @@ async function fluidAndGlassEvidence() {
     report.observations.glassPixelReadback = { menuRegion:box, open:pixelSummary(open.regions[0]), closed:pixelSummary(closed.regions[0]), difference:materialDifference,
         interpretation:'暂停背景后比较菜单有无时同区域GL像素；排除HTML字形与CSS层，仅证明光学shader真实输出，视觉等效仍由用户评审' };
     await menuReversal();
+    await menuHeroInterruption();
     await click('.mico-immersive-play'); await waitFor(async () => !(await state()).audio.paused, '光学材质比较后恢复原 Audio');
     await recordMotionVideo();
     const beforeLoss = await state();
@@ -414,36 +566,97 @@ async function fluidAndGlassEvidence() {
     await waitFor(async () => { const now=await state(); return now.fluid?.phase==='ready' && now.fluid.coverSceneStatus==='ready' && now.gl.some(record=>record.losses>0&&record.restores>0); }, '真实 contextrestored 重建纹理并恢复');
     continuity('上下文 loss/restore 保留原 Audio、歌曲和文档', beforeLoss, await state());
 }
-async function recordMotionVideo() {
+async function recordMotionVideo(captureMethod='capturePage') {
     const encoder = '/opt/homebrew/bin/ffmpeg';
     assert.ok(fs.statSync(encoder, { throwIfNoEntry: false })?.isFile(), '已读取现有 ffmpeg 编码器，未安装新依赖');
-    const filename = '11-webgl-motion' + (mode === 'unthrottled' ? '-unthrottled' : '') + '.mp4';
-    const destination = path.join(evidence, filename), timestamps = [];
-    const child = spawn(encoder, ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'image2pipe', '-vcodec', 'mjpeg', '-framerate', '10', '-i', 'pipe:0',
-        '-an', '-c:v', 'libx264', '-preset', 'fast', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', destination], { stdio: ['pipe', 'ignore', 'pipe'] });
+    const filename = '11-webgl-motion' + (captureMethod==='capturePage'?'-capturePage':'') + (mode === 'unthrottled' ? '-unthrottled' : '') + '.mp4';
+    const destination = path.join(evidence, filename), timestamps = [], encodingTimes = [], presentationTimes = [];
+    const child = spawn(encoder, ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'image2pipe', '-vcodec', 'mjpeg', '-framerate', '60',
+        '-use_wallclock_as_timestamps', '1', '-i', 'pipe:0', '-an', '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '20',
+        '-fps_mode', 'vfr', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', destination], { stdio: ['pipe', 'ignore', 'pipe'] });
     let errors = ''; child.stderr.on('data', chunk => { errors += chunk; });
     const completion = new Promise((resolve, reject) => { child.on('error', reject); child.on('exit', code => code === 0 ? resolve() : reject(new Error('真实帧 MP4 编码失败：' + errors))); });
-    const started = performance.now();
+    completion.catch(()=>{}); // 同一Promise仍在收尾时await；避免编码器提前失败成为未处理拒绝。
+    const started = performance.now();let accepting=true,backpressure=false,throttleDrops=0,backpressureDrops=0,emptyFrames=0,frameError=null,outputSize=null,nativeImageSize=null;
+    let captureTimer=null,lastHash=null,duplicateFrames=0,captureRequests=0,inFlightDrops=0;
+    const captures=new Set(),captureLatenciesMs=[];
+    child.stdin.on('drain',()=>{backpressure=false;});
+    child.stdin.on('error',error=>{frameError=error;accepting=false;});
+    const processFrame=(frame)=>{
+        if(!accepting)return;
+        const time=performance.now()-started;presentationTimes.push(time);
+        if(frame.isEmpty()){emptyFrames++;return;}
+        if(captureMethod==='subscription'&&timestamps.length&&time-timestamps.at(-1)<15){throttleDrops++;return;}
+        if(backpressure){backpressureDrops++;return;}
+        try{
+            if(!outputSize){nativeImageSize=frame.getSize();outputSize={width:1470,height:Math.round(1470*nativeImageSize.height/nativeImageSize.width/2)*2};}
+            const began=performance.now(),videoFrame=frame.resize({...outputSize,quality:'good'});
+            const encoded=videoFrame.toJPEG(88),hash=createHash('sha256').update(encoded).digest('hex');encodingTimes.push(performance.now()-began);
+            if(hash===lastHash){duplicateFrames++;return;}lastHash=hash;
+            timestamps.push(time);backpressure=!child.stdin.write(encoded);
+        }catch(error){frameError=error;accepting=false;}
+    };
+    if(captureMethod==='subscription'){
+        // 本机Electron39.2.4官方实现把beginFrameSubscription固定限制在30Hz；不用重复帧伪造60fps。
+        main.webContents.beginFrameSubscription(false,processFrame);
+    }else{
+        // 直接采集同一隔离webContents的实际画面，最多两个并发readback；相同JPEG帧去重。
+        captureTimer=setInterval(()=>{
+            if(!accepting)return;
+            if(captures.size>=2){inFlightDrops++;return;}
+            const began=performance.now();captureRequests++;
+            const task=main.webContents.capturePage().then(frame=>{captureLatenciesMs.push(performance.now()-began);processFrame(frame);})
+                .catch(error=>{frameError=error;accepting=false;}).finally(()=>captures.delete(task));
+            captures.add(task);
+        },16);
+    }
+    const stopCapture=async()=>{accepting=false;if(captureTimer!==null)clearInterval(captureTimer);if(captureMethod==='subscription')main.webContents.endFrameSubscription();await Promise.all([...captures]);};
     try {
-        for (let index = 0; index < 80; index++) {
-            if (index === 10) await click('.mico-immersive-more');
-            if (index === 32) await click('.mico-immersive-more');
-            if (index === 48) await click('.mico-immersive-more');
-            if (index === 68) await click('.mico-immersive-more');
-            const elapsed = performance.now() - started;
-            if (elapsed < index * 100) await new Promise(resolve => setTimeout(resolve, index * 100 - elapsed));
-            const frame = await main.webContents.capturePage();
-            timestamps.push(performance.now() - started);
-            const videoFrame=frame.resize({width:1470,height:848});
-            if (!child.stdin.write(videoFrame.toJPEG(90))) await new Promise(resolve => child.stdin.once('drain', resolve));
+        for(const targetMs of [1000,3000,5000,7000]){
+            const wait=targetMs-(performance.now()-started);if(wait>0)await new Promise(resolve=>setTimeout(resolve,wait));
+            await click('.mico-immersive-more');
         }
+        const wait=8000-(performance.now()-started);if(wait>0)await new Promise(resolve=>setTimeout(resolve,wait));
+        await stopCapture();
+        if(frameError)throw frameError;
         child.stdin.end(); await completion;
-    } catch (error) { child.kill(); throw error; }
+    } catch (error) {
+        try { await stopCapture(); }
+        finally {
+            child.stdin.destroy();
+            if(child.exitCode===null&&child.signalCode===null)child.kill();
+            await completion.catch(()=>{});
+        }
+        throw error;
+    }
     const elapsedMs = timestamps.at(-1) - timestamps[0];
-    report.observations.motionVideo = { file: filename, capturedFrames: timestamps.length, elapsedMs, frameTimestampsMs: timestamps,
-        encoder, outputSize:{width:1470,height:848}, jpegQuality:90,
-        interpretation: 'Electron capturePage 连续真实帧由Retina尺寸缩至实际CSS视口尺寸并JPEG90编码后生成10fps约8秒视频；采样时间逐帧记录，没有合成或伪造场景' };
-    check('动态证据由连续实际帧生成至少5秒视频', timestamps.length === 80 && elapsedMs >= 5000 && fs.statSync(destination).size > 1000, report.observations.motionVideo);
+    const probe=path.join(path.dirname(encoder),'ffprobe');assert.ok(fs.statSync(probe,{throwIfNoEntry:false})?.isFile(),'现有ffprobe可读取成片真实元数据');
+    const metadata=JSON.parse(execFileSync(probe,['-v','error','-select_streams','v:0','-show_entries','stream=nb_frames,r_frame_rate,avg_frame_rate,duration:format=duration','-of','json',destination],{encoding:'utf8'}));
+    const actualCapturedFps=(timestamps.length-1)*1000/elapsedMs,stream=metadata.streams[0],videoSeconds=Number(metadata.format.duration);
+    const encodingSorted=[...encodingTimes].sort((a,b)=>a-b);
+    const result = { file: filename,captureMethod,capturedFrames: timestamps.length, elapsedMs, actualCapturedFps, frameTimestampsMs: timestamps,
+        presentationFrames:presentationTimes.length,presentationTimestampsMs:presentationTimes,throttleDrops,backpressureDrops,emptyFrames,
+        captureRequests,inFlightDrops,duplicateFrames,captureLatenciesMs,
+        encodingMedianMs:encodingSorted[Math.floor(encodingSorted.length*.5)],encodingP95Ms:encodingSorted[Math.floor(encodingSorted.length*.95)],
+        encoder,outputSize,nativeImageSize,resizeQuality:'good',jpegQuality:88,ffprobe:metadata,
+        interpretation: '采集同一隔离宿主的真实帧；记录逐帧时间、背压、并发readback跳过及重复帧去重；Retina按实测比例缩小JPEG88编码，输入到达时钟生成VFR成片，不重复帧或加速掉帧；录制编码可能影响宿主，独立GL cadence在录制前另测' };
+    report.observations.motionVideoAttempts??=[];report.observations.motionVideoAttempts.push(result);
+    check(captureMethod+'实际视频保留至少5秒真实采样时长',elapsedMs>=5000&&Number(stream.nb_frames)>=timestamps.length*.95&&
+        videoSeconds>=5&&Math.abs(videoSeconds-elapsedMs/1000)<.5&&fs.statSync(destination).size>1000,result);
+    if(captureMethod==='capturePage'&&actualCapturedFps<50){
+        console.log('直接capturePage实际采样 '+actualCapturedFps.toFixed(2)+'fps，保留本次成片；改用官方固定30Hz订阅记录，不把证据API采样率当运行GLfps。');
+        await recordMotionVideo('subscription');return;
+    }
+    if(captureMethod==='subscription'){
+        result.captureApiCap={electronVersion:'39.2.4',maximumFps:30,
+            source:'https://github.com/electron/electron/blob/v39.2.4/shell/browser/api/frame_subscriber.cc',blobSha:'b3171c433991b87d0a010ff83c3bbce2fa7ff2f1',
+            evidence:'constexpr static int kMaxFrameRate = 30; SetMinCapturePeriod(base::Seconds(1) / kMaxFrameRate)'};
+        check('官方固定30Hz订阅保留至少25fps独立真实帧，运行60Hz另测',process.versions.electron==='39.2.4'&&timestamps.length>=175&&actualCapturedFps>=25,result);
+    }else{
+        check('直接capturePage取得至少50fps独立真实帧',timestamps.length>=350&&actualCapturedFps>=50,result);
+        const canonical='11-webgl-motion'+(mode==='unthrottled'?'-unthrottled':'')+'.mp4';fs.copyFileSync(destination,path.join(evidence,canonical));result.file=canonical;
+    }
+    report.observations.motionVideo=result;
 }
 
 async function audit() {
@@ -458,7 +671,8 @@ async function audit() {
         check('生产插件目录属于本次隔离 profile', manager.getExtensionsDirectory() === path.join(profile, 'extensions'));
         const onboarding = await import('../src/config/onboardingGuide.js');
         const songs = [{ id: 1, hash: 'immersive-a', playHash: 'immersive-a', name: '隔离验收 · Warm Canvas', author: 'MicoMusic 技术音频', img: baseUrl + '/fixture-cover.svg', url: baseUrl + '/fixture-a.wav', timeLength: duration },
-            { id: 2, hash: 'immersive-b', playHash: 'immersive-b', name: '隔离验收 · 无歌词 / 坏封面', author: 'MicoMusic 技术音频', img: baseUrl + '/fixture-cover-missing.svg', url: baseUrl + '/fixture-b.wav', timeLength: duration }];
+            { id: 2, hash: 'immersive-b', playHash: 'immersive-b', name: '隔离验收 · 无歌词 / 坏封面', author: 'MicoMusic 技术音频', img: baseUrl + '/fixture-cover-missing.svg', url: baseUrl + '/fixture-b.wav', timeLength: duration },
+            { id: 3, hash: 'immersive-c', playHash: 'immersive-c', name: '隔离验收 · White Canvas', author: 'MicoMusic 技术音频', img: baseUrl + '/fixture-cover-bright.svg', url: baseUrl + '/fixture-a.wav', timeLength: duration }];
         const initialStorage = [[onboarding.ONBOARDING_GUIDE_INTRO_STORAGE_KEY, onboarding.ONBOARDING_GUIDE_VERSION],
             ...onboarding.onboardingGuideGroups.map(guide => [guide.storageKey || `${onboarding.ONBOARDING_GUIDE_STORAGE_PREFIX}${guide.key}:version`, guide.version]),
             ['settings', JSON.stringify({ navigationMode: 'top', playerBarLayout: 'full', lyricsTranslation: 'on', loudnessNormalization: 'off' })],
@@ -481,7 +695,7 @@ async function audit() {
         await main.loadFile(path.join(root, 'dist/index.html'), { hash: '/settings' });
         await waitFor(async () => { const now = await state(); return now.ready?.success && now.audioCount === 1 && now.audio?.duration === duration && now.nativeVisible === 'true'; }, '生产 Vue/AudioController/WAV 元数据与原生可见性');
         check('真实宿主 helper 经生产 preload 提供可见状态', main.webContents.getBackgroundThrottling() === (mode !== 'unthrottled') && (await state()).nativeVisible === 'true');
-        check('真实生产播放器恢复两歌曲 fixture 队列', await evaluate(main, `JSON.parse(localStorage.getItem('MusicQueue')).queue.length === 2 && Boolean(document.querySelector('.player-bar .album-art'))`));
+        check('真实生产播放器恢复三歌曲 fixture 队列', await evaluate(main, `JSON.parse(localStorage.getItem('MusicQueue')).queue.length === 3 && Boolean(document.querySelector('.player-bar .album-art'))`));
         await installPluginObservers();
         await capture('01-base-entry');
         await heroReversal();
@@ -517,6 +731,13 @@ async function audit() {
         check('宽屏封面与歌词起点匹配附图比例', Math.abs(coverRect.x / wide.width - 0.118) < 0.015 && Math.abs(coverRect.width / wide.width - 0.264) < 0.015 &&
             Math.abs(coverRect.height - coverRect.width) < 1 && Math.abs(lyricsRect.x / wide.width - 0.513) < 0.02, wide);
         await fluidAndGlassEvidence();
+        // 录像长度取决于实际捕获路径；先回到确定的另一句再验证滚动，
+        // 避免当前已经到25秒所在句时把正确的静止误判为缺少弹簧动画。
+        await setInput('.mico-immersive-seek',0);
+        await waitFor(async()=>{
+            const spring=await springState();
+            return spring?.phase==='idle'&&await evaluate(main,`document.querySelector('.mico-immersive-lyrics')?.getAttribute('data-mico-lyric-active')==='0'`);
+        },'弹簧验证从实际第一句静止位置开始');
         await setInput('.mico-immersive-seek', 25, 'input'); await setInput('.mico-immersive-seek', 25);
         await waitFor(async () => Math.abs((await state()).audio.time - 25) < 1.5, '真实 seek');
         check('进度控件调整生产 Audio 当前时间', true, (await state()).audio);
@@ -561,6 +782,16 @@ async function audit() {
         await waitFor(async () => (await state()).fluid?.paletteStatus === 'error' && (await state()).fluid?.paletteSource === 'fallback', '坏封面无法提色时使用保守色板');
         check('坏封面进入 CSS 回退并保留 DOM 控件与唯一音频', (await state()).fluid.phase === 'fallback' && (await state()).audioCount === 1 && (await state()).fluid.coverSceneStatus === 'unavailable' && await evaluate(main, `document.documentElement.getAttribute('data-mico-fluid-renderer')==='css'`), (await state()).fluid);
         await capture('06-no-lyrics-bad-cover');
+        await click('[aria-label="下一首"]');
+        await waitFor(async ()=>(await state()).song?.hash==='immersive-c'&&(await state()).audio.src.endsWith('/fixture-a.wav'),'真实队列切换原创白亮封面歌曲');
+        await waitFor(async ()=>(await state()).fluid?.coverSceneStatus==='ready'&&(await state()).fluid?.phase==='ready'&&Boolean(await evaluate(main,`document.querySelectorAll('.mico-lyric-row').length>0`)),'白亮封面自然上传与歌词解析');
+        await click('.mico-immersive-play');await waitFor(async ()=>(await state()).audio.paused,'白亮菜单视觉检查前暂停真实音频');
+        await naturalMenuOpening('白亮高对比');
+        await naturalMenuGeometry('白亮高对比封面');await menuContrastEvidence('bright');
+        await capture('15-bright-natural-menu');
+        await darkModeEvidence();
+        await click('[aria-label="上一首"]');
+        await waitFor(async ()=>(await state()).song?.hash==='immersive-b','真实队列先返回无歌词歌曲');
         await click('[aria-label="上一首"]');
         await waitFor(async () => (await state()).song?.hash === 'immersive-a' && (await state()).audio.src.endsWith('/fixture-a.wav'), '上一首生产队列回到第一首');
         await waitFor(() => evaluate(main, `document.querySelectorAll('.mico-lyric-row').length > 0 && !document.querySelector('.mico-immersive-cover-fallback')`), '歌词和封面恢复');
@@ -581,8 +812,23 @@ async function audit() {
         const afterFill = await evaluate(main, `[...document.querySelectorAll('.mico-lyric-active .mico-lyric-token')].map(node => node.style.getPropertyValue('--mico-word-fill'))`);
         check('暂停歌词不使用独立计时器继续逐词推进', pausedFill.length === 5 && JSON.stringify(pausedFill) === JSON.stringify(afterFill), { before: pausedFill, after: afterFill });
         await setInput('.mico-immersive-seek', 11);
-        await waitFor(() => evaluate(main, `document.querySelector('.mico-immersive-lyrics')?.getAttribute('data-mico-lyric-phase') === 'interlude' && Boolean(document.querySelector('.mico-lyric-gap'))`), 'KRC 行间空隙提示');
-        check('真实歌词时间空隙显示间奏而不冒充活跃行', await evaluate(main, `document.querySelector('.mico-immersive-lyrics').getAttribute('data-mico-lyric-active') === '-1'`));
+        await waitFor(() => evaluate(main, `document.querySelector('.mico-immersive-lyrics')?.getAttribute('data-mico-lyric-phase') === 'interlude'`), 'KRC 两秒真实换气间隙');
+        check('两秒行间换气不产生悬浮间奏点', await evaluate(main, `!document.querySelector('.mico-lyric-gap')&&document.querySelector('.mico-immersive-lyrics').getAttribute('data-mico-lyric-gap-key')==='none'`));
+        await capture('18-short-gap-no-dots');
+        await setInput('.mico-immersive-seek', 37);
+        await waitFor(()=>evaluate(main,`Boolean(document.querySelector('.mico-lyric-gap-active[data-mico-lyric-gap-start="34000"][data-mico-lyric-gap-end="40000"] .mico-lyric-gap'))`),'真实六秒间奏布局行显示');
+        await waitFor(async()=>{const s=await springState();return s?.phase==='idle'&&Math.abs(s.target-s.scrollTop)<2;},'真实间奏自身布局行跟随结束',4000);
+        const gap=await evaluate(main,`(() => {const stage=document.querySelector('.mico-immersive-lyrics'),row=document.querySelector('.mico-lyric-gap-active'),dots=row.querySelector('.mico-lyric-gap'),r=row.getBoundingClientRect(),v=stage.getBoundingClientRect(),d=dots.getBoundingClientRect();
+            return {active:stage.getAttribute('data-mico-lyric-active'),focus:stage.getAttribute('data-mico-lyric-stage-focus'),rowIndex:row.getAttribute('data-mico-lyric-stage-index'),
+                progress:dots.getAttribute('data-mico-lyric-gap-progress'),centerRatio:(r.y+r.height/2-v.y)/v.height,
+                rowPosition:getComputedStyle(row).position,dotPosition:getComputedStyle(dots).position,dotsInsideRow:d.y>=r.y&&d.bottom<=r.bottom,
+                scrollTop:stage.scrollTop,fills:[...row.querySelectorAll('.mico-lyric-gap-dot')].map(n=>n.style.getPropertyValue('--mico-gap-dot-fill'))};})()`);
+        check('长间奏点位于歌词布局流并跟随自己的行索引',gap.active==='-1'&&gap.focus===gap.rowIndex&&gap.dotsInsideRow&&
+            !['absolute','fixed'].includes(gap.rowPosition)&&!['absolute','fixed'].includes(gap.dotPosition)&&Math.abs(gap.centerRatio-.43)<.02,gap);
+        await new Promise(resolve=>setTimeout(resolve,350));
+        const stableGap=await evaluate(main,`(() => {const s=document.querySelector('.mico-immersive-lyrics'),g=document.querySelector('.mico-lyric-gap');return {progress:g.getAttribute('data-mico-lyric-gap-progress'),scrollTop:s.scrollTop,fills:[...g.querySelectorAll('.mico-lyric-gap-dot')].map(n=>n.style.getPropertyValue('--mico-gap-dot-fill'))};})()`);
+        check('暂停时真实间奏进度与布局稳定无独立计时推进',gap.progress===stableGap.progress&&JSON.stringify(gap.fills)===JSON.stringify(stableGap.fills)&&Math.abs(gap.scrollTop-stableGap.scrollTop)<.5&& (await state()).audio.paused,stableGap);
+        await capture('19-long-gap-in-lyric-flow');
         await setInput('.mico-immersive-seek', 3);
         await evaluate(main, `(() => { const stage = document.querySelector('.mico-immersive-lyrics'); stage.dispatchEvent(new WheelEvent('wheel', { deltaY: 180, bubbles: true })); stage.scrollTop += 180; })()`);
         await waitFor(() => evaluate(main, `document.querySelector('.mico-immersive-lyrics')?.getAttribute('data-mico-lyric-following') === 'false'`), '用户浏览暂停自动跟随');
@@ -622,10 +868,32 @@ async function audit() {
             check('第 ' + (index + 1) + ' 次重载清理旧引擎的 GL 资源和 RAF', disposed?.phase === 'disposed' && disposed.rafPending === false && Object.values(disposed.resources).every(count => count === 0) && disposed.allocations === disposed.deletions, disposed);
             await installPluginObservers();
         }
+        // IPC重载会替换扩展隔离世界；观察器注入时现有GL对象已经创建。
+        // 正常关闭再进入播放器，使后续检查观测真实的新对象创建，而非空记录冒充已释放。
+        await heroSample(()=>click('.mico-immersive-close'),false);
+        await heroSample(()=>click('.player-bar .album-art'),true);
+        check('重载后重新进入的GL对象由当前隔离观察器实际记录',glLiveResources(await state())>0);
         await settings({ lowBlur: true });
         await waitFor(async () => (await state()).background.motion === 'still', '低模糊停止背景流动');
         await stoppedGL('低模糊模式冻结流体并停止持续 GL RAF', {allowStaticControlUpdates:true});
         await capture('08-low-blur');
+        await click('.mico-immersive-play');await waitFor(async()=>(await state()).audio.paused,'低模糊有限菜单动画前暂停同一Audio');
+        // pause/最终timeupdate可使Vue同步最后一个seek value，允许这次有限静态材质更新先完成再取严格停止基线。
+        await new Promise(resolve=>setTimeout(resolve,400));
+        await stoppedGL('低模糊暂停后背景循环完全停止');
+        await naturalMenuOpening('低模糊暂停');
+        const lowBlurFrames=report.observations.menuOpeningFrames['低模糊暂停'].filter(sample=>sample.anchorPhase==='opening'&&sample.elapsedMs>=100&&sample.elapsedMs<=300);
+        const outline=lowBlurFrames.map(sample=>{
+            const menuDraw=sample.rectUniforms.filter(uniform=>uniform.menuErrorPx!==null).sort((a,b)=>a.menuErrorPx-b.menuErrorPx)[0];
+            return {elapsedMs:sample.elapsedMs,frames:sample.glFrames,time:sample.glTime,maxGeometryErrorPx:menuDraw?.menuErrorPx??null,
+                interpretation:'每次真实u_rect上传时与同一时刻菜单DOMRect对照；不把最后绘制的工具按钮当菜单'};
+        });
+        check('低模糊暂停时100至300ms玻璃轮廓随真实DOM变形且流体时间冻结',outline.length>=3&&new Set(outline.map(sample=>sample.frames)).size>=3&&
+            outline.every(sample=>sample.maxGeometryErrorPx!==null&&sample.maxGeometryErrorPx<.5)&&new Set(outline.map(sample=>sample.time)).size===1,outline);
+        await stoppedGL('低模糊暂停菜单展开后无持续GL循环');await capture('21-low-blur-paused-menu');
+        await click('.mico-immersive-more');await waitFor(()=>evaluate(main,`!document.querySelector('#mico-immersive-options')`),'低模糊菜单关闭');
+        await stoppedGL('低模糊暂停菜单关闭后无持续GL循环');
+        await click('.mico-immersive-play');await waitFor(async()=>!(await state()).audio.paused,'低模糊有限动画后恢复同一Audio');
         await settings({ lowBlur: false, reduceMotion: true });
         await waitFor(async () => (await state()).background.motion === 'still', '减少动效停止流动');
         await stoppedGL('减少动效冻结流体并停止持续 GL RAF', {allowStaticControlUpdates:true});
@@ -658,6 +926,9 @@ async function audit() {
         const narrow = await geometry(); report.observations.narrowGeometry = narrow;
         check('窄窗口封面、控制与歌词保持视口内', Object.entries(narrow).filter(([key]) => key.startsWith('.')).every(([, box]) => box.x >= -1 && box.y >= -1 && box.x + box.width <= narrow.width + 1 && box.y + box.height <= narrow.height + 1), narrow);
         await capture('09-narrow');
+        await naturalMenuOpening('窄窗口');await naturalMenuGeometry('窄窗口');await menuContrastEvidence('narrow');
+        await capture('20-narrow-natural-menu');
+        await pressedKey('Escape');await waitFor(()=>evaluate(main,`!document.querySelector('#mico-immersive-options')`),'窄窗口菜单关闭');
         main.setContentSize(1300, 816); await new Promise(resolve => setTimeout(resolve, 250));
         await setInput('.mico-immersive-seek', 3);
         await capture('10-reference-ratio');

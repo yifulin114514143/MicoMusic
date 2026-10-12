@@ -98,7 +98,8 @@ function installImmersiveObservers(pluginWorld = false) {
         let record = contextRecords.get(gl);
         if (record) return record;
         record = { id: contexts.length + 1, type, canvas: new WeakRef(canvas), context: new WeakRef(gl),
-            creates: {}, deletes: {}, active: {}, compiles: [], links: [], draws: 0, losses: 0, restores: 0, paletteUniform: null };
+            creates: {}, deletes: {}, active: {}, compiles: [], links: [], draws: 0, losses: 0, restores: 0, paletteUniform: null,
+            frameTimesMs: [], frameTaskPending: false,rectUniforms:[] };
         contexts.push(record); contextRecords.set(gl, record);
         originalAdd.call(canvas, 'webglcontextlost', () => {
             record.losses++;
@@ -116,7 +117,7 @@ function installImmersiveObservers(pluginWorld = false) {
     for (const name of ['WebGLRenderingContext', 'WebGL2RenderingContext']) {
         const prototype = window[name]?.prototype;
         if (!prototype) continue;
-        for (const method of [...Object.keys(resourceMethods), 'compileShader', 'linkProgram', 'drawArrays', 'drawElements', 'getUniformLocation', 'uniform3fv']) {
+        for (const method of [...Object.keys(resourceMethods), 'compileShader', 'linkProgram', 'drawArrays', 'drawElements', 'getUniformLocation', 'uniform3fv','uniform4fv']) {
             if (!Object.prototype.hasOwnProperty.call(prototype, method) || typeof prototype[method] !== 'function') continue;
             const original = prototype[method];
             prototype[method] = function (...args) {
@@ -138,12 +139,35 @@ function installImmersiveObservers(pluginWorld = false) {
                     if (value) uniformNames.set(value, args[1]);
                 } else if (method === 'uniform3fv') {
                     if (uniformNames.get(args[0]) === 'u_colors[0]') record.paletteUniform = Array.from(args[1]);
+                } else if(method==='uniform4fv') {
+                    if(uniformNames.get(args[0])==='u_rect') {
+                        const rect=Array.from(args[1]),canvas=record.canvas.deref();
+                        const player=canvas?.closest('.mico-immersive-player');
+                        const menu=player?.querySelector('.mico-immersive-menu');
+                        const background=player?.querySelector('.mico-immersive-background');
+                        let menuErrorPx=null;
+                        if(menu&&background){
+                            const bounds=menu.getBoundingClientRect(),origin=background.getBoundingClientRect();
+                            const expected=[bounds.x-origin.x+bounds.width/2,bounds.y-origin.y+bounds.height/2,bounds.width,bounds.height];
+                            menuErrorPx=Math.max(...expected.map((value,index)=>Math.abs(value-rect[index])));
+                        }
+                        record.rectUniforms.push({timeMs:performance.now(),rect,menuErrorPx});
+                    }
                 } else if (method === 'compileShader') {
                     record.compiles.push({ success: this.getShaderParameter(args[0], this.COMPILE_STATUS), info: this.getShaderInfoLog(args[0]) });
                 } else if (method === 'linkProgram') {
                     record.links.push({ success: this.getProgramParameter(args[0], this.LINK_STATUS), info: this.getProgramInfoLog(args[0]) });
                 } else {
                     record.draws++;
+                    // 每次自然生产绘制中的首个默认 framebuffer draw 标记一帧；同一任务的玻璃 draw 不重复计数。
+                    // 与 host requestAnimationFrame 分开，避免 120 Hz 宿主掩盖 30 Hz 实际流体输出。
+                    if (this.getParameter(this.FRAMEBUFFER_BINDING) === null && !record.frameTaskPending) {
+                        record.frameTaskPending = true;
+                        record.rectUniforms=[];
+                        record.frameTimesMs.push(performance.now());
+                        if (record.frameTimesMs.length > 1200) record.frameTimesMs.shift();
+                        queueMicrotask(() => { record.frameTaskPending = false; });
+                    }
                     // 自然 draw 后读取最终 framebuffer；不主动重画，也不改 uniforms。
                     const request = window.__immersiveValidationReadback?.request;
                     if (request && !window.__immersiveValidationReadback.result && !window.__immersiveValidationReadback.pending && this.getParameter(this.FRAMEBUFFER_BINDING) === null &&
@@ -185,7 +209,8 @@ function installImmersiveObservers(pluginWorld = false) {
             pendingRAF: raf.pending.size,
             gl: contexts.map(record => ({ id: record.id, type: record.type, canvasId: record.canvas.deref()?.id,
                 creates: record.creates, deletes: record.deletes, active: record.active, compiles: record.compiles, links: record.links,
-                draws: record.draws, losses: record.losses, restores: record.restores, paletteUniform: record.paletteUniform }))
+                draws: record.draws, losses: record.losses, restores: record.restores, paletteUniform: record.paletteUniform,
+                frameTimesMs: record.frameTimesMs,rectUniforms:record.rectUniforms }))
         }));
         originalAdd.call(document, 'mico-validation-observation-request', publish);
         originalAdd.call(document, 'mico-validation-readback-request', () => {
