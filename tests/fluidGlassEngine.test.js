@@ -20,7 +20,9 @@ class Events {
 }
 class Element extends Events {
     attributes = new Map(); children = []; width = 800; height = 600; left = 0; top = 0;
-    style = { visibility: 'visible', display: 'block', borderTopLeftRadius: '18px', opacity: '1' };
+    className = '';
+    style = { visibility: 'visible', display: 'block', borderTopLeftRadius: '18px', opacity: '1',
+        setProperty(name, value) { this[name] = value; }, removeProperty(name) { delete this[name]; } };
     setAttribute(name, value) { this.attributes.set(name, String(value)); }
     getAttribute(name) { return this.attributes.get(name) ?? null; }
     removeAttribute(name) { this.attributes.delete(name); }
@@ -30,6 +32,11 @@ class Element extends Events {
     get offsetWidth() { return this.width; }
     get offsetHeight() { return this.height; }
     get parentElement() { return this.parent || null; }
+    matches(selector) { return selector.split(',').some(part => part.trim().startsWith('.') && this.className.split(' ').includes(part.trim().slice(1))); }
+    closest(selector) {
+        for (let node = this; node; node = node.parentElement) if (selector === '[inert]' ? node.attributes.has('inert') : node.matches(selector)) return node;
+        return null;
+    }
 }
 function fakeGl(faults) {
     const live = new Set(); let id = 0;
@@ -63,7 +70,7 @@ function fakeGl(faults) {
 function harness({ visible = true, flow = true, faults = {}, source = '' } = {}) {
     const document = new Events(); document.documentElement = new Element(); document.hidden = !visible;
     const target = new Element(); target.setAttribute('data-motion', flow ? 'flow' : 'still'); target.setAttribute('data-mico-fluid-source', source);
-    const player = new Element(); const anchor = new Element(); anchor.setAttribute('data-mico-menu-phase', 'closed');
+    const player = new Element(); player.className = 'mico-immersive-player'; const anchor = new Element(); anchor.setAttribute('data-mico-menu-phase', 'closed');
     player.querySelector = selector => selector === '.mico-immersive-menu-anchor' ? anchor : null;
     player.querySelectorAll = () => [];
     target.closest = () => player;
@@ -143,6 +150,55 @@ test('compile/link/allocation/FBO failures clean partial allocations and leave C
     }
 });
 
+test('CSS fallback ignores repeated pointer entry and presses on menus that are later removed', () => {
+    const h = harness({ faults: { compile: true }, flow: false });
+    assert.equal(h.engine.diagnostics().phase, 'fallback'); assertReleased(h);
+    for (let i = 0; i < 20; i++) {
+        const action = new Element(); action.className = 'mico-immersive-menu-action';
+        action.width = 180; action.height = 40; action.left = 250; action.top = 300;
+        h.player.appendChild(action);
+        h.document.dispatchEvent({ type: 'pointermove', target: action, clientX: 350, clientY: 320 });
+        h.document.dispatchEvent({ type: 'pointerdown', target: action, button: 0, clientX: 350, clientY: 320 });
+        action.remove(); h.engine.sync();
+        assert.equal(h.engine.feedback.size, 0, 'CSS fallback must not retain an unmounted menu action');
+        assert.equal(h.engine.hoveredNode, null); assert.equal(h.engine.pressedNode, null);
+        assert.equal(action.getAttribute('data-mico-pointer-feedback'), null);
+        assertReleased(h);
+    }
+    assert.equal(h.engine.pointerActive, 0); assert.equal(h.engine.pointerInitialized, false);
+    h.engine.dispose(); assertReleased(h); assert.equal(h.document.count, 0);
+});
+
+test('draw failure after pointer press clears existing control transforms and all retained feedback', () => {
+    const h = harness({ flow: false }); h.advance(40);
+    const control = new Element(); control.className = 'mico-immersive-control';
+    control.width = 72; control.height = 64; control.left = 350; control.top = 430;
+    h.player.appendChild(control); h.player.querySelectorAll = () => [control];
+    h.document.dispatchEvent({ type: 'pointerdown', target: control, button: 0, clientX: 408, clientY: 470 });
+    h.advance(16); h.advance(16);
+    assert.equal(control.getAttribute('data-mico-pointer-feedback'), 'true');
+    assert.ok(Number(control.style['--mico-pointer-press']) > 0);
+    assert.ok(Number.parseFloat(control.style['--mico-pointer-x']) > 0);
+    assert.equal(h.engine.feedback.size, 1); assert.equal(h.engine.pressedNode, control);
+    h.gl.drawArrays = () => { throw new Error('draw failed after pointer press'); };
+    h.engine.requestFrame(); h.advance(16);
+    assert.equal(h.engine.diagnostics().phase, 'fallback');
+    assert.equal(h.engine.diagnostics().error, 'draw failed after pointer press');
+    assert.equal(h.engine.feedback.size, 0); assert.equal(h.engine.hoveredNode, null); assert.equal(h.engine.pressedNode, null);
+    assert.equal(h.engine.pointerActive, 0); assert.equal(h.engine.pointerInitialized, false);
+    assert.deepEqual(plain(h.engine.pointer), [-1000, -1000]);
+    assert.equal(control.getAttribute('data-mico-pointer-feedback'), null);
+    for (const property of ['--mico-pointer-hover', '--mico-pointer-press', '--mico-pointer-x', '--mico-pointer-y']) {
+        assert.equal(control.style[property], undefined, 'failed material cannot leave a DOM control deformed');
+    }
+    assertReleased(h);
+    h.document.dispatchEvent({ type: 'pointermove', target: control, clientX: 408, clientY: 470 });
+    h.document.dispatchEvent({ type: 'pointerdown', target: control, button: 0, clientX: 408, clientY: 470 });
+    h.advance(1000);
+    assert.equal(h.engine.feedback.size, 0); assertReleased(h);
+    h.engine.dispose(); assertReleased(h); assert.equal(h.document.count, 0);
+});
+
 test('context loss stops draws, cancels pending cover data, and restores only while visible', () => {
     const h = harness({ source: 'cover-a' }); h.advance(40);
     let prevented = false;
@@ -218,6 +274,82 @@ test('paused seek focus and blur refresh a single glass thumb frame and dispose 
     assert.equal(h.rafs.size, 1); h.advance(40); assert.equal(h.engine.shapes, 0); assert.equal(h.rafs.size, 0);
     h.engine.dispose(); assertReleased(h); assert.equal(h.document.count, 0);
     h.document.dispatchEvent({ type: 'focusin', target: seek }); assert.equal(h.rafs.size, 0);
+});
+
+test('paused pointer entry, movement and departure settle continuously without advancing the fluid clock', () => {
+    const h = harness({ flow: false }); h.advance(40);
+    const control = new Element(); control.className = 'mico-immersive-control';
+    control.width = 72; control.height = 64; control.left = 350; control.top = 430; control.style.borderTopLeftRadius = '50%';
+    h.player.appendChild(control); h.player.querySelectorAll = () => [control];
+    h.document.dispatchEvent({ type: 'pointermove', target: control, clientX: 408, clientY: 470 });
+    h.advance(16);
+    const entered = plain(h.engine.diagnostics());
+    assert.ok(entered.pointerPresence > 0 && entered.pointerPresence < 1, 'entry has a material fade rather than a jump');
+    assert.ok(Number(control.style['--mico-pointer-hover']) > 0 && Number(control.style['--mico-pointer-hover']) < 1);
+    assert.equal(h.engine.shapes, 1, 'transport control has a transient hover material');
+    h.document.dispatchEvent({ type: 'pointermove', target: control, clientX: 365, clientY: 448 });
+    h.advance(16);
+    assert.ok(h.engine.pointer[0] > 365 && h.engine.pointer[0] < 408, 'the new pointer sample is approached continuously');
+    assert.ok(h.engine.pointer[1] > 448 && h.engine.pointer[1] < 470);
+    for (let i = 0; i < 80; i++) h.advance(16);
+    assert.equal(h.rafs.size, 0, 'a settled stationary hover never maintains a renderer loop');
+    const stationary = h.engine.frameCount; h.advance(10000); assert.equal(h.engine.frameCount, stationary);
+    assert.equal(h.engine.time, 0);
+    h.document.dispatchEvent({ type: 'pointerleave' }); h.advance(16);
+    assert.ok(h.engine.pointerActive > 0 && h.engine.pointerActive < 1, 'departure fades while restoring the control');
+    for (let i = 0; i < 80; i++) h.advance(16);
+    assert.equal(h.rafs.size, 0); assert.equal(h.engine.pointerActive, 0); assert.equal(h.engine.shapes, 0);
+    assert.equal(control.getAttribute('data-mico-pointer-feedback'), null);
+    assert.equal(control.style['--mico-pointer-x'], undefined);
+    assert.equal(h.engine.feedback.size, 0); assert.equal(h.engine.time, 0);
+    h.engine.dispose(); assertReleased(h); assert.equal(h.document.count, 0);
+});
+
+test('pointer press releases smoothly and the material uses the current transformed DOM rectangle', () => {
+    const h = harness({ flow: false }); h.advance(40);
+    const control = new Element(); control.className = 'mico-immersive-control mico-immersive-play';
+    control.width = 70; control.height = 64; control.left = 350; control.top = 430;
+    h.player.appendChild(control); h.player.querySelectorAll = () => [control];
+    h.document.dispatchEvent({ type: 'pointerdown', target: control, button: 0, clientX: 385, clientY: 462 });
+    h.advance(16); h.advance(16);
+    const pressed = Number(control.style['--mico-pointer-press']); assert.ok(pressed > 0 && pressed < 1);
+    // Represent the actual layout result of the CSS transform. A cached base
+    // rectangle would disagree with this newly measured shape.
+    control.left = 354; control.top = 433; control.width = 66; control.height = 60;
+    h.advance(16);
+    const shapeUniform = h.gl.calls.filter(call => call[0] === 'uniform4fv' && call[1] === 'u_rect').at(-1);
+    assert.deepEqual(plain(shapeUniform[2]), [387,463,66,60]);
+    assert.ok(h.gl.calls.some(call => call[0] === 'uniform1f' && call[1] === 'u_press' && call[2] > 0));
+    h.document.dispatchEvent({ type: 'pointerup' }); h.advance(16);
+    assert.ok(Number(control.style['--mico-pointer-press']) > 0, 'release retains a continuous restoring state');
+    for (let i = 0; i < 80; i++) h.advance(16);
+    assert.equal(control.style['--mico-pointer-press'], '0.00000'); assert.equal(h.rafs.size, 0);
+    h.hide(); assertReleased(h); assert.equal(control.getAttribute('data-mico-pointer-feedback'), null);
+    assert.equal(control.style['--mico-pointer-hover'], undefined);
+    h.show(); h.advance(40); assert.equal(h.engine.pointerActive, 0);
+    h.engine.dispose(); assertReleased(h);
+});
+
+test('reduced motion and low blur perform one pointer update; disabled and inert controls receive no feedback', () => {
+    for (const settings of [{ reduceMotion: true, lowBlur: false }, { reduceMotion: false, lowBlur: true }]) {
+        const h = harness({ flow: false }); h.engine.setSettings(settings); h.advance(40);
+        const control = new Element(); control.className = 'mico-immersive-control';
+        control.width = 72; control.height = 64; control.left = 350; control.top = 430;
+        h.player.appendChild(control); h.player.querySelectorAll = () => [control];
+        control.disabled = true;
+        h.document.dispatchEvent({ type: 'pointermove', target: control, clientX: 385, clientY: 462 }); h.advance(16);
+        assert.equal(h.engine.feedback.size, 0); assert.equal(h.rafs.size, 0);
+        control.disabled = false; h.player.setAttribute('inert', '');
+        h.document.dispatchEvent({ type: 'pointermove', target: control, clientX: 385, clientY: 462 }); h.advance(16);
+        assert.equal(h.engine.feedback.size, 0); assert.equal(h.rafs.size, 0);
+        h.player.removeAttribute('inert');
+        h.document.dispatchEvent({ type: 'pointermove', target: control, clientX: 385, clientY: 462 }); h.advance(16);
+        assert.equal(h.engine.pointerActive, 1); assert.equal(control.style['--mico-pointer-hover'], '1.00000');
+        assert.equal(h.rafs.size, 0); assert.equal(h.engine.time, 0);
+        h.document.dispatchEvent({ type: 'pointercancel' }); h.advance(16);
+        assert.equal(h.engine.feedback.size, 0); assert.equal(h.rafs.size, 0);
+        h.engine.dispose(); assertReleased(h); assert.equal(h.document.count, 0);
+    }
 });
 
 test('palette ignores letterboxes for chromatic selection and rejects invisible images rather than reporting cover success', () => {

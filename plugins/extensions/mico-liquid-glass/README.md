@@ -12,7 +12,9 @@
 {"version":1,"enabled":true,"theme":"auto","reduceMotion":false,"lowBlur":false}
 ```
 
-首次默认启用；读取设置前不创建材质。`theme` 为 `auto`、`light` 或 `dark`，自动模式跟随宿主实际 `html.dark` 类。减少动效和系统 `prefers-reduced-motion` 停止连续流动及歌词动效。降低模糊开销使背景保持静态，并降低基础界面模糊；仍保留播放和歌词功能。暂停时停止背景连续RAF，词填充仅在真实音频词组进行时运行，隐藏界面释放GPU对象。非法字段逐项回到明确默认值，合法 `enabled:false` 保留。设置界面复用现有插件弹窗入口。
+首次默认启用；读取设置前不创建材质。`theme` 为 `auto`、`light` 或 `dark`，自动模式跟随宿主实际 `html.dark` 类。减少动效和系统 `prefers-reduced-motion` 停止连续流动及歌词动效。降低模糊开销使背景保持静态，并降低基础界面模糊；仍保留播放和歌词功能。暂停时停止背景连续RAF；可见播放期间，歌词从同一真实音频元素逐帧采样，覆盖前奏、句间空档与整行模式，结束或缓冲停滞后停止。没有修改歌词原时间或添加统一偏移。隐藏界面释放GPU对象。非法字段逐项回到明确默认值，合法 `enabled:false` 保留。设置界面复用现有插件弹窗入口。
+
+指针反馈使用同一渲染器内的有界弹簧，提供按钮吸附、按压回弹和局部玻璃折射；离开后收敛即停止请求帧，暂停背景时间不推进。歌词当前句快速变清晰，词组轻微抬升由真实填充进度直接控制，悬停显示局部光斑。实现值经过本插件独立调校，不称为 LyricsBlossom 内部原参数。
 
 ## 生命周期契约
 
@@ -29,4 +31,4 @@
 
 ## 验证
 
-从仓库根运行`npm run test:immersive`与`npm run test:phase3`，再`npm run build`、`npm run validate:immersive`。后者在隔离macOS Electron与userData中加载实际扩展，使用loopback音频、原创封面及KRC，检查真实GPU绘制、白亮封面菜单可读性、展开全程几何、深色模式、句间短间隔与真实长间奏、自然绘制节奏、隐藏、20次开关及重载/卸载，并录制原生呈现帧。当前修复证据位于`docs/immersive/evidence/2026-10-11-visual-regression`；历史WebGL证据保留在`docs/immersive/evidence/webgl`。这些技术fixtures的通过不代表真实酷狗账号、跨平台或用户视觉验收。
+从仓库根运行`npm run test:immersive`与`npm run test:phase3`，再`npm run build`、`npm run validate:immersive`。后者在隔离macOS Electron与userData中加载实际扩展，使用loopback音频、原创封面及KRC，检查真实GPU绘制、白亮封面菜单可读性、展开全程几何、深色模式、句间短间隔与真实长间奏、自然绘制节奏、隐藏、20次开关及重载/卸载，并录制原生呈现帧。本轮新增真实时钟边界、当前行清晰度、词组反馈与指针进出/按压检查，证据写入`docs/immersive/evidence/2026-10-12-sync-pointer-regression`。前轮成功证据保留在`docs/immersive/evidence/2026-10-11-visual-regression`。这些技术fixtures的通过不代表真实酷狗账号、跨平台或用户视觉验收。

@@ -5,9 +5,29 @@
         textures: 'deleteTexture', buffers: 'deleteBuffer', framebuffers: 'deleteFramebuffer', programs: 'deleteProgram', shaders: 'deleteShader'
     };
     const targetSelector = '.mico-immersive-background';
-    const shapeSelectors = ['.mico-immersive-more', '.mico-immersive-close', '.mico-immersive-tool', '.mico-immersive-menu'];
+    const shapeSelectors = ['.mico-immersive-more', '.mico-immersive-close', '.mico-immersive-tool', '.mico-immersive-menu', '.mico-immersive-control'];
+    const feedbackSelector = '.mico-immersive-control,.mico-immersive-more,.mico-immersive-close,.mico-immersive-tool,.mico-immersive-menu-action,.mico-immersive-menu,.mico-immersive-seek,.mico-immersive-volume-range';
+    const movingFeedbackSelector = '.mico-immersive-control,.mico-immersive-more,.mico-immersive-close,.mico-immersive-tool,.mico-immersive-menu-action';
+    const feedbackProperties = ['--mico-pointer-hover', '--mico-pointer-press', '--mico-pointer-x', '--mico-pointer-y'];
     const clamp = (value, lo, hi) => Math.min(hi, Math.max(lo, value));
     const smooth = (value) => { const t = clamp(value, 0, 1); return t * t * (3 - 2 * t); };
+    const channel = (value = 0) => ({ value, velocity: 0, target: value });
+    const unsettled = (state, threshold = .002) => Math.abs(state.value-state.target) > threshold || Math.abs(state.velocity) > threshold * 20;
+    // Exact damped oscillator step: event frequency never determines the motion.
+    function advanceChannel(state, dt, frequency, damping = 1) {
+        const displacement = state.value-state.target;
+        if (damping === 1) {
+            const impulse = state.velocity + frequency*displacement, decay = Math.exp(-frequency*dt);
+            state.value = state.target + (displacement + impulse*dt)*decay;
+            state.velocity = (state.velocity-frequency*impulse*dt)*decay;
+        } else {
+            const drag = frequency*damping, wave = frequency*Math.sqrt(1-damping*damping), decay = Math.exp(-drag*dt);
+            const cosine = Math.cos(wave*dt), sine = Math.sin(wave*dt), impulse = (state.velocity+drag*displacement)/wave;
+            state.value = state.target + decay*(displacement*cosine+impulse*sine);
+            state.velocity = decay*(state.velocity*cosine-(drag*impulse+wave*displacement)*sine);
+        }
+        if (!unsettled(state)) { state.value = state.target; state.velocity = 0; }
+    }
     class FluidGlassEngine {
         constructor(settings) {
             this.settings = settings;
@@ -26,6 +46,9 @@
             this.width = 0; this.height = 0; this.dpr = 1;
             this.phase = 'waiting'; this.error = null;
             this.pointer = [-1000, -1000]; this.pointerActive = 0;
+            this.pointerX = channel(-1000); this.pointerY = channel(-1000); this.pointerPresence = channel();
+            this.pointerInitialized = false; this.feedback = new Map(); this.hoveredNode = null; this.pressedNode = null;
+            this.interactionUntil = 0; this.interactionLastTick = 0;
             this.viewportVisible = true;
             this.source = null;
             this.paletteStatus = 'pending'; this.paletteSource = 'fallback';
@@ -41,16 +64,23 @@
             this.motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
             this.onVisibility = () => this.sync();
             this.onFocusChange = () => this.requestFrame();
-            this.onPointer = (event) => {
-                if (!this.target || !this.canvas) return;
-                const rect = this.target.getBoundingClientRect();
-                this.pointer = [event.clientX - rect.left, event.clientY - rect.top];
-                this.pointerActive = 1;
-                this.requestFrame();
+            this.onPointer = (event) => this.trackPointer(event);
+            this.onPointerLeave = () => { this.releasePointer(); this.requestFrame(); };
+            this.onPointerDown = (event) => {
+                if (event.button !== undefined && event.button !== 0) return;
+                this.trackPointer(event);
+                if (!this.hoveredNode) return;
+                this.pressedNode = this.hoveredNode; this.feedback.get(this.pressedNode).press.target = 1;
+                this.wakeInteraction();
             };
-            this.onPointerLeave = () => { this.pointerActive = 0; this.requestFrame(); };
+            this.onPointerUp = () => {
+                const state = this.feedback.get(this.pressedNode);
+                if (!state) return;
+                state.press.target = 0;
+                this.pressedNode = null; this.wakeInteraction();
+            };
             this.onContextLost = (event) => {
-                event.preventDefault(); this.cancelFrame(); this.releaseResources();
+                event.preventDefault(); this.clearFeedback(); this.cancelFrame(); this.releaseResources();
                 for (const canvas of [this.canvas, this.backgroundCanvas, this.overlayCanvas]) if (canvas) { canvas.width = 0; canvas.height = 0; }
                 this.paletteAbort?.abort(); this.source = null;
                 this.phase = 'context-lost'; this.error = 'WebGL 上下文丢失；保留静态背景及 DOM 控件';
@@ -68,6 +98,9 @@
             document.addEventListener('visibilitychange', this.onVisibility);
             document.addEventListener('pointermove', this.onPointer, { passive: true });
             document.addEventListener('pointerleave', this.onPointerLeave);
+            document.addEventListener('pointerdown', this.onPointerDown, { passive: true });
+            document.addEventListener('pointerup', this.onPointerUp, { passive: true });
+            document.addEventListener('pointercancel', this.onPointerLeave, { passive: true });
             document.addEventListener('input', this.onVisibility);
             document.addEventListener('focusin', this.onFocusChange);
             document.addEventListener('focusout', this.onFocusChange);
@@ -138,6 +171,94 @@
             if (!program.uniforms.has(name)) program.uniforms.set(name, this.gl.getUniformLocation(program.program, name));
             this.gl[method](program.uniforms.get(name), value);
         }
+        wakeInteraction() {
+            const now = performance.now();
+            if (now-this.interactionLastTick > 80) this.interactionLastTick = now;
+            this.interactionUntil = now + 900;
+            this.requestFrame();
+        }
+        trackPointer(event) {
+            if (this.phase !== 'ready' || !this.target || !this.canvas || !this.visible()) return;
+            const rect = this.target.getBoundingClientRect();
+            const x = event.clientX-rect.left, y = event.clientY-rect.top;
+            if (x < 0 || y < 0 || x > rect.width || y > rect.height) { this.releasePointer(); this.requestFrame(); return; }
+            if (!this.pointerInitialized) {
+                this.pointerX.value = x; this.pointerY.value = y;
+                this.pointerInitialized = true;
+            }
+            this.pointerX.target = x; this.pointerY.target = y; this.pointerPresence.target = 1;
+            const player = this.target.closest('.mico-immersive-player');
+            const hit = event.target?.closest?.(feedbackSelector);
+            const node = hit && !hit.disabled && !hit.closest('[inert]') && hit.closest('.mico-immersive-player') === player ? hit : null;
+            if (node !== this.hoveredNode) {
+                const old = this.feedback.get(this.hoveredNode);
+                if (old) { old.hover.target = 0; old.x.target = 0; old.y.target = 0; }
+                this.hoveredNode = node;
+            }
+            if (node) {
+                if (!this.feedback.has(node)) this.feedback.set(node, { hover: channel(), press: channel(), x: channel(), y: channel() });
+                const state = this.feedback.get(node), bounds = node.getBoundingClientRect();
+                state.hover.target = 1;
+                const attraction = node.matches('.mico-immersive-menu-action') ? .8 : 3.2;
+                state.x.target = clamp((event.clientX-bounds.left-bounds.width/2) / Math.max(1,bounds.width/2), -1, 1)*attraction;
+                state.y.target = clamp((event.clientY-bounds.top-bounds.height/2) / Math.max(1,bounds.height/2), -1, 1)*attraction;
+            }
+            this.wakeInteraction();
+        }
+        releasePointer() {
+            this.pointerPresence.target = 0; this.hoveredNode = null; this.pressedNode = null;
+            for (const state of this.feedback.values()) {
+                state.hover.target = 0; state.press.target = 0; state.x.target = 0; state.y.target = 0;
+            }
+            this.wakeInteraction();
+        }
+        clearFeedback() {
+            for (const node of this.feedback.keys()) {
+                for (const property of feedbackProperties) node.style.removeProperty(property);
+                node.removeAttribute('data-mico-pointer-feedback');
+            }
+            this.feedback.clear(); this.hoveredNode = null; this.pressedNode = null;
+            this.pointerInitialized = false; this.pointer = [-1000,-1000]; this.pointerActive = 0;
+            this.pointerX = channel(-1000); this.pointerY = channel(-1000); this.pointerPresence = channel();
+            this.interactionUntil = 0; this.interactionLastTick = 0;
+        }
+        interactionMoving(now) {
+            if (now >= this.interactionUntil) return false;
+            if (unsettled(this.pointerX, .02) || unsettled(this.pointerY, .02) || unsettled(this.pointerPresence)) return true;
+            return [...this.feedback.values()].some(state => Object.values(state).some(value => unsettled(value)));
+        }
+        advanceFeedback(now) {
+            const dt = this.interactionLastTick ? clamp((now-this.interactionLastTick)/1000, 0, .05) : 1/60;
+            this.interactionLastTick = now;
+            const instant = this.reduced() || this.settings.lowBlur || now >= this.interactionUntil;
+            const step = (state, frequency, damping = 1) => {
+                if (instant) { state.value = state.target; state.velocity = 0; }
+                else advanceChannel(state, dt, frequency, damping);
+            };
+            step(this.pointerX, 32); step(this.pointerY, 32); step(this.pointerPresence, 22);
+            this.pointer = [this.pointerX.value, this.pointerY.value]; this.pointerActive = clamp(this.pointerPresence.value, 0, 1);
+            for (const [node,state] of this.feedback) {
+                if (node.isConnected === false) {
+                    for (const property of feedbackProperties) node.style.removeProperty(property);
+                    node.removeAttribute('data-mico-pointer-feedback'); this.feedback.delete(node);
+                    if (node === this.hoveredNode) this.hoveredNode = null;
+                    if (node === this.pressedNode) this.pressedNode = null;
+                    continue;
+                }
+                step(state.hover, 26, .78); step(state.press, 38, .9); step(state.x, 30); step(state.y, 30);
+                if (node.matches(movingFeedbackSelector)) {
+                    node.setAttribute('data-mico-pointer-feedback', 'true');
+                    node.style.setProperty('--mico-pointer-hover', clamp(state.hover.value, 0, 1.04).toFixed(5));
+                    node.style.setProperty('--mico-pointer-press', clamp(state.press.value, 0, 1).toFixed(5));
+                    node.style.setProperty('--mico-pointer-x', `${state.x.value.toFixed(4)}px`);
+                    node.style.setProperty('--mico-pointer-y', `${state.y.value.toFixed(4)}px`);
+                }
+                if (state.hover.target === 0 && state.press.target === 0 && !Object.values(state).some(value => unsettled(value))) {
+                    for (const property of feedbackProperties) node.style.removeProperty(property);
+                    node.removeAttribute('data-mico-pointer-feedback'); this.feedback.delete(node);
+                }
+            }
+        }
         resize() {
             if (!this.canvas || !this.target || !this.gl) return;
             const rect = this.target.getBoundingClientRect();
@@ -185,11 +306,13 @@
             this.intersectionObserver.observe(target);
         }
         fallback(error) {
+            this.clearFeedback();
             this.cancelFrame(); this.releaseResources(); this.phase = 'fallback'; this.error = error.message;
             for (const canvas of [this.canvas, this.backgroundCanvas, this.overlayCanvas]) if (canvas) { canvas.width = 0; canvas.height = 0; }
             document.documentElement.setAttribute('data-mico-fluid-renderer', 'css'); this.publish();
         }
         detach() {
+            this.clearFeedback();
             this.cancelFrame(); this.paletteAbort?.abort(); this.paletteAbort = null;
             this.resizeObserver?.disconnect(); this.intersectionObserver?.disconnect(); this.resizeObserver = null; this.intersectionObserver = null;
             this.releaseResources();
@@ -206,6 +329,7 @@
             document.documentElement.removeAttribute('data-mico-fluid-renderer');
         }
         suspend() {
+            this.clearFeedback();
             this.cancelFrame();
             if (this.paletteAbort) { this.paletteAbort.abort(); this.paletteAbort = null; this.source = null; }
             if (this.phase === 'ready') {
@@ -245,7 +369,7 @@
         visible() { return !!this.target && this.viewportVisible && !document.hidden && this.target.getAttribute('data-mico-fluid-visible') !== 'false' && document.documentElement.getAttribute('data-mico-window-visible') !== 'false'; }
         reduced() { return !!this.settings.reduceMotion || this.motionPreference.matches; }
         flowing() { return this.visible() && !this.reduced() && !this.settings.lowBlur && this.target.getAttribute('data-motion') === 'flow' && this.target.getAttribute('data-blur') !== 'low'; }
-        needsFrames(now) { return this.visible() && !this.reduced() && (now < this.geometryUntil || !this.settings.lowBlur && (this.flowing() || now < this.colorEnds)); }
+        needsFrames(now) { return this.visible() && !this.reduced() && (now < this.geometryUntil || !this.settings.lowBlur && (this.flowing() || now < this.colorEnds || this.interactionMoving(now))); }
         setSettings(settings) { this.settings = settings; this.sync(); }
         loadPalette(source) {
             this.source = source; this.paletteAbort?.abort();
@@ -313,6 +437,7 @@
             if (this.lastDraw && now - this.lastDraw < 15 && this.needsFrames(now)) { this.requestFrame(); return; }
             if (this.flowing() && this.lastDraw) this.time += Math.min(.1, (now - this.lastDraw) / 1000);
             this.lastDraw = now;
+            this.advanceFeedback(now);
             if (this.colorEnds) {
                 const mix = this.reduced() || this.settings.lowBlur ? 1 : smooth((now - this.colorStarted) / 1500);
                 this.colors = this.fromColors.map((color, i) => color.map((value, j) => value + (this.toColors[i][j] - value) * mix));
@@ -386,12 +511,14 @@
             gl.enable(gl.BLEND); gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
             this.use(programs.glass); this.uniform(programs.glass, 'u_scene', 'uniform1i', 0); this.uniform(programs.glass, 'u_view', 'uniform2fv', [this.width, this.height]); this.uniform(programs.glass, 'u_pointer', 'uniform2fv', this.pointer); this.uniform(programs.glass, 'u_pointerActive', 'uniform1f', this.pointerActive);
             this.shapes = 0;
-            const renderShape = (shape, join = null, neck = 0, frost = .25, regular = 0) => {
+            const renderShape = (shape, join = null, neck = 0, frost = .25, regular = 0, feedback = null) => {
                 this.uniform(programs.glass, 'u_rect', 'uniform4fv', shape.rect); this.uniform(programs.glass, 'u_radius', 'uniform1f', shape.radius);
                 this.uniform(programs.glass, 'u_joinRect', 'uniform4fv', join?.rect || [0,0,0,0]); this.uniform(programs.glass, 'u_joinRadius', 'uniform1f', join?.radius || 0); this.uniform(programs.glass, 'u_joinAmount', 'uniform1f', neck);
                 this.uniform(programs.glass, 'u_strength', 'uniform1f', this.settings.lowBlur ? .7 : 1.15); this.uniform(programs.glass, 'u_opacity', 'uniform1f', shape.opacity * .97);
                 this.uniform(programs.glass, 'u_frost', 'uniform1f', this.settings.lowBlur ? 0 : frost);
                 this.uniform(programs.glass, 'u_regular', 'uniform1f', regular);
+                this.uniform(programs.glass, 'u_hover', 'uniform1f', clamp(feedback?.hover.value || 0, 0, 1));
+                this.uniform(programs.glass, 'u_press', 'uniform1f', clamp(feedback?.press.value || 0, 0, 1));
                 let left = shape.rect[0] - shape.rect[2]/2, top = shape.rect[1] - shape.rect[3]/2, right = left + shape.rect[2], bottom = top + shape.rect[3];
                 if (join) { left = Math.min(left,join.rect[0]-join.rect[2]/2); top = Math.min(top,join.rect[1]-join.rect[3]/2); right = Math.max(right,join.rect[0]+join.rect[2]/2); bottom = Math.max(bottom,join.rect[1]+join.rect[3]/2); }
                 const pad = Math.max(regular > .01 ? 26 : 2,neck); left = clamp(left-pad,0,this.width); top = clamp(top-pad,0,this.height); right = clamp(right+pad,0,this.width); bottom = clamp(bottom+pad,0,this.height);
@@ -400,13 +527,18 @@
             for (const node of nodes) {
                 if (joining && node === more) continue;
                 const shape = this.measure(node); if (!shape) continue;
+                const feedback = this.feedback.get(node);
+                if (node.matches('.mico-immersive-control')) {
+                    if (!feedback || feedback.hover.value < .003 && feedback.press.value < .003) continue;
+                    shape.opacity *= clamp(feedback.hover.value*.34 + feedback.press.value*.24, 0, .58);
+                }
                 const regular = node === menu ? smooth((Math.min(shape.rect[2], shape.rect[3]) - 40) / 96) : 0;
-                renderShape(shape, node === menu && joining ? moreShape : null, node === menu ? joinAmount : 0, node === menu ? 1 : .25, regular);
+                renderShape(shape, node === menu && joining ? moreShape : null, node === menu ? joinAmount : 0, node === menu ? 1 : .25, regular, feedback);
             }
             const seek = player?.querySelector('.mico-immersive-seek');
             if (seek && !seek.disabled && (seek.matches(':hover') || seek === document.activeElement)) {
                 const base = this.measure(seek); const max = Number(seek.max), min = Number(seek.min); const ratio = max > min ? clamp((Number(seek.value)-min)/(max-min),0,1) : 0;
-                if (base) renderShape({ rect: [base.rect[0]-base.rect[2]/2+5.5+ratio*(base.rect[2]-11), base.rect[1], 14, 14], radius: 7, opacity: 1 });
+                if (base) renderShape({ rect: [base.rect[0]-base.rect[2]/2+5.5+ratio*(base.rect[2]-11), base.rect[1], 14, 14], radius: 7, opacity: 1 }, null, 0, .25, 0, this.feedback.get(seek));
             }
             gl.disable(gl.SCISSOR_TEST); gl.disable(gl.BLEND);
             this.overlayContext.clearRect(0, 0, this.overlayCanvas.width, this.overlayCanvas.height);
@@ -418,7 +550,8 @@
                 dpr: this.dpr, width: this.width, height: this.height, targetFrameRate: 60, paletteStatus: this.paletteStatus, paletteSource: this.paletteSource,
                 paletteTransitionMs: 1500, shapes: this.shapes, timeSeconds: this.time, resources: Object.fromEntries(Object.entries(this.resources).map(([kind, values]) => [kind, values.size])),
                 outputCanvases: this.backgroundCanvas && this.overlayCanvas ? 2 : 0, coverSceneStatus: this.coverSceneStatus, coverSceneError: this.coverSceneError, coverSceneDraws: this.coverSceneDraws,
-                allocations: this.allocations, deletions: this.deletions, error: this.error };
+                pointer: [...this.pointer], pointerPresence: this.pointerActive, pointerFeedbackControls: this.feedback.size,
+                interactionMoving: this.interactionMoving(performance.now()), allocations: this.allocations, deletions: this.deletions, error: this.error };
         }
         publish() { if (this.target) this.target.setAttribute('data-mico-fluid-state', JSON.stringify(this.diagnostics())); }
         dispose() {
@@ -426,6 +559,7 @@
             this.disposed = true; this.observer.disconnect();
             document.removeEventListener('visibilitychange', this.onVisibility); document.removeEventListener('pointermove', this.onPointer); document.removeEventListener('pointerleave', this.onPointerLeave); document.removeEventListener('input', this.onVisibility);
             document.removeEventListener('focusin', this.onFocusChange); document.removeEventListener('focusout', this.onFocusChange);
+            document.removeEventListener('pointerdown', this.onPointerDown); document.removeEventListener('pointerup', this.onPointerUp); document.removeEventListener('pointercancel', this.onPointerLeave);
             this.motionPreference.removeEventListener('change', this.onVisibility);
             this.detach(); this.phase = 'disposed';
             document.dispatchEvent(new CustomEvent('mico-fluid-diagnostics', { detail: JSON.stringify(this.diagnostics()) }));

@@ -113,6 +113,8 @@ uniform float u_strength;
 uniform float u_opacity;
 uniform float u_frost;
 uniform float u_regular;
+uniform float u_hover;
+uniform float u_press;
 float rounded(vec2 p, vec4 rect, float radius) {
     vec2 q = abs(p - rect.xy) - rect.zw * .5 + radius;
     return length(max(q, 0.)) + min(max(q.x,q.y),0.) - radius;
@@ -153,8 +155,14 @@ void main() {
     // The dome's slope approaches the rim continuously. Snell refraction gives
     // a bounded ray displacement while leaving the flat centre undistorted.
     float slope = edge / sqrt(max(.10, 1. - edge * edge));
-    vec3 surfaceNormal = normalize(vec3(normal * slope, 1.));
-    float thickness = min(24., max(7., min(u_rect.z,u_rect.w) * .40));
+    vec2 pointerDelta = p-u_pointer;
+    float pointerRadius = max(22., min(u_rect.z,u_rect.w)*.70);
+    float pointerField = exp(-dot(pointerDelta,pointerDelta)/(pointerRadius*pointerRadius)) * u_pointerActive;
+    // A shallow local dome follows the smoothed pointer; labels remain DOM text
+    // above this material and the regular menu keeps its luminance compression.
+    vec2 localSlope = pointerDelta/pointerRadius * pointerField * (.18+.10*u_hover) * (1.-u_regular*.80);
+    vec3 surfaceNormal = normalize(vec3(normal * slope + localSlope, 1.));
+    float thickness = min(24., max(7., min(u_rect.z,u_rect.w) * .40)) * (1.-u_press*.12);
     vec3 rayGreen = refract(vec3(0.,0.,-1.), surfaceNormal, 1. / 1.45);
     vec3 rayRed = refract(vec3(0.,0.,-1.), surfaceNormal, 1. / 1.43);
     vec3 rayBlue = refract(vec3(0.,0.,-1.), surfaceNormal, 1. / 1.48);
@@ -168,15 +176,19 @@ void main() {
     refracted.b = mix(refracted.b, smoothScene(p + blueOffset, blurRadius).b, .45);
     float luma = dot(refracted, vec3(.2126,.7152,.0722));
     refracted = mix(vec3(luma), refracted, mix(1.18,1.06,u_regular));
-    vec2 lightDirection = normalize(vec2(-.65,-.76));
+    vec2 pointerDirection = normalize(u_pointer-u_rect.xy + vec2(.0001));
+    vec2 lightDirection = normalize(mix(vec2(-.65,-.76), pointerDirection, .42*pointerField));
     float rim = pow(max(0., dot(normal,lightDirection)), 5.) * exp(-abs(sd + .7) * 1.5);
     float opposing = pow(max(0.,dot(normal,-lightDirection)),4.) * exp(-abs(sd + 1.5) * .8);
-    float pointerGlow = exp(-length(p-u_pointer)/max(30.,min(u_rect.z,u_rect.w)*.85)) * u_pointerActive;
+    float pointerGlow = pointerField*(1.-u_regular*.65);
+    float caustic = pow(max(0., dot(normal, normalize(pointerDelta+vec2(.0001)))), 3.) * edge * pointerGlow;
     float thinEdge = exp(-abs(sd + .6) * 2.1);
     // Schlick reflectance is weak head-on and rises with the curved edge.
     float fresnel = .034 + .966 * pow(1. - surfaceNormal.z, 5.);
     vec3 glassColor = mix(refracted, vec3(.88,.94,1.), fresnel * .18);
-    glassColor += vec3(.012 + rim*.25 + opposing*.055 + thinEdge*.032 + pointerGlow*(.02+edge*.12));
+    glassColor += vec3(.012 + rim*.25 + opposing*.055 + thinEdge*.032 + pointerGlow*(.025+edge*.15) + caustic*.075);
+    glassColor += vec3(.018,.027,.040)*u_hover*pointerGlow;
+    glassColor *= 1.-u_press*.025;
     glassColor *= 1. - .05 * edge;
     gl_FragColor = vec4(clamp(glassColor,0.,1.), coverage * u_opacity);
 }

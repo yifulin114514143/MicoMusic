@@ -5,3 +5,18 @@
 .mico-immersive-player[data-mico-hero-phase="closing"] { pointer-events: none; }
 .mico-immersive-player:has(.mico-immersive-menu-anchor[data-mico-menu-phase="opening"]) .mico-immersive-menu,
 .mico-immersive-player:has(.mico-immersive-menu-anchor[data-mico-menu-phase="closing"]) .mico-immersive-menu { will-change: transform, translate; }
+/* These channels come from one bounded renderer spring. The material is measured
+   after this DOM transform so its silhouette and the actual hit control agree. */
+html[data-mico-liquid-glass="on"] .mico-immersive-player :is(.mico-immersive-control,.mico-immersive-more,.mico-immersive-close,.mico-immersive-tool)[data-mico-pointer-feedback="true"] {
+    transition: opacity 150ms ease;
+    transform: translate3d(var(--mico-pointer-x,0px),var(--mico-pointer-y,0px),0)
+        scale(calc(1 + var(--mico-pointer-hover,0)*.065 - var(--mico-pointer-press,0)*.13));
+}
+html[data-mico-liquid-glass="on"] .mico-immersive-player .mico-immersive-menu-action[data-mico-pointer-feedback="true"] {
+    transform: translate3d(var(--mico-pointer-x,0px),var(--mico-pointer-y,0px),0)
+        scale(calc(1 - var(--mico-pointer-press,0)*.025));
+}
+html[data-mico-liquid-glass="on"] .mico-immersive-player[data-reduced-motion="true"] [data-mico-pointer-feedback="true"] { transform: none; transition: none; }
+@media (prefers-reduced-motion: reduce) {
+    html[data-mico-liquid-glass="on"] .mico-immersive-player [data-mico-pointer-feedback="true"] { transform: none; transition: none; }
+}
