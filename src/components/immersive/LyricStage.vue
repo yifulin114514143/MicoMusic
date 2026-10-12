@@ -2,15 +2,29 @@
     <section ref="viewport" class="mico-immersive-lyrics" :class="{ 'mico-lyrics-reduced': reduceMotion, 'mico-lyrics-browsing': !following }"
         :style="{ '--mico-lyric-font': fontFamily || 'inherit' }" :data-mico-lyric-phase="position.phase"
         :data-mico-lyric-following="String(following)" :data-mico-lyric-active="position.activeIndex" :data-mico-lyric-clock="wordClockRunning ? 'running' : 'idle'"
+        :data-mico-lyric-stage-focus="followFocusIndex" :data-mico-lyric-gap-key="position.gap?.key || 'none'"
         aria-label="歌词" tabindex="0" @scroll.passive="onScroll" @wheel.passive="beginBrowse"
         @pointerdown="onPointerDown" @touchstart.passive="onTouchStart" @touchmove.passive="beginBrowse" @touchend.passive="onPointerRelease" @touchcancel.passive="onPointerRelease"
         @keydown="onBrowseKey">
         <div v-if="hasText" class="mico-lyric-content">
             <div class="mico-lyric-spacer" aria-hidden="true" :style="{ height: `${windowed.top + topPadding}px` }"></div>
-            <component :is="getSeekTime(row) === null ? 'div' : 'button'" v-for="row in visibleRows" :key="row.key"
+            <template v-for="row in visibleRows" :key="row.key">
+            <div v-if="row.kind === 'gap'" :ref="element => setRowElement(element, row.index)"
+                class="mico-lyric-row mico-lyric-gap-row" :class="{ 'mico-lyric-focused': row.index === focusIndex, 'mico-lyric-gap-active': isGapActive(row) }"
+                :style="presentation(row.index)" :data-mico-lyric-stage-index="row.index"
+                :data-mico-lyric-gap-start="row.startMs" :data-mico-lyric-gap-end="row.endMs"
+                :data-mico-lyric-gap-before="row.beforeIndex" :data-mico-lyric-gap-after="row.afterIndex"
+                :aria-hidden="!isGapActive(row)">
+                <span v-if="isGapActive(row)" class="mico-lyric-gap" role="status"
+                    :aria-label="row.phase === 'prelude' ? '前奏' : '间奏'" :data-mico-lyric-gap-progress="position.gap.progress">
+                    <span v-for="dot in 3" :key="dot" class="mico-lyric-gap-dot" aria-hidden="true"
+                        :style="{ '--mico-gap-dot-fill': Math.max(0, Math.min(1, position.gap.progress * 3 - (dot - 1))) }"></span>
+                </span>
+            </div>
+            <component v-else :is="getSeekTime(row) === null ? 'div' : 'button'"
                 :ref="element => setRowElement(element, row.index)" class="mico-lyric-row"
-                :class="{ 'mico-lyric-focused': row.index === focusIndex, 'mico-lyric-active': row.index === position.activeIndex }"
-                :style="presentation(row.index)" :data-mico-lyric-index="row.index"
+                :class="{ 'mico-lyric-focused': row.index === focusIndex, 'mico-lyric-active': row.sourceIndex === position.activeIndex }"
+                :style="presentation(row.index)" :data-mico-lyric-index="row.sourceIndex" :data-mico-lyric-stage-index="row.index"
                 :data-mico-lyric-timing="row.hasWordTiming ? 'word' : 'line'"
                 :type="getSeekTime(row) === null ? undefined : 'button'" :title="getSeekTime(row) === null ? undefined : '从这一句播放'"
                 @click="seekRow(row)">
@@ -26,11 +40,10 @@
                 </span>
                 <span v-if="secondary(row)" class="mico-lyric-secondary">{{ secondary(row) }}</span>
             </component>
+            </template>
             <div class="mico-lyric-spacer" aria-hidden="true" :style="{ height: `${windowed.bottom + bottomPadding}px` }"></div>
         </div>
         <div v-else class="mico-lyric-empty" role="status">{{ tips || '暂无歌词' }}</div>
-        <div v-if="following && ['prelude', 'interlude'].includes(position.phase)" class="mico-lyric-gap" role="status"
-            :aria-label="position.phase === 'prelude' ? '前奏' : '间奏'"><span aria-hidden="true">● ● ●</span></div>
         <div v-if="!following && hasText" class="mico-lyric-resume-anchor">
             <button class="mico-lyric-resume" type="button" @click.stop="resumeFollow">回到正在播放</button>
         </div>
@@ -39,7 +52,7 @@
 
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { buildLyricTimeline, resolveLyricPosition, getTokenProgress, getSeekTime, selectSecondaryText,
+import { buildLyricTimeline, buildLyricStageRows, getLyricStageFocus, resolveLyricPosition, getTokenProgress, getSeekTime, selectSecondaryText,
     getVirtualWindow, getLinePresentation, createFollowTimer, createLyricSpring,
     retargetLineSpring, stepLineSpring, isLyricSpringSettled, hasWordMotion, createLyricWordClock } from './lyricsTimeline.js';
 
@@ -60,26 +73,31 @@ const lineSprings = new Map();
 let observer = null, alive = false, pointerHeld = false, generation = 0, followQueued = false, followInstant = false, measuredWidth = 0;
 const isVisible = () => !document.hidden && props.windowVisible;
 const rows = computed(() => buildLyricTimeline(props.lines));
+const stageRows = computed(() => buildLyricStageRows(rows.value));
+const sourceStageIndexes = computed(() => new Map(stageRows.value.filter(row => row.kind === 'line').map(row => [row.sourceIndex, row.index])));
 const position = computed(() => resolveLyricPosition(rows.value, visualTime.value));
+const followFocusIndex = computed(() => getLyricStageFocus(stageRows.value, position.value));
+const activeStageIndex = computed(() => sourceStageIndexes.value.get(position.value.activeIndex) ?? -1);
 const hasText = computed(() => rows.value.some(row => row.hasText));
 const secondary = row => selectSecondaryText(row, props.mode, props.showTranslation);
-const heights = computed(() => rows.value.map(row => measuredHeights.value.get(row.index) || (secondary(row) ? 128 : 96)));
+const isGapActive = row => following.value && row.key === position.value.gap?.key;
+const heights = computed(() => stageRows.value.map(row => measuredHeights.value.get(row.index) || (row.kind === 'gap' ? 72 : secondary(row) ? 128 : 96)));
 const topPadding = computed(() => Math.max(0, viewportHeight.value * 0.43 - (heights.value[0] || 96) / 2));
 const bottomPadding = computed(() => Math.max(0, viewportHeight.value * 0.57 - (heights.value.at(-1) || 96) / 2));
 const windowed = computed(() => getVirtualWindow(heights.value, Math.max(0, scrollTop.value - topPadding.value), viewportHeight.value, 4));
-const visibleRows = computed(() => rows.value.slice(windowed.value.start, windowed.value.end));
+const visibleRows = computed(() => stageRows.value.slice(windowed.value.start, windowed.value.end));
 const focusIndex = computed(() => {
-    if (following.value) return position.value.focusIndex;
+    if (following.value) return followFocusIndex.value;
     const center = Math.max(0, scrollTop.value + viewportHeight.value * 0.43 - topPadding.value);
     const offsets = windowed.value.offsets;
     const boundary = offsets.findIndex((offset, index) => index > 0 && offset > center);
-    return Math.max(0, boundary < 0 ? rows.value.length - 1 : boundary - 1);
+    return Math.max(0, boundary < 0 ? stageRows.value.length - 1 : boundary - 1);
 });
 const presentation = index => {
     const value = getLinePresentation(index, focusIndex.value, props.reduceMotion);
     return { '--mico-line-opacity': value.opacity, '--mico-line-blur': `${value.blurPx}px`,
         '--mico-line-delay': `${value.delayMs}ms`, '--mico-line-shift': `${value.translateY}px`,
-        '--mico-line-scale': !props.reduceMotion && index === position.value.activeIndex ? 1.03 : 1 };
+        '--mico-line-scale': !props.reduceMotion && index === activeStageIndex.value ? 1.03 : 1 };
 };
 const wordClock = createLyricWordClock({
     readTime: () => props.playbackClock ? props.playbackClock() : props.time,
@@ -90,7 +108,7 @@ const wordClock = createLyricWordClock({
         && document.documentElement.getAttribute('data-mico-liquid-glass') === 'on',
     hasMotion: time => {
         const active = resolveLyricPosition(rows.value, time).activeIndex;
-        return rowElements.has(active) && hasWordMotion(rows.value[active], time);
+        return rowElements.has(sourceStageIndexes.value.get(active)) && hasWordMotion(rows.value[active], time);
     },
     onState: running => { wordClockRunning.value = running; }
 });
@@ -144,8 +162,8 @@ function requestFollow(instant = false) {
         if (ticket !== generation) return;
         followQueued = false; const immediate = followInstant; followInstant = false;
         const element = viewport.value;
-        if (!alive || !element || !isVisible() || !following.value || position.value.focusIndex < 0) return;
-        const index = position.value.focusIndex;
+        if (!alive || !element || !isVisible() || !following.value || followFocusIndex.value < 0) return;
+        const index = followFocusIndex.value;
         const target = Math.max(0, topPadding.value + windowed.value.offsets[index] + heights.value[index] / 2 - element.clientHeight * 0.43);
         spring.moveTo(target, { immediate: immediate || props.reduceMotion, from: element.scrollTop });
     });
@@ -219,7 +237,7 @@ watch(() => props.lines, () => {
     spring.stop(viewport.value?.scrollTop); wordClock.stop(); cancelPendingFollow();
     nextTick(() => { if (alive) { wordClock.sync(); measure(); requestFollow(true); } });
 }, { flush: 'post' });
-watch(() => position.value.focusIndex, () => requestFollow(), { flush: 'post' });
+watch(() => followFocusIndex.value, () => requestFollow(), { flush: 'post' });
 watch(() => props.time, (time, previous) => {
     if (!isVisible()) return;
     visualTime.value = time; wordClock.sync();

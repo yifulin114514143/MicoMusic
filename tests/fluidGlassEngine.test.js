@@ -114,7 +114,7 @@ test('hidden mount allocates no GPU objects or cover reads; visibility rebuilds 
     const h = harness({ visible: false, source: 'cover-a' });
     assertReleased(h); assert.equal(h.requests.length, 0); assert.equal(h.engine.diagnostics().phase, 'suspended');
     for (let i = 0; i < 20; i++) {
-        h.show(); assert.equal(h.engine.diagnostics().phase, 'ready'); assert.equal(h.gl.live.size, 7);
+        h.show(); assert.equal(h.engine.diagnostics().phase, 'ready'); assert.equal(h.gl.live.size, 8);
         assert.equal(h.rafs.size, 1); h.advance(40);
         const request = h.requests.at(-1); h.hide(); assert.equal(request.signal.aborted, true); assertReleased(h);
         const frames = h.engine.frameCount; h.advance(1000); assert.equal(h.engine.frameCount, frames);
@@ -127,9 +127,9 @@ test('hidden mount allocates no GPU objects or cover reads; visibility rebuilds 
 test('native hide and offscreen suspension both delete resources; detach explicitly relinquishes context quota', () => {
     const h = harness(); h.advance(40);
     h.document.documentElement.setAttribute('data-mico-window-visible', 'false'); h.engine.sync(); assertReleased(h);
-    h.document.documentElement.removeAttribute('data-mico-window-visible'); h.engine.sync(); assert.equal(h.gl.live.size, 7);
+    h.document.documentElement.removeAttribute('data-mico-window-visible'); h.engine.sync(); assert.equal(h.gl.live.size, 8);
     h.engine.intersectionObserver.fn([{ isIntersecting: false }]); assertReleased(h);
-    h.engine.intersectionObserver.fn([{ isIntersecting: true }]); assert.equal(h.gl.live.size, 7);
+    h.engine.intersectionObserver.fn([{ isIntersecting: true }]); assert.equal(h.gl.live.size, 8);
     h.removeTarget(); assertReleased(h); assert.equal(h.gl.lost, 1); assert.equal(h.target.children.length, 0);
     h.engine.dispose(); assert.equal(h.gl.lost, 1);
 });
@@ -150,7 +150,7 @@ test('context loss stops draws, cancels pending cover data, and restores only wh
     assert.equal(prevented, true); assertReleased(h); assert.equal(h.requests[0].signal.aborted, true);
     assert.equal(h.engine.diagnostics().phase, 'context-lost');
     h.hide(); h.canvases[0].dispatchEvent({ type: 'webglcontextrestored' }); assertReleased(h);
-    h.show(); assert.equal(h.engine.diagnostics().phase, 'ready'); assert.equal(h.gl.live.size, 7);
+    h.show(); assert.equal(h.engine.diagnostics().phase, 'ready'); assert.equal(h.gl.live.size, 8);
     assert.equal(h.requests.length, 2); h.engine.dispose(); assertReleased(h);
 });
 
@@ -186,6 +186,25 @@ test('hero geometry deadline is bounded once per phase despite unrelated DOM syn
     const deadline = h.engine.geometryUntil;
     for (let i = 0; i < 20; i++) { h.advance(40); h.engine.sync(); assert.equal(h.engine.geometryUntil, deadline); }
     h.advance(40); assert.equal(h.rafs.size, 0); h.engine.dispose();
+});
+
+test('low-blur follows bounded menu geometry while keeping fluid time frozen and stopping after the transition', () => {
+    const h = harness({ flow: false });
+    h.engine.setSettings({ reduceMotion: false, lowBlur: true }); h.advance(40);
+    assert.equal(h.rafs.size, 0);
+    const time = h.engine.time, frames = h.engine.frameCount;
+    h.anchor.setAttribute('data-mico-menu-phase', 'opening'); h.engine.sync();
+    const deadline = h.engine.geometryUntil;
+    for (let i = 0; i < 20; i++) {
+        h.advance(40); h.engine.sync();
+        assert.equal(h.engine.geometryUntil, deadline);
+        assert.equal(h.engine.time, time);
+    }
+    h.advance(40);
+    assert.ok(h.engine.frameCount > frames + 5, 'menu material must track intermediate geometry');
+    assert.equal(h.rafs.size, 0);
+    h.advance(10000); assert.equal(h.engine.time, time);
+    h.engine.dispose(); assertReleased(h);
 });
 
 test('paused seek focus and blur refresh a single glass thumb frame and dispose removes both listeners', () => {
@@ -237,7 +256,7 @@ test('real cover texture is composited into the glass scene at host geometry, wh
     h.player.querySelectorAll = () => [menu];
     h.requests[0].resolve([[1,.25,0],[0,.25,1],[.5,.5,.5],[.1,.1,.1]]); await settle(); h.advance(40);
     assert.equal(h.engine.diagnostics().coverSceneStatus, 'ready'); assert.equal(h.engine.diagnostics().coverSceneDraws, 1);
-    assert.equal(h.gl.live.size, 8); assert.equal(h.engine.diagnostics().outputCanvases, 2);
+    assert.equal(h.gl.live.size, 9); assert.equal(h.engine.diagnostics().outputCanvases, 2);
     assert.ok(h.gl.calls.some(call => call[0] === 'texImage2D' && call.length === 7 && call[6] === h.engine.coverImage));
     assert.ok(h.gl.calls.some(call => call[0] === 'uniform4fv' && call[1] === 'u_rect' && JSON.stringify(call[2]) === '[140,120,200,200]'));
     const coverPass = h.gl.calls.findIndex(call => call[0] === 'uniform1i' && call[1] === 'u_cover');

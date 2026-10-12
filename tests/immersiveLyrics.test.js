@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-    buildLyricTimeline, resolveLyricPosition, getTokenProgress, getSeekTime,
+    buildLyricTimeline, buildLyricStageRows, getLyricStageFocus, LYRIC_GAP_MIN_MS, resolveLyricPosition, getTokenProgress, getSeekTime,
     selectSecondaryText, getVirtualWindow, getLinePresentation, createFollowTimer,
     LYRIC_SPRING, LYRIC_SPRING_LIMITS, stepLyricSpring, isLyricSpringSettled,
     retargetLineSpring, stepLineSpring, createLyricSpring, hasWordMotion, createLyricWordClock
@@ -236,11 +236,70 @@ test('真实 parser 输出的主行时间与逐词来源直接用于舞台，不
 
 test('前奏、有效行、间奏、尾奏采用半开区间并保留真实聚焦行', () => {
     const rows = buildLyricTimeline([lyric(2000, 4000, '第一句'), lyric(7000, 9000, '第二句')]);
-    assert.deepEqual(resolveLyricPosition(rows, 0), { phase: 'prelude', activeIndex: -1, focusIndex: 0, nextIndex: 0 });
+    assert.deepEqual(resolveLyricPosition(rows, 0), { phase: 'prelude', activeIndex: -1, focusIndex: 0, nextIndex: 0, gap: null });
     assert.equal(resolveLyricPosition(rows, 2).activeIndex, 0);
-    assert.deepEqual(resolveLyricPosition(rows, 4), { phase: 'interlude', activeIndex: -1, focusIndex: 0, nextIndex: 1 });
+    assert.deepEqual(resolveLyricPosition(rows, 4), { phase: 'interlude', activeIndex: -1, focusIndex: 0, nextIndex: 1, gap: null });
     assert.equal(resolveLyricPosition(rows, 7).activeIndex, 1);
-    assert.deepEqual(resolveLyricPosition(rows, 9), { phase: 'outro', activeIndex: -1, focusIndex: 1, nextIndex: -1 });
+    assert.deepEqual(resolveLyricPosition(rows, 9), { phase: 'outro', activeIndex: -1, focusIndex: 1, nextIndex: -1, gap: null });
+});
+
+test('普通短换气与行间停顿不生成三个点，四秒展示阈值不修改任何源时间', () => {
+    assert.equal(LYRIC_GAP_MIN_MS, 4000);
+    const source = [lyric(2000, 4000, '普通第一句'), lyric(6000, 8000, '普通第二句'), lyric(11000, 13000, '普通第三句')];
+    const snapshot = structuredClone(source), rows = buildLyricTimeline(source);
+    assert.equal(resolveLyricPosition(rows, 1).gap, null);
+    assert.equal(resolveLyricPosition(rows, 5).gap, null);
+    assert.equal(resolveLyricPosition(rows, 9).gap, null);
+    assert.deepEqual(buildLyricStageRows(rows).map(row => row.kind), ['line', 'line', 'line']);
+    assert.deepEqual(source, snapshot);
+});
+
+test('长前奏与真实间奏在歌词序列中占明确一行，源歌词索引与布局索引保持分离', () => {
+    const rows = buildLyricTimeline([lyric(6000, 8000, '第一句'), lyric(14000, 16000, '第二句')]);
+    const stage = buildLyricStageRows(rows);
+    assert.deepEqual(stage.map(row => row.kind), ['gap', 'line', 'gap', 'line']);
+    assert.deepEqual(stage.filter(row => row.kind === 'line').map(row => [row.sourceIndex, row.index]), [[0, 1], [1, 3]]);
+    const prelude = resolveLyricPosition(rows, 3);
+    assert.equal(prelude.gap.phase, 'prelude');
+    assert.equal(prelude.gap.progress, 0.5);
+    assert.equal(getLyricStageFocus(stage, prelude), 0);
+    const middle = resolveLyricPosition(rows, 11);
+    assert.deepEqual(middle.gap, { key: 'mico-lyric-gap-8000-14000', startMs: 8000, endMs: 14000,
+        beforeIndex: 0, afterIndex: 1, phase: 'interlude', progress: 0.5 });
+    assert.equal(getLyricStageFocus(stage, middle), 2, '自动跟随聚焦间奏自身，不停留在前句再浮出三个点');
+    assert.equal(getSeekTime(stage[2]), null);
+    assert.equal(getSeekTime(stage[3]), 14);
+    assert.equal(getLyricStageFocus(stage, resolveLyricPosition(rows, 14)), 3);
+});
+
+test('间奏采用真实半开边界，暂停保持进度、倒退重新求值，尾奏不凭歌曲长度猜测', () => {
+    const rows = buildLyricTimeline([lyric(0, 1000, '第一句'), lyric(5000, 6000, '第二句')]);
+    assert.equal(resolveLyricPosition(rows, 1).gap.progress, 0);
+    const paused = resolveLyricPosition(rows, 3);
+    assert.deepEqual(resolveLyricPosition(rows, 3), paused);
+    assert.equal(paused.gap.progress, 0.5);
+    assert.equal(resolveLyricPosition(rows, 4.999).gap !== null, true);
+    assert.equal(resolveLyricPosition(rows, 5).gap, null);
+    assert.equal(resolveLyricPosition(rows, 5).activeIndex, 1);
+    assert.equal(resolveLyricPosition(rows, 2).gap.progress, 0.25);
+    assert.equal(resolveLyricPosition(rows, 999).gap, null);
+    const unknown = buildLyricTimeline([{ characters: [{ char: '没有主行边界' }] }, { characters: [{ char: '不能补造间奏' }] }]);
+    assert.equal(buildLyricStageRows(unknown).some(row => row.kind === 'gap'), false);
+});
+
+test('重叠长句覆盖短句结束点，不根据短行末端制造假间奏；空行仅保留真实有效区间', () => {
+    const rows = buildLyricTimeline([lyric(0, 10000, '长句'), lyric(1000, 2000, '重叠短句'),
+        { startTime: 3000, endTime: 9000, characters: [] }, lyric(12000, 13000, '后句'),
+        { startTime: 13000, endTime: 18000, characters: [] }]);
+    const stage = buildLyricStageRows(rows);
+    assert.deepEqual(stage.map(row => row.kind), ['line', 'line', 'line', 'gap']);
+    assert.equal(resolveLyricPosition(rows, 6).activeIndex, 0);
+    assert.equal(resolveLyricPosition(rows, 6).gap, null);
+    assert.equal(resolveLyricPosition(rows, 11).gap, null, '长句真实末端至下一句仅两秒');
+    assert.equal(resolveLyricPosition(rows, 15).gap.beforeIndex, 3);
+    assert.equal(resolveLyricPosition(rows, 15).gap.afterIndex, -1);
+    assert.equal(resolveLyricPosition(rows, 18).gap, null);
+    assert.deepEqual(stage.filter(row => row.kind === 'line').map(row => row.sourceIndex), [0, 1, 3]);
 });
 
 test('倒退 seek 和新歌曲从时间直接求解，不沿用旧行或高亮状态', () => {

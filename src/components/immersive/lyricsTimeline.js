@@ -22,6 +22,71 @@ const activeAt = (index, time, from) => {
     return null;
 };
 
+// 展示规则：仅在真实行边界之间至少留出四秒时呈现间奏行。
+// 这不是歌曲结构识别，也不改变主行或逐词时间；普通换气/行间停顿不产生三个点。
+export const LYRIC_GAP_MIN_MS = 4000;
+const buildGapIntervals = (voicedRows, blankRows) => {
+    const gaps = [];
+    const append = (startMs, endMs, beforeIndex, afterIndex, phase) => {
+        if (endMs - startMs < LYRIC_GAP_MIN_MS) return;
+        gaps.push({ key: `mico-lyric-gap-${startMs}-${endMs}`, startMs, endMs, beforeIndex, afterIndex, phase });
+    };
+    if (!voicedRows.length) return gaps;
+    append(0, voicedRows[0].startMs, -1, voicedRows[0].index, 'prelude');
+    let previous = voicedRows[0], endMs = previous.endMs;
+    for (const next of voicedRows.slice(1)) {
+        if (next.startMs > endMs) append(endMs, next.startMs, previous.index, next.index, 'interlude');
+        if (next.endMs >= endMs) { previous = next; endMs = next.endMs; }
+    }
+    // 尾部只有歌词数据明确提供了空白区间才可呈现；没有音频总时长时不推测尾奏。
+    let blankStart = null, blankEnd = null;
+    for (const blank of blankRows) {
+        if (blank.endMs <= endMs) continue;
+        const start = Math.max(endMs, blank.startMs);
+        if (blankStart !== null && start > blankEnd) {
+            append(blankStart, blankEnd, previous.index, -1, 'interlude');
+            blankStart = null;
+        }
+        if (blankStart === null) blankStart = start;
+        blankEnd = Math.max(blankEnd ?? 0, blank.endMs);
+    }
+    if (blankStart !== null) append(blankStart, blankEnd, previous.index, -1, 'interlude');
+    return gaps;
+};
+const getTimelineIndex = rows => {
+    let index = timelineIndexes.get(rows);
+    if (!index) {
+        const textRows = rows.filter(row => row.hasText);
+        const voiced = indexTimedRows(textRows), blank = indexTimedRows(rows.filter(row => !row.hasText));
+        index = { textRows, voiced, blank, gaps: buildGapIntervals(voiced.rows, blank.rows) };
+        timelineIndexes.set(rows, index);
+    }
+    return index;
+};
+
+// 布局索引与原歌词索引分开；空白歌词源不再占一个无意义的可点击/聚焦主行。
+export function buildLyricStageRows(rows) {
+    const { textRows, gaps } = getTimelineIndex(rows);
+    const stage = [], before = new Map(), after = new Map();
+    for (const gap of gaps) {
+        const map = gap.afterIndex >= 0 ? before : after;
+        const index = gap.afterIndex >= 0 ? gap.afterIndex : gap.beforeIndex;
+        if (!map.has(index)) map.set(index, []);
+        map.get(index).push(gap);
+    }
+    for (const row of textRows) {
+        for (const gap of before.get(row.index) || []) stage.push({ ...gap, kind: 'gap', hasText: false });
+        stage.push({ ...row, sourceIndex: row.index, kind: 'line' });
+        for (const gap of after.get(row.index) || []) stage.push({ ...gap, kind: 'gap', hasText: false });
+    }
+    return stage.map((row, index) => ({ ...row, index }));
+}
+
+export function getLyricStageFocus(stageRows, position) {
+    if (position.gap) return stageRows.findIndex(row => row.kind === 'gap' && row.key === position.gap.key);
+    return stageRows.findIndex(row => row.kind === 'line' && row.sourceIndex === position.focusIndex);
+}
+
 export function buildLyricTimeline(lines) {
     if (!Array.isArray(lines)) return [];
     return lines.map((source, index) => {
@@ -47,27 +112,24 @@ export function buildLyricTimeline(lines) {
 }
 
 export function resolveLyricPosition(rows, seconds) {
-    let index = timelineIndexes.get(rows);
-    if (!index) {
-        const textRows = rows.filter(row => row.hasText);
-        index = { textRows, voiced: indexTimedRows(textRows), blank: indexTimedRows(rows.filter(row => !row.hasText)) };
-        timelineIndexes.set(rows, index);
-    }
-    const { textRows, voiced, blank } = index;
-    if (!textRows.length) return { phase: 'empty', activeIndex: -1, focusIndex: -1, nextIndex: -1 };
+    const { textRows, voiced, blank, gaps } = getTimelineIndex(rows);
+    if (!textRows.length) return { phase: 'empty', activeIndex: -1, focusIndex: -1, nextIndex: -1, gap: null };
     const voicedRows = voiced.rows;
-    if (!voicedRows.length) return { phase: 'untimed', activeIndex: -1, focusIndex: textRows[0].index, nextIndex: -1 };
+    if (!voicedRows.length) return { phase: 'untimed', activeIndex: -1, focusIndex: textRows[0].index, nextIndex: -1, gap: null };
     const time = clockMilliseconds(seconds);
     const current = latestStart(voicedRows, time);
     const active = activeAt(voiced, time, current);
     if (active) return { phase: 'line', activeIndex: active.index, focusIndex: active.index,
-        nextIndex: voicedRows[latestStart(voicedRows, active.startMs) + 1]?.index ?? -1 };
+        nextIndex: voicedRows[latestStart(voicedRows, active.startMs) + 1]?.index ?? -1, gap: null };
+    const gap = gaps.find(value => value.startMs <= time && time < value.endMs);
+    if (gap) return { phase: gap.phase, activeIndex: -1, focusIndex: gap.beforeIndex >= 0 ? gap.beforeIndex : gap.afterIndex,
+        nextIndex: gap.afterIndex, gap: { ...gap, progress: (time - gap.startMs) / (gap.endMs - gap.startMs) } };
     const previous = voicedRows[current];
     const next = voicedRows[current + 1];
     const insideBlank = Boolean(activeAt(blank, time, latestStart(blank.rows, time)));
-    if (!previous) return { phase: insideBlank ? 'interlude' : 'prelude', activeIndex: -1, focusIndex: next.index, nextIndex: next.index };
-    if (next || insideBlank) return { phase: 'interlude', activeIndex: -1, focusIndex: previous.index, nextIndex: next?.index ?? -1 };
-    return { phase: 'outro', activeIndex: -1, focusIndex: previous.index, nextIndex: -1 };
+    if (!previous) return { phase: insideBlank ? 'interlude' : 'prelude', activeIndex: -1, focusIndex: next.index, nextIndex: next.index, gap: null };
+    if (next || insideBlank) return { phase: 'interlude', activeIndex: -1, focusIndex: previous.index, nextIndex: next?.index ?? -1, gap: null };
+    return { phase: 'outro', activeIndex: -1, focusIndex: previous.index, nextIndex: -1, gap: null };
 }
 
 export function getTokenProgress(token, seconds) {

@@ -3,5 +3,5 @@
 .mico-immersive-player[data-mico-hero-phase="opening"] .mico-immersive-cover,
 .mico-immersive-player[data-mico-hero-phase="closing"] .mico-immersive-cover { will-change: transform; }
 .mico-immersive-player[data-mico-hero-phase="closing"] { pointer-events: none; }
-.mico-immersive-menu-anchor[data-mico-menu-phase="opening"] .mico-immersive-menu,
-.mico-immersive-menu-anchor[data-mico-menu-phase="closing"] .mico-immersive-menu { will-change: transform; }
+.mico-immersive-player:has(.mico-immersive-menu-anchor[data-mico-menu-phase="opening"]) .mico-immersive-menu,
+.mico-immersive-player:has(.mico-immersive-menu-anchor[data-mico-menu-phase="closing"]) .mico-immersive-menu { will-change: transform, translate; }

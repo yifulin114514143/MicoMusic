@@ -90,7 +90,7 @@
             this.gl?.bindBuffer(this.gl.ARRAY_BUFFER, null);
             this.gl?.useProgram(null);
             for (const kind of Object.keys(resourceMethods)) for (const resource of [...this.resources[kind]]) this.release(kind, resource);
-            this.programs = null; this.texture = null; this.framebuffer = null; this.buffer = null; this.coverTexture = null;
+            this.programs = null; this.texture = null; this.framebuffer = null; this.buffer = null; this.coverTexture = null; this.fluidTexture = null;
         }
         program(fragment) {
             const gl = this.gl;
@@ -118,6 +118,13 @@
             gl.bindTexture(gl.TEXTURE_2D, this.texture);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            // A complete sampler also exists before any cover arrives; it never
+            // aliases the scene FBO being written by the fluid program.
+            this.fluidTexture = this.allocate('textures', gl.createTexture());
+            gl.bindTexture(gl.TEXTURE_2D, this.fluidTexture);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0,0,0,255]));
             this.framebuffer = this.allocate('framebuffers', gl.createFramebuffer());
             this.width = 0; this.height = 0;
             this.resize();
@@ -238,7 +245,7 @@
         visible() { return !!this.target && this.viewportVisible && !document.hidden && this.target.getAttribute('data-mico-fluid-visible') !== 'false' && document.documentElement.getAttribute('data-mico-window-visible') !== 'false'; }
         reduced() { return !!this.settings.reduceMotion || this.motionPreference.matches; }
         flowing() { return this.visible() && !this.reduced() && !this.settings.lowBlur && this.target.getAttribute('data-motion') === 'flow' && this.target.getAttribute('data-blur') !== 'low'; }
-        needsFrames(now) { return this.visible() && !this.reduced() && !this.settings.lowBlur && (this.flowing() || now < this.colorEnds || now < this.geometryUntil); }
+        needsFrames(now) { return this.visible() && !this.reduced() && (now < this.geometryUntil || !this.settings.lowBlur && (this.flowing() || now < this.colorEnds)); }
         setSettings(settings) { this.settings = settings; this.sync(); }
         loadPalette(source) {
             this.source = source; this.paletteAbort?.abort();
@@ -268,14 +275,24 @@
         uploadCover() {
             const gl = this.gl;
             if (!this.coverImage || !gl) return;
+            if (this.coverTexture) this.release('textures', this.coverTexture);
             this.coverTexture = this.allocate('textures', gl.createTexture());
             gl.bindTexture(gl.TEXTURE_2D, this.coverTexture);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-            try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.coverImage); }
+            let field;
+            try {
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.coverImage);
+                field = document.createElement('canvas'); field.width = 32; field.height = 32;
+                const context = field.getContext('2d');
+                if (!context) throw new Error('无法生成封面空间色彩纹理');
+                context.drawImage(this.coverImage, 0, 0, 32, 32);
+                gl.bindTexture(gl.TEXTURE_2D, this.fluidTexture);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, field);
+            }
             catch (error) { this.coverSceneStatus = 'error'; this.coverSceneError = error.message; this.coverFallback = true; throw error; }
-            finally { gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false); }
+            finally { gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false); if (field) { field.width = 0; field.height = 0; } }
             this.coverSceneStatus = 'ready'; this.coverSceneError = null;
         }
         transitionPalette(colors, source) {
@@ -293,8 +310,7 @@
         tick(now) {
             this.raf = 0;
             if (this.disposed || this.phase !== 'ready' || !this.visible()) { this.publish(); return; }
-            const finiteMotion = now < this.geometryUntil || now < this.colorEnds;
-            if (this.lastDraw && now - this.lastDraw < (finiteMotion ? 15 : 32) && this.needsFrames(now)) { this.requestFrame(); return; }
+            if (this.lastDraw && now - this.lastDraw < 15 && this.needsFrames(now)) { this.requestFrame(); return; }
             if (this.flowing() && this.lastDraw) this.time += Math.min(.1, (now - this.lastDraw) / 1000);
             this.lastDraw = now;
             if (this.colorEnds) {
@@ -328,7 +344,11 @@
             const gl = this.gl, programs = this.programs;
             gl.disable(gl.SCISSOR_TEST); gl.disable(gl.BLEND);
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.framebuffer); gl.viewport(0, 0, this.sceneWidth, this.sceneHeight);
-            this.use(programs.fluid); this.uniform(programs.fluid, 'u_resolution', 'uniform2fv', [this.sceneWidth, this.sceneHeight]); this.uniform(programs.fluid, 'u_time', 'uniform1f', this.time); this.uniform(programs.fluid, 'u_colors[0]', 'uniform3fv', this.colors.flat()); gl.drawArrays(gl.TRIANGLES, 0, 6);
+            gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, this.fluidTexture);
+            this.use(programs.fluid); this.uniform(programs.fluid, 'u_resolution', 'uniform2fv', [this.sceneWidth, this.sceneHeight]); this.uniform(programs.fluid, 'u_time', 'uniform1f', this.time); this.uniform(programs.fluid, 'u_colors[0]', 'uniform3fv', this.colors.flat());
+            this.uniform(programs.fluid, 'u_coverField', 'uniform1i', 0);
+            const coverMix = this.coverSceneStatus === 'ready' ? (this.colorEnds ? smooth((now - this.colorStarted) / 1500) : 1) : 0;
+            this.uniform(programs.fluid, 'u_coverMix', 'uniform1f', coverMix); gl.drawArrays(gl.TRIANGLES, 0, 6);
             gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, this.canvas.width, this.canvas.height);
             gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, this.texture);
             this.use(programs.copy); this.uniform(programs.copy, 'u_scene', 'uniform1i', 0); gl.drawArrays(gl.TRIANGLES, 0, 6);
@@ -366,20 +386,22 @@
             gl.enable(gl.BLEND); gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
             this.use(programs.glass); this.uniform(programs.glass, 'u_scene', 'uniform1i', 0); this.uniform(programs.glass, 'u_view', 'uniform2fv', [this.width, this.height]); this.uniform(programs.glass, 'u_pointer', 'uniform2fv', this.pointer); this.uniform(programs.glass, 'u_pointerActive', 'uniform1f', this.pointerActive);
             this.shapes = 0;
-            const renderShape = (shape, join = null, neck = 0, frost = .25) => {
+            const renderShape = (shape, join = null, neck = 0, frost = .25, regular = 0) => {
                 this.uniform(programs.glass, 'u_rect', 'uniform4fv', shape.rect); this.uniform(programs.glass, 'u_radius', 'uniform1f', shape.radius);
                 this.uniform(programs.glass, 'u_joinRect', 'uniform4fv', join?.rect || [0,0,0,0]); this.uniform(programs.glass, 'u_joinRadius', 'uniform1f', join?.radius || 0); this.uniform(programs.glass, 'u_joinAmount', 'uniform1f', neck);
                 this.uniform(programs.glass, 'u_strength', 'uniform1f', this.settings.lowBlur ? .7 : 1.15); this.uniform(programs.glass, 'u_opacity', 'uniform1f', shape.opacity * .97);
                 this.uniform(programs.glass, 'u_frost', 'uniform1f', this.settings.lowBlur ? 0 : frost);
+                this.uniform(programs.glass, 'u_regular', 'uniform1f', regular);
                 let left = shape.rect[0] - shape.rect[2]/2, top = shape.rect[1] - shape.rect[3]/2, right = left + shape.rect[2], bottom = top + shape.rect[3];
                 if (join) { left = Math.min(left,join.rect[0]-join.rect[2]/2); top = Math.min(top,join.rect[1]-join.rect[3]/2); right = Math.max(right,join.rect[0]+join.rect[2]/2); bottom = Math.max(bottom,join.rect[1]+join.rect[3]/2); }
-                const pad = Math.max(2,neck); left = clamp(left-pad,0,this.width); top = clamp(top-pad,0,this.height); right = clamp(right+pad,0,this.width); bottom = clamp(bottom+pad,0,this.height);
+                const pad = Math.max(regular > .01 ? 26 : 2,neck); left = clamp(left-pad,0,this.width); top = clamp(top-pad,0,this.height); right = clamp(right+pad,0,this.width); bottom = clamp(bottom+pad,0,this.height);
                 gl.enable(gl.SCISSOR_TEST); gl.scissor(Math.floor(left*this.dpr), Math.floor((this.height-bottom)*this.dpr), Math.ceil((right-left)*this.dpr), Math.ceil((bottom-top)*this.dpr)); gl.drawArrays(gl.TRIANGLES,0,6); this.shapes++;
             };
             for (const node of nodes) {
                 if (joining && node === more) continue;
                 const shape = this.measure(node); if (!shape) continue;
-                renderShape(shape, node === menu && joining ? moreShape : null, node === menu ? joinAmount : 0, node === menu ? 1 : .25);
+                const regular = node === menu ? smooth((Math.min(shape.rect[2], shape.rect[3]) - 40) / 96) : 0;
+                renderShape(shape, node === menu && joining ? moreShape : null, node === menu ? joinAmount : 0, node === menu ? 1 : .25, regular);
             }
             const seek = player?.querySelector('.mico-immersive-seek');
             if (seek && !seek.disabled && (seek.matches(':hover') || seek === document.activeElement)) {
@@ -393,7 +415,7 @@
         }
         diagnostics() {
             return { phase: this.phase, renderer: this.phase === 'ready' ? 'webgl1' : 'css', frameCount: this.frameCount, rafPending: !!this.raf,
-                dpr: this.dpr, width: this.width, height: this.height, paletteStatus: this.paletteStatus, paletteSource: this.paletteSource,
+                dpr: this.dpr, width: this.width, height: this.height, targetFrameRate: 60, paletteStatus: this.paletteStatus, paletteSource: this.paletteSource,
                 paletteTransitionMs: 1500, shapes: this.shapes, timeSeconds: this.time, resources: Object.fromEntries(Object.entries(this.resources).map(([kind, values]) => [kind, values.size])),
                 outputCanvases: this.backgroundCanvas && this.overlayCanvas ? 2 : 0, coverSceneStatus: this.coverSceneStatus, coverSceneError: this.coverSceneError, coverSceneDraws: this.coverSceneDraws,
                 allocations: this.allocations, deletions: this.deletions, error: this.error };
