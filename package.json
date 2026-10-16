@@ -1,6 +1,6 @@
 {
   "name": "micomusic",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "homepage": "https://github.com/yifulin114514143/MicoMusic",
   "main": "electron/main.js",
   "scripts": {
@@ -28,7 +28,8 @@
     "test:phase3": "node --test tests/extensionLifecycle.test.js tests/extensionManagerRuntime.test.js tests/liquidGlassPlugin.test.js tests/builtinVisualPluginFiles.test.js tests/nativeHostShutdownRuntime.test.js",
     "validate:phase3": "node scripts/run-phase3-validation.mjs",
     "test:immersive": "node --test tests/parseKrcLine.test.js tests/immersiveVisualState.test.js tests/immersiveLyrics.test.js tests/immersiveHero.test.js tests/immersiveMenuGeometry.test.js tests/fluidGlassEngine.test.js",
-    "validate:immersive": "node scripts/run-immersive-validation.mjs"
+    "validate:immersive": "node scripts/run-immersive-validation.mjs",
+    "test:upstream": "node --test tests/upstreamSync.test.js"
   },
   "engines": {
     "node": ">=20"

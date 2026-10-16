@@ -12,6 +12,8 @@ test('安装包、运行时和依赖锁文件使用同一独立身份', () => {
     assert.equal(pkg.build.productName, APP_NAME);
     assert.equal(pkg.name, lock.name);
     assert.equal(pkg.name, lock.packages[''].name);
+    assert.equal(pkg.version, lock.version);
+    assert.equal(pkg.version, lock.packages[''].version);
     assert.notEqual(APP_ID, 'cn.MoeKoe.Music');
     assert.deepEqual(pkg.build.protocols.flatMap(item => item.schemes), [APP_PROTOCOL]);
     assert.deepEqual(pkg.build.publish, { provider: 'github', owner: 'yifulin114514143', repo: 'MicoMusic' });

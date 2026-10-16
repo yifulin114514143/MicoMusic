@@ -21,7 +21,7 @@ app.setPath('logs', path.join(profile, 'logs'));
 app.setPath('temp', path.join(profile, 'temp'));
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 app.on('window-all-closed', () => {});
-const evidence = path.join(root, 'docs/immersive/evidence/2026-10-12-sync-pointer-regression');
+const evidence = path.join(root, 'docs/immersive/evidence/2026-10-16-upstream-sync');
 fs.mkdirSync(evidence, { recursive: true });
 function sourceState() {
     const files = execFileSync('git', ['ls-files', '-co', '--exclude-standard', '--', 'src', 'electron', 'plugins/extensions/mico-liquid-glass', 'scripts', 'tests', 'package.json'], { cwd: root, encoding: 'utf8' }).trim().split('\n').filter(Boolean);
@@ -37,7 +37,7 @@ function sourceState() {
         sourceFiles, rendererFiles, interpretation: '当前工作树与生产构建；含未提交源码，不能只用 HEAD 标识本次运行内容' };
 }
 const report = { timestamp: new Date().toISOString(), mode, backgroundThrottling: mode !== 'unthrottled', electron: process.versions.electron, chromium: process.versions.chrome,
-    platform: process.platform, validationRevision: 'lyric-source-clock-clarity-pointer-spring-2026-10-12', sourceState: sourceState(), checks: [], observations: {},
+    platform: process.platform, validationRevision: 'upstream-sync-2026-10-16', sourceState: sourceState(), checks: [], observations: {},
     isolation: { userData: app.getPath('userData'), logs:app.getPath('logs'), temp:app.getPath('temp'), executable:app.getPath('exe'),
         interpretation:'仅本工作树 artifacts/immersive-runtime 中复制的Electron bundle与临时profile，不读取或迁移已安装音乐客户端profile' },
     limitations: ['真实生产 Vue/PlayerControl/AudioController/插件加载器的隔离 Electron 宿主；不是完整发行版主进程',
@@ -115,6 +115,7 @@ async function serveFixtures() {
         else if (url.pathname === '/lyric') data = { status: 200, decodeContent: url.searchParams.get('id') === 'fixture-krc-prelude' ? preludeKrc : krc };
         else if (url.pathname === '/song/url') data = { status: 1, url: [base + (url.searchParams.get('hash') === 'immersive-b' ? '/fixture-b.wav' : '/fixture-a.wav')], timeLength: duration, extName: 'wav' };
         else if (url.pathname === '/register/dev') data = { status: 1, data: { dfid: 'isolated-technical-fixture' } };
+        else if (url.pathname === '/user/grade/info') data = { status: 1, data: { d_sec: 0 } };
         else if (url.pathname === '/song/climax' || url.pathname === '/images') data = { status: 0 };
         else { res.writeHead(404); res.end('fixture: endpoint not defined'); return; }
         res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify(data));

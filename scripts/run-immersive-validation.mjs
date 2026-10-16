@@ -6,7 +6,7 @@ import electron from 'electron';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const runtime = path.join(root, 'artifacts/immersive-runtime');
-const evidence = path.join(root, 'docs/immersive/evidence/2026-10-12-sync-pointer-regression');
+const evidence = path.join(root, 'docs/immersive/evidence/2026-10-16-upstream-sync');
 fs.mkdirSync(runtime, { recursive: true });
 fs.mkdirSync(evidence, { recursive: true });
 if (process.platform !== 'darwin') throw new Error('本运行器仅覆盖当前 macOS 原生 Electron；其他平台需另行验收');

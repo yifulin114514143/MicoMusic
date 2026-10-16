@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-10-16T11:37:25.702Z",
+  "apiCommit": "ba3645f2c89e6b9d4fec82ff783c15287e4c5f43",
+  "routes": [
+    "/user/listen/report",
+    "/user/grade/info",
+    "/privilege/lite"
+  ],
+  "loadedModuleCount": 234,
+  "startup": "passed",
+  "bindAddress": "127.0.0.1",
+  "dynamicallyAllocatedPort": "54058",
+  "missingAuthentication": {
+    "httpStatus": 400,
+    "body": {
+      "status": 0,
+      "msg": "需要 token、userid、mid 和 32 位字母数字 uuid（也可从 cookie 读取）"
+    }
+  },
+  "limitation": "仅本机服务与拒绝缺失认证的请求；未向酷狗提交真实听歌事件或验证账号时长入账"
+}

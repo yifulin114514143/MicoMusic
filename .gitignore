@@ -56,3 +56,5 @@ docs/immersive/evidence/2026-10-12-sync-pointer-regression/failure.png
 docs/immersive/evidence/2026-10-12-sync-pointer-regression/failure-unthrottled.png
 docs/immersive/evidence/2026-10-12-sync-pointer-regression/11-webgl-motion-capturePage.mp4
 docs/immersive/evidence/2026-10-12-sync-pointer-regression/11-webgl-motion-capturePage-unthrottled.mp4
+# 本次未完成的原生回归现场保留本地；结论记录于 docs/upstream-sync/。
+docs/immersive/evidence/2026-10-16-upstream-sync/
