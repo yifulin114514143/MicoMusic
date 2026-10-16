@@ -6,6 +6,9 @@ import { fileURLToPath } from 'url';
 import isDev from 'electron-is-dev';
 import AdmZip from 'adm-zip';
 import { validateNativeHostManifest } from './nativeHostManager.js';
+import { createExtensionLifecycle, getManagedExtensionPath, getExtensionPackagePath, pathsMatch } from './extensionLifecycle.js';
+
+export { pathsMatch } from './extensionLifecycle.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -14,72 +17,21 @@ const EXTENSIONS_DIR = !isDev
     ? path.join(app.getPath('userData'), 'extensions')
     : path.join(__dirname, '../../plugins/extensions');
 
-/**
- * 加载 Chrome 插件
- */
-export async function loadChromeExtensions() {
-    if (!fs.existsSync(EXTENSIONS_DIR)) {
-        fs.mkdirSync(EXTENSIONS_DIR, { recursive: true });
-        log.info('创建插件目录:', EXTENSIONS_DIR);
-    }
+const lifecycle = createExtensionLifecycle({
+    extensionsDirectory: EXTENSIONS_DIR,
+    getSession: () => session.defaultSession,
+    validateManifest,
+    logger: log
+});
 
-    try {
-        const extensionDirs = fs.readdirSync(EXTENSIONS_DIR, { withFileTypes: true })
-            .filter(dirent => dirent.isDirectory())
-            .map(dirent => dirent.name);
-
-        const loadTasks = [];
-
-        for (const extensionDir of extensionDirs) {
-            const extensionPath = path.join(EXTENSIONS_DIR, extensionDir);
-            const manifestPath = path.join(extensionPath, 'manifest.json');
-            
-            if (fs.existsSync(manifestPath)) {
-                try {
-                    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-                    
-                    // 验证 manifest 格式
-                    if (manifest.manifest_version && manifest.name && manifest.version) {
-                        loadTasks.push(
-                            session.defaultSession.loadExtension(extensionPath, {
-                                allowFileAccess: true
-                            }).then((extension) => {
-                                log.info(`成功加载插件: ${manifest.name} (${extension.id})`);
-                            }).catch((error) => {
-                                log.error(`加载插件失败 ${extensionDir}:`, error);
-                            })
-                        );
-                    } else {
-                        log.warn(`插件 ${extensionDir} 的 manifest.json 格式不正确`);
-                    }
-                } catch (error) {
-                    log.error(`解析插件 ${extensionDir} 的 manifest.json 失败:`, error);
-                }
-            } else {
-                log.warn(`插件目录 ${extensionDir} 缺少 manifest.json 文件`);
-            }
-        }
-
-        await Promise.allSettled(loadTasks);
-    } catch (error) {
-        log.error('扫描插件目录失败:', error);
-    }
-}
-
-/**
- * 卸载所有插件
- */
-export function unloadChromeExtensions() {
-    try {
-        const extensions = session.defaultSession.getAllExtensions();
-        extensions.forEach(extension => {
-            session.defaultSession.removeExtension(extension.id);
-            log.info(`卸载插件: ${extension.name}`);
-        });
-    } catch (error) {
-        log.error('卸载插件失败:', error);
-    }
-}
+// 所有卸载路径都先等待插件清理，然后移除 Electron 会话。
+export const loadChromeExtensions = lifecycle.loadChromeExtensions;
+export const unloadChromeExtensions = lifecycle.unloadChromeExtensions;
+export const uninstallExtension = lifecycle.uninstallExtension;
+export const reloadExtensions = lifecycle.reloadExtensions;
+export const setBeforeExtensionUnloadHook = lifecycle.setBeforeExtensionUnloadHook;
+export const setAfterExtensionLoadHook = lifecycle.setAfterExtensionLoadHook;
+export const getLastLoadResults = lifecycle.getLastLoadResults;
 
 /**
  * 获取已加载的插件列表
@@ -97,73 +49,7 @@ export function getLoadedExtensions() {
  * 安装单个插件
  * @param {string} extensionPath 插件路径
  */
-export async function installExtension(extensionPath) {
-    try {
-        const extension = await session.defaultSession.loadExtension(extensionPath, {
-            allowFileAccess: true
-        });
-        log.info(`手动安装插件成功: ${extension.name}`);
-        return { success: true, extension: { id: extension.id, name: extension.name } };
-    } catch (error) {
-        log.error('手动安装插件失败:', error);
-        return { success: false, message: error.message };
-    }
-}
-
-/**
- * 卸载单个插件
- * @param {string} extensionId 插件ID
- */
-export function uninstallExtension(extensionId, extensionDir = '') {
-    try {
-        let removedFromSession = false;
-        let removedFiles = false;
-        let targetDirPath = '';
-
-        targetDirPath = path.join(EXTENSIONS_DIR, path.basename(extensionDir.trim()));
-        try {
-            session.defaultSession.removeExtension(extensionId);
-            removedFromSession = true;
-            log.info(`卸载插件会话: ${extensionId}`);
-        } catch (error) {
-            log.warn(`卸载插件会话失败 ${extensionId}:`, error);
-        }
-
-        if (targetDirPath && fs.existsSync(targetDirPath)) {
-            fs.rmSync(targetDirPath, { recursive: true, force: true });
-            removedFiles = true;
-            log.info(`删除插件目录: ${targetDirPath}`);
-        }
-
-        if (!removedFromSession && !removedFiles) {
-            return { success: false, message: '未找到可卸载的插件会话或目录' };
-        }
-
-        return {
-            success: true,
-            removedFromSession,
-            removedFiles,
-            path: targetDirPath || ''
-        };
-    } catch (error) {
-        log.error('卸载插件失败:', error);
-        return { success: false, message: error.message };
-    }
-}
-
-/**
- * 重新加载所有插件
- */
-export async function reloadExtensions() {
-    try {
-        unloadChromeExtensions();
-        await loadChromeExtensions();
-        return { success: true, message: '插件重新加载成功' };
-    } catch (error) {
-        log.error('重新加载插件失败:', error);
-        return { success: false, message: error.message };
-    }
-}
+export const installExtension = lifecycle.installExtension;
 
 /**
  * 获取插件目录路径
@@ -242,7 +128,12 @@ function hasExtensionPopupFile(extensionPath, manifest) {
  * @param {string} extensionDir 插件目录名
  */
 export function getExtensionInfo(extensionDir) {
-    const extensionPath = path.join(EXTENSIONS_DIR, extensionDir);
+    let extensionPath;
+    try {
+        extensionPath = getManagedExtensionPath(EXTENSIONS_DIR, extensionDir);
+    } catch (error) {
+        return { error: error.message };
+    }
     const manifestPath = path.join(extensionPath, 'manifest.json');
     
     const validation = validateManifest(manifestPath);
@@ -346,37 +237,36 @@ export async function installPluginFromZip(zipPath) {
             return { success: false, message: `manifest.json 解析失败: ${error.message}` };
         }
 
-        // 获取真实的插件目录名（去除可能的 -main 后缀）
+        // 保留既有 -main 包目录兼容行为；实际删除和写入路径必须先验证。
         const pluginName = pluginEntry.replace(/-main$/, '');
-        const targetDir = path.join(EXTENSIONS_DIR, pluginName);
-        
-        // 如果目标目录已存在，先删除
-        if (fs.existsSync(targetDir)) {
-            fs.rmSync(targetDir, { recursive: true, force: true });
+        const targetDir = getManagedExtensionPath(EXTENSIONS_DIR, pluginName, { mustExist: false });
+        const packageFiles = zipEntries
+            .filter(entry => entry.entryName.startsWith(pluginEntry + '/'))
+            .map(entry => ({ entry, relativePath: entry.entryName.substring(pluginEntry.length + 1) }))
+            .filter(item => item.relativePath);
+        for (const item of packageFiles) {
+            getExtensionPackagePath(targetDir, item.relativePath);
+            // 先读取校验内容，损坏的 ZIP 不得在发现错误前删除现有插件。
+            if (!item.entry.isDirectory) item.data = item.entry.getData();
         }
 
-        // 创建目标目录
-        fs.mkdirSync(targetDir, { recursive: true });
+        // 更新也经过同一异步清理入口，失败时保留原插件，不继续覆盖。
+        if (fs.existsSync(targetDir)) {
+            const loaded = getLoadedExtensions().find(extension => pathsMatch(extension.path, targetDir));
+            const result = await uninstallExtension(loaded?.id || '', pluginName);
+            if (!result.success) return { success: false, message: '更新前卸载失败：' + result.message };
+        }
 
-        // 解压所有文件，保持目录结构
-        for (const entry of zipEntries) {
-            const entryName = entry.entryName;
-            // 检查是否属于目标插件目录
-            if (entryName.startsWith(pluginEntry + '/')) {
-                // 计算相对路径
-                const relativePath = entryName.substring(pluginEntry.length + 1);
-                if (relativePath) {  // 跳过空路径
-                    const targetPath = path.join(targetDir, relativePath);
-                    if (entry.isDirectory) {
-                        // 创建目录
-                        fs.mkdirSync(targetPath, { recursive: true });
-                    } else {
-                        // 解压文件
-                        const targetDirPath = path.dirname(targetPath);
-                        fs.mkdirSync(targetDirPath, { recursive: true });
-                        fs.writeFileSync(targetPath, entry.getData());
-                    }
-                }
+        // 清理钩子返回后重新验证路径，避免目标被替换成符号链接。
+        getManagedExtensionPath(EXTENSIONS_DIR, pluginName, { mustExist: false });
+        fs.mkdirSync(targetDir);
+        for (const { entry, relativePath, data } of packageFiles) {
+            const targetPath = getExtensionPackagePath(targetDir, relativePath);
+            if (entry.isDirectory) {
+                fs.mkdirSync(targetPath, { recursive: true });
+            } else {
+                fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+                fs.writeFileSync(targetPath, data);
             }
         }
 
@@ -384,8 +274,12 @@ export async function installPluginFromZip(zipPath) {
         const result = await installExtension(targetDir);
         if (!result.success) {
             // 如果加载失败，清理已解压的文件
+            if (getLoadedExtensions().some(extension => pathsMatch(extension.path, targetDir))) {
+                return { success: false, message: '插件加载失败，清理未完成，已保留插件文件：' + result.message };
+            }
             if (fs.existsSync(targetDir)) {
-                fs.rmSync(targetDir, { recursive: true, force: true });
+                getManagedExtensionPath(EXTENSIONS_DIR, pluginName);
+                fs.rmSync(targetDir, { recursive: true });
             }
             return { success: false, message: '插件加载失败：' + result.message };
         }
@@ -434,9 +328,9 @@ export async function installPluginFromUrl(downloadUrl, extensionId = '', extens
         fs.writeFileSync(tempZipPath, zipBuffer);
 
         if (extensionId || extensionDir) {
-            const uninstallResult = uninstallExtension(extensionId, extensionDir);
+            const uninstallResult = await uninstallExtension(extensionId, extensionDir);
             if (!uninstallResult.success) {
-                log.warn('Failed to remove existing plugin before update:', uninstallResult.message);
+                return { success: false, message: '更新前卸载失败：' + uninstallResult.message };
             }
         }
 
@@ -496,7 +390,7 @@ export function scanExtensions() {
                 extensions.push({
                     ...info,
                     directory: extensionDir,
-                    installed: isExtensionInstalled(info.name)
+                    installed: isExtensionInstalled(info.path)
                 });
             } else {
                 log.warn(`插件 ${extensionDir} 信息获取失败:`, info.error);
@@ -512,12 +406,12 @@ export function scanExtensions() {
 
 /**
  * 检查插件是否已安装
- * @param {string} extensionName 插件名称
+ * @param {string} extensionPath 插件绝对路径
  */
-function isExtensionInstalled(extensionName) {
+function isExtensionInstalled(extensionPath) {
     try {
         const loadedExtensions = getLoadedExtensions();
-        return loadedExtensions.some(ext => ext.name === extensionName);
+        return loadedExtensions.some(ext => pathsMatch(ext.path, extensionPath));
     } catch (error) {
         return false;
     }
@@ -527,6 +421,10 @@ function isExtensionInstalled(extensionName) {
 export default {
     loadChromeExtensions,
     unloadChromeExtensions,
+    setBeforeExtensionUnloadHook,
+    setAfterExtensionLoadHook,
+    getLastLoadResults,
+    pathsMatch,
     getLoadedExtensions,
     installExtension,
     uninstallExtension,

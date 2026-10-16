@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="player-bar">
-            <div class="album-art" @click="toggleLyrics(currentSong.hash, currentTime)">
+            <div ref="compactCover" class="album-art" @click="toggleLyrics(currentSong.hash, currentTime)">
                 <img v-if="currentSong.img" :src="currentSong.img" alt="Album Art" />
                 <i v-else class="fas fa-music"></i>
                 <span class="album-art-hover-indicator" aria-hidden="true">
@@ -21,7 +21,7 @@
             </div>
             <div class="song-info" @click="toggleLyrics(currentSong.hash, currentTime)">
                 <div class="song-title-row">
-                    <div class="song-title" @click.stop="searchSong(currentSong.name)">{{ currentSong?.name || "MoeKoeMusic" }}</div>
+                    <div class="song-title" @click.stop="searchSong(currentSong.name)">{{ currentSong?.name || "MicoMusic" }}</div>
                     <div v-if="currentSong?.qualityLabel" class="quality-menu-wrapper" @click.stop>
                         <button
                             type="button"
@@ -47,7 +47,7 @@
                         </transition>
                     </div>
                 </div>
-                <div class="artist" @click.stop="searchSong(currentSong.author)">{{ currentSong?.author || "MoeJue" }}</div>
+                <div class="artist" @click.stop="searchSong(currentSong.author)">{{ currentSong?.author || "米可" }}</div>
             </div>
             <div class="controls">
                 <button class="control-btn" :title="t('shang-yi-shou')" @click="playSongFromQueue('previous')">
@@ -131,8 +131,23 @@
         @add-cloud-music-to-queue="onQueueCloudSongAdd" @add-local-music-to-queue="onQueueLocalSongAdd" ref="queueList" />
 
     <!-- 全屏歌词界面 -->
+    <!-- 新视图仅在正式视觉插件启用时挂载；关闭插件后仍使用下面的原全屏界面。 -->
+    <ImmersivePlayer v-if="showLyrics && immersiveVisual.enabled" ref="immersivePlayer" :origin-rect="immersiveOrigin" :get-origin-rect="readCompactCoverRect"
+        :song="currentSong" :current-time="currentTime" :duration="immersiveDuration"
+        :playing="playing" :volume="volume" :speed="currentSpeed" :playback-clock="readPlaybackClock"
+        :playback-mode-index="currentPlaybackModeIndex" :lyrics="lyricsData"
+        :lyrics-mode="lyricsMode" :tips="SongTips" :font-family="lyricsFontFamily"
+        :highlight-mode="lyricsHighlightMode" :reduce-motion="immersiveVisual.reduceMotion"
+        :low-blur="immersiveVisual.lowBlur" :window-visible="immersiveVisual.windowVisible"
+        @close="finishImmersiveClose" @toggle-play="togglePlayPause"
+        @previous="playSongFromQueue('previous')" @next="playSongFromQueue('next')"
+        @seek="seekImmersive" @volume-change="changeImmersiveVolume" @playback-mode="setPlaybackMode"
+        @like="playlistSelect.toLike()" @collect="playlistSelect.fetchPlaylists()"
+        @queue="queueList.openQueue()" @share="share(currentSong.name, currentSong.hash)"
+        @desktop-lyrics="desktopLyrics" @lyrics-mode="switchLyricsMode" @copy-lyrics="copyLyricsToClipboard"
+        @playback-speed="changePlaybackSpeed" @quality-change="switchQuality" />
     <transition name="slide-up">
-        <div v-if="showLyrics" class="lyrics-bg" :style="lyricsBackgroundStyle">
+        <div v-if="showLyrics && !immersiveVisual.enabled" class="lyrics-bg" :style="lyricsBackgroundStyle">
             <template v-if="lyricsBackground === 'cover'">
                 <div
                     v-for="(image, index) in lyricsBackgroundImages"
@@ -158,14 +173,14 @@
                             <div v-if="coverMode === 'vinyl'" key="vinyl" class="vinyl-player">
                                 <!-- 唱片播放器模式 -->
                                 <div class="vinyl-disc" :class="{ 'rotating': playing }">
-                                    <img :src="currentSong?.img || './assets/images/!.png'" alt="Album Art" class="vinyl-cover" />
+                                    <img :src="currentSong?.img || './assets/images/mico/mico-app-icon-512.png'" alt="Album Art" class="vinyl-cover" />
                                 </div>
                                 <div class="tonearm" :class="{ 'playing': playing }"></div>
                             </div>
                             <div v-else key="square" class="album-art-large">
                                 <!-- 普通封面模式 -->
                                 <img v-if="easterEggImage" :src="easterEggImage.src" :class="easterEggClass" alt="Easter Egg" />
-                                <img :src="currentSong?.img || './assets/images/!.png'" alt="Album Art" />
+                                <img :src="currentSong?.img || './assets/images/mico/mico-app-icon-512.png'" alt="Album Art" />
                             </div>
                         </transition>
                     </div>
@@ -278,10 +293,14 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useMusicQueueStore } from '../stores/musicQueue';
+import { useListenTimeStore } from '../stores/listenTime';
+import { MoeAuthStore } from '../stores/store';
 import { useI18n } from 'vue-i18n';
 import PlaylistSelectModal from './PlaylistSelectModal.vue';
 import QueueList from './QueueList.vue';
 import FullscreenLyricsSettings from './FullscreenLyricsSettings.vue';
+import ImmersivePlayer from './immersive/ImmersivePlayer.vue';
+import { useImmersiveVisualState } from './immersive/visualState.js';
 import { useRouter } from 'vue-router';
 import { getCover, getAudioOutputDeviceSignature, share } from '../utils/utils';
 import { get } from '../utils/request';
@@ -306,8 +325,13 @@ const qualityMenuOpen = ref(false);
 const { t } = useI18n();
 const router = useRouter();
 const musicQueueStore = useMusicQueueStore();
+const listenTimeStore = useListenTimeStore();
 const playlists = ref([]);
 const currentTime = ref(0);
+const immersiveVisual = useImmersiveVisualState();
+const compactCover = ref(null);
+const immersivePlayer = ref(null);
+const immersiveOrigin = ref(null);
 const fullscreenLyricsDefaultSettings = {
     background: 'on',
     fontSize: '24px',
@@ -329,7 +353,7 @@ const lyricsAlign = computed(() => fullscreenLyricsSettings.value.align);
 const lyricsBackground = computed(() => fullscreenLyricsSettings.value.background);
 const lyricsHighlightMode = computed(() => fullscreenLyricsSettings.value.highlightMode || 'char');
 const lyricsDisplayMode = computed(() => fullscreenLyricsSettings.value.displayMode || 'scroll');
-const lyricsDefaultBackgroundImage = computed(() => currentSong.value?.img || 'https://random.MoeJue.cn/randbg');
+const lyricsDefaultBackgroundImage = computed(() => currentSong.value?.img || './assets/images/mico/mico-discover-peek.png');
 const lyricsCoverImages = ref([]);
 const lyricsBackgroundImageIndex = ref(0);
 const lyricsBackgroundImages = computed(() => {
@@ -424,6 +448,9 @@ const switchQuality = async (option) => {
 
 // 初始化事件回调
 const onSongEnd = () => {
+    // 自然播放结束：上报完整播放并结算会话
+    tickListenSession(false);
+    settleListenSession('end');
     if (currentPlaybackModeIndex.value == 2) return; // 单曲循环
     // 顺序播放：最后一首播放完毕后停止
     if (currentPlaybackModeIndex.value == 3) {
@@ -541,7 +568,25 @@ const volumeValueStyle = computed(() => {
 });
 
 const lyricsHandler = useLyricsHandler(t);
-const { lyricsData, originalLyrics, showLyrics, scrollAmount, SongTips, lyricsMode, toggleLyrics, getLyrics, highlightCurrentChar, resetLyricsHighlight, getCurrentLineText, scrollToCurrentLine, toggleLyricsMode } = lyricsHandler;
+const { lyricsData, originalLyrics, showLyrics, scrollAmount, SongTips, lyricsMode, toggleLyrics: toggleLyricsView, getLyrics, highlightCurrentChar, resetLyricsHighlight, getCurrentLineText, scrollToCurrentLine, toggleLyricsMode } = lyricsHandler;
+const readPlaybackClock = () => audio.currentTime;
+const finishImmersiveClose = () => {
+    if (showLyrics.value) toggleLyricsView(currentSong.value.hash, audio.currentTime);
+};
+const readCompactCoverRect = () => {
+    const rect = compactCover.value?.getBoundingClientRect();
+    return rect ? { x: rect.x, y: rect.y, width: rect.width, height: rect.height } : null;
+};
+const toggleLyrics = (hash, time) => {
+    if (showLyrics.value && immersiveVisual.enabled && immersivePlayer.value) {
+        immersivePlayer.value.requestClose();
+        return true;
+    }
+    if (!showLyrics.value && immersiveVisual.enabled) {
+        immersiveOrigin.value = readCompactCoverRect();
+    }
+    return toggleLyricsView(hash, time);
+};
 
 const currentLyricsLineIndex = computed(() => {
     if (!lyricsData.value || lyricsData.value.length === 0) return -1;
@@ -594,6 +639,27 @@ const mediaSession = useMediaSession();
 
 const songQueue = useSongQueue(t, musicQueueStore, queueList);
 const { currentSong, NextSong, addSongToQueue, addCloudMusicToQueue, addLocalMusicToQueue, addLocalPlaylistToQueue, addToNext, getPlaylistAllSongs, addPlaylistToQueue, addCloudPlaylistToQueue, restoreLocalSongCover } = songQueue;
+
+// 数据与控制继续属于现有播放器；视觉组件不会创建音频对象。
+const immersiveDuration = ref(0);
+const syncImmersiveDuration = () => {
+    const mediaDuration = Number(audio.duration);
+    immersiveDuration.value = Number.isFinite(mediaDuration) && mediaDuration > 0 ? mediaDuration : 0;
+};
+const seekImmersive = (seconds) => {
+    const target = Number(seconds);
+    if (!Number.isFinite(target) || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+    audio.currentTime = Math.max(0, Math.min(target, audio.duration));
+    currentTime.value = audio.currentTime;
+    progressWidth.value = audio.currentTime / audio.duration * 100;
+    resetLyricsHighlight(audio.currentTime);
+};
+const changeImmersiveVolume = (percent) => {
+    const value = Number(percent);
+    if (!Number.isFinite(value)) return;
+    volume.value = Math.max(0, Math.min(100, value));
+    changeVolume();
+};
 
 const resetTrackTimeline = () => {
     currentTime.value = 0;
@@ -868,6 +934,102 @@ const toPlayerSong = (song) => {
     return playerSong;
 };
 
+// ===== 听歌时长(CSCC)上报 =====
+// 会话结构：{ hash, mixsongid, timeLength, accumulatedMs, lastTick, running }
+let listenSession = null;
+// 上报请求串行队列：保证同一首(及跨首)歌曲的 end/switch 先于下一次 start 到达服务器，避免乱序被拒
+let listenReportChain = Promise.resolve();
+// 两次上报之间的最小间隔(毫秒)：酷狗 CSCC 有频控，间隔过短会返回 errcode=1203 拒绝 start
+const LISTEN_REPORT_MIN_INTERVAL = 2000;
+let lastListenReportDoneAt = 0;
+const enqueueListenReport = (task) => {
+    listenReportChain = listenReportChain.then(async () => {
+        // 与上一次上报完成时间拉开最小间隔，触发频控时静默失败不重试(API 侧要求不重复上报)
+        const waitMs = LISTEN_REPORT_MIN_INTERVAL - (Date.now() - lastListenReportDoneAt);
+        if (waitMs > 0) await new Promise((resolve) => setTimeout(resolve, waitMs));
+        await task();
+        lastListenReportDoneAt = Date.now();
+    }).catch((error) => {
+        lastListenReportDoneAt = Date.now();
+        console.warn('[PlayerControl] 听歌时长上报队列执行出错:', error);
+    });
+    return listenReportChain;
+};
+
+// 仅上报酷狗在线歌曲且已登录的场景（需要 mixsongid）
+const isListenReportableSong = (song) => {
+    if (!song?.hash) return false;
+    if (isLocalSong(song) || song.isCloud) return false;
+    const mixsongid = Number(song.mixsongid);
+    if (!Number.isSafeInteger(mixsongid) || mixsongid <= 0) return false;
+    try {
+        return !!MoeAuthStore().isAuthenticated;
+    } catch (error) {
+        return false;
+    }
+};
+
+// 结算会话的播放中时间片段（开始累计/停止累计）
+const tickListenSession = (isPlaying) => {
+    if (!listenSession) return;
+    if (isPlaying && !listenSession.running) {
+        listenSession.running = true;
+        listenSession.lastTick = Date.now();
+    } else if (!isPlaying && listenSession.running) {
+        listenSession.accumulatedMs += Date.now() - listenSession.lastTick;
+        listenSession.running = false;
+    }
+};
+
+// 结算并上报当前会话：end=自然完整播放, switch=被切歌等中断
+const settleListenSession = (type) => {
+    const session = listenSession;
+    if (!session) return;
+    listenSession = null;
+    // 上报前补结算仍在播放中的时间片段
+    const elapsedMs = session.accumulatedMs + (session.running ? Date.now() - session.lastTick : 0);
+    let duration;
+    if (type === 'end') {
+        // 完整播放：按歌曲全长上报；若经历过单曲循环(loop 不触发 ended，圈数时长会持续累计)，取累计值以免丢失
+        const fullSeconds = (Number.isFinite(audio.duration) && audio.duration > 0)
+            ? audio.duration
+            : (session.timeLength || 0);
+        duration = Math.max(Math.round(fullSeconds * 1000), Math.round(elapsedMs));
+    } else {
+        // 中断播放：按实际聆听时长上报（含单曲循环各圈累计）
+        duration = Math.round(elapsedMs);
+    }
+    if (!Number.isSafeInteger(duration) || duration <= 0) return;
+    const mixsongid = session.mixsongid;
+    enqueueListenReport(() => listenTimeStore.reportCsccEvent(type, {
+        mixsongid,
+        duration,
+        diff_sec: Math.round(duration / 1000)
+    }));
+};
+
+// 歌曲开始播放成功后调用：按中断结算上一首会话，并为新歌开启会话
+const handleListenSessionOnSongStarted = (song) => {
+    if (listenSession && listenSession.hash === song?.hash) {
+        // 同一首歌重播（切音质/失败重试等），保留原会话不打断统计
+        tickListenSession(!audio.paused);
+        return;
+    }
+    settleListenSession('switch');
+    if (!isListenReportableSong(song)) return;
+    listenSession = {
+        hash: song.hash,
+        mixsongid: Number(song.mixsongid),
+        timeLength: song.timeLength || 0,
+        accumulatedMs: 0,
+        lastTick: Date.now(),
+        running: !audio.paused
+    };
+    const mixsongid = listenSession.mixsongid;
+    // 入队串行执行：若存在前一首歌的 end/switch 上报，start 会在其完成后才发出
+    enqueueListenReport(() => listenTimeStore.reportCsccEvent('start', { mixsongid }));
+};
+
 // 播放歌曲
 const playSong = async (song) => {
     clearAutoSwitchTimer();
@@ -916,6 +1078,7 @@ const playSong = async (song) => {
                 await playPromise;
                 console.log('[PlayerControl] 成功开始播放歌曲');
                 playing.value = true;
+                handleListenSessionOnSongStarted(currentSong.value);
             }
         } catch (playError) {
             if(playError.name.includes('NotSupportedError')) {
@@ -929,6 +1092,7 @@ const playSong = async (song) => {
             try {
                 await audio.play();
                 playing.value = true;
+                handleListenSessionOnSongStarted(currentSong.value);
             } catch (retryError) {
                 console.error('[PlayerControl] 重试播放失败:', retryError);
                 window.$modal.alert(t('bo-fang-shi-bai'));
@@ -1042,6 +1206,8 @@ const resumePlayback = async () => {
         await ensureAudioContextRunning();
         await audio.play();
         playing.value = true;
+        // 应用重启后续播恢复时，为当前歌曲建立上报会话
+        handleListenSessionOnSongStarted(currentSong.value);
         return true;
     } catch (retryError) {
         console.error('[PlayerControl] 播放失败:', retryError);
@@ -1374,6 +1540,7 @@ const copyLyricsToClipboard = async () => {
 const handleKeyDown = (event) => {
     const isInputFocused = ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
     if (isInputFocused) return;
+    if (immersiveVisual.enabled && event.code !== 'KeyC' && document.activeElement.closest('.mico-immersive-player button, .mico-immersive-player select')) return;
 
     switch (event.code) {
         case 'Space':
@@ -1442,6 +1609,7 @@ const setupMediaShortcuts = () => {
             await teamEventActions.joinTeam(data.teamcode);
         }
     });
+    window.electron.ipcRenderer.send('protocol-ready');
 };
 
 // 切换静音
@@ -1598,6 +1766,11 @@ onMounted(() => {
 
     // 初始化音频设置
     audioController.initAudio();
+    // HTMLMediaElement 的实际时长单位为秒，避免将不同队列的 timeLength 单位混用。
+    audio.addEventListener('loadedmetadata', syncImmersiveDuration);
+    audio.addEventListener('durationchange', syncImmersiveDuration);
+    audio.addEventListener('emptied', syncImmersiveDuration);
+    syncImmersiveDuration();
 
     const savedSettings = JSON.parse(localStorage.getItem('settings') || '{}');
     syncDesktopLyricsFont(savedSettings);
@@ -1633,7 +1806,7 @@ onMounted(() => {
                 savedSong.isLocal = true;
                 savedSong.url = '';
                 if (isBlobUrl(savedSong.img)) {
-                    savedSong.img = './assets/images/ico.png';
+                    savedSong.img = './assets/images/mico/mico-app-icon-512.png';
                 }
             }
             currentSong.value = savedSong;
@@ -1725,6 +1898,7 @@ onMounted(() => {
     audio.addEventListener('pause', () => {
         playing.value = false;
         console.log('[PlayerControl] 暂停事件');
+        tickListenSession(false);
         // 暂停时清除SMTC位置状态
         mediaSession.clearPositionState();
         if (isElectron()) window.electron.ipcRenderer.send('play-pause-action', playing.value, audio.currentTime);
@@ -1733,6 +1907,7 @@ onMounted(() => {
     audio.addEventListener('play', () => {
         playing.value = true;
         console.log('[PlayerControl] 播放事件');
+        tickListenSession(true);
         if (!lyricsData.value.length) getCurrentLyrics();
         if (isElectron()) window.electron.ipcRenderer.send('play-pause-action', playing.value, audio.currentTime);
     });
@@ -1765,6 +1940,8 @@ watch(lyricsData, (newLyrics) => {
 
 // 组件卸载清理
 onUnmounted(() => {
+    // 关闭前把仍在进行中的听歌会话按中断上报一次
+    settleListenSession('switch');
     // 清除自动切换定时器
     clearAutoSwitchTimer();
     stopLyricsBackgroundCarousel();
@@ -1785,6 +1962,9 @@ onUnmounted(() => {
     window.removeEventListener('loudness-normalization-change', () => {});
 
     // 使用AudioController的销毁方法清理基本监听器
+    audio.removeEventListener('loadedmetadata', syncImmersiveDuration);
+    audio.removeEventListener('durationchange', syncImmersiveDuration);
+    audio.removeEventListener('emptied', syncImmersiveDuration);
     audioController.destroy();
 
     // 清理组件特定的监听器

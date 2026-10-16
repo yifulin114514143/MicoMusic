@@ -27,11 +27,11 @@
     <aside class="side-navigation" :class="{ collapsed: isCollapsed }">
         <div class="side-profile">
             <router-link :to="!isCollapsed ? '/library' : '/settings'" class="side-profile-link">
-                <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/profile.jpg'"
-                    alt="Profile Picture">
+                <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/mico/mico-app-icon-512.png'"
+                    alt="用户头像，未登录时显示米可">
                 <div class="side-profile-info">
                     <span>{{ MoeAuth.UserInfo?.nickname || $t('deng-lu') }}</span>
-                    <small>{{ MoeAuth.isAuthenticated ? 'Hi,欢迎回来!' : 'MoeKoe Music' }}</small>
+                    <small>{{ MoeAuth.isAuthenticated ? 'Hi,欢迎回来!' : 'MicoMusic' }}</small>
                 </div>
             </router-link>
             <button class="side-profile-menu-button" @click.stop="toggleProfile">
@@ -140,11 +140,12 @@
 
     <div v-if="isDisclaimerVisible" class="modal-overlay" @click="Disclaimer">
         <div class="modal-content" @click.stop>
-            <img class="modal-banner" :src="DISCLAIMER_BANNER_SRC" alt="Banner">
+            <MicoBrandBanner />
             <h2>{{ $t('mian-ze-sheng-ming') }}</h2>
             <p v-for="key in ABOUT_DISCLAIMER_KEYS" :key="key">{{ $t(key) }}</p>
+            <MicoProjectInfo />
             <button @click="Disclaimer">{{ $t('guan-bi-an-niu') }}</button>
-            <div class="version-number">© MoeKoe Music <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span></div>
+            <div class="version-number">MicoMusic <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span></div>
         </div>
     </div>
     <AppUpdateDialog ref="updateDialogRef" :app-version="appVersion" :platform="platform"
@@ -158,7 +159,9 @@ import { useI18n } from 'vue-i18n';
 import { get } from '../utils/request';
 import { MoeAuthStore } from '../stores/store';
 import AppUpdateDialog from './AppUpdateDialog.vue';
-import { ABOUT_DISCLAIMER_KEYS, DISCLAIMER_BANNER_SRC } from '../config/disclaimer';
+import { ABOUT_DISCLAIMER_KEYS } from '../config/disclaimer';
+import MicoBrandBanner from './MicoBrandBanner.vue';
+import MicoProjectInfo from './MicoProjectInfo.vue';
 
 const MoeAuth = MoeAuthStore();
 const router = useRouter();

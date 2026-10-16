@@ -1,45 +1,23 @@
-## ✨ 变更类型 Type of Change
+# MicoMusic 代码合并请求
 
-- [ ] Bug 修复 (fix)
-- [ ] 新功能 (feat)
-- [ ] 文档更新 (docs)
-- [ ] 样式调整 (style)
-- [ ] 重构 (refactor)
-- [ ] 测试相关 (test)
-- [ ] 构建/工具 (chore)
-- [ ] 其他 (other):
+## 修改摘要
 
----
+请用中文说明修改了什么、涉及哪些文件，以及修改原因。
 
-## 📋 变更描述 Description
+## 验证结果
 
-请简要描述此次变更内容：
-> Describe your changes here.
+- 执行的命令与退出结果：
+- 手动验证的页面或桌面行为：
+- 尚未验证的范围：
 
----
+## 风险与兼容性
 
-## 🐛 如果是 Bug 修复，请描述问题和修复方法 Bug Fix
+说明数据、安装身份、API、插件和上游同步是否受到影响；英文错误保留原文并附中文解释。
 
-- 问题是什么？What was the problem?
-- 如何修复的？How was it fixed?
+## Git 与合并说明
 
----
-
-## ✅ 测试验证 How did you test?
-
-- [ ] 本地测试通过 Passed local tests
-- [ ] 关键功能测试 Tested critical features
-- [ ] 其他测试描述 (如自动化测试、手动测试等)：
-> Please describe testing details
-
----
-
-## 📚 相关 Issues / Related Issues
-
-> Closes #xxx 或 Related to #xxx
-
----
-
-## 📷 截图 / Screenshots (如果适用)
-
-> 如果有界面变动，附上截图或录屏
+- 实际分支名及中文名称：
+- 分支用途与创建原因：
+- 关联 Issue（问题记录）：
+- 完成后如何处理分支：
+- 合并到 main 需要项目负责人确认。

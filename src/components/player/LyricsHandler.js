@@ -1,5 +1,6 @@
 import { ref, nextTick } from 'vue';
 import { get } from '../../utils/request';
+import { parseKrcLine } from './parseKrcLine.js';
 
 export default function useLyricsHandler(t) {
     const lyricsData = ref([]);
@@ -69,7 +70,7 @@ export default function useLyricsHandler(t) {
                 SongTips.value = t('huo-qu-ge-ci-shi-bai');
                 return false;
             }
-            parseLyrics(lyricResponse.decodeContent, settings?.lyricsTranslation === 'on');
+            parseLyrics(lyricResponse.decodeContent, settings?.lyricsTranslation !== 'off');
             originalLyrics.value = lyricResponse.decodeContent;
             centerFirstLine();
             return true;
@@ -120,54 +121,9 @@ export default function useLyricsHandler(t) {
         }
 
         const parsedLyrics = [];
-        const charRegex = /<(\d+),(\d+),\d+>([^<]+)/g;
-
         lines.forEach(line => {
-            // 匹配主时间标签 [start,duration]
-            const lineMatch = line.match(/^\[(\d+),(\d+)\](.*)/);
-            if (!lineMatch) return;
-
-            const start = parseInt(lineMatch[1]);
-            const lyricContent = lineMatch[3];
-            const characters = [];
-            
-            // 解析字符级时间标签 <start,duration,unknown>text
-            let charMatch;
-
-            while ((charMatch = charRegex.exec(lyricContent)) !== null) {
-                const text = charMatch[3];
-                const charDuration = parseInt(charMatch[2]);
-                const charStart = start + parseInt(charMatch[1]);
-                
-                // 直接使用文本组，不拆分
-                characters.push({
-                    char: text,
-                    startTime: charStart,
-                    endTime: charStart + charDuration,
-                    highlighted: false
-                });
-            }
-
-            // 如果没有找到字符级时间标签，使用行级时间标签进行等分
-            if (characters.length === 0) {
-                const duration = parseInt(lineMatch[2]);
-                const lyric = lyricContent.replace(/<.*?>/g, '');
-                if (lyric.trim()) {
-                    for (let index = 0; index < lyric.length; index++) {
-                        characters.push({
-                            char: lyric[index],
-                            startTime: start + (index * duration) / lyric.length,
-                            endTime: start + ((index + 1) * duration) / lyric.length,
-                            highlighted: false
-                        });
-                    }
-                }
-            }
-
-            // 保存有效歌词行
-            if (characters.length > 0) {
-                parsedLyrics.push({ characters });
-            }
+            const parsed = parseKrcLine(line);
+            if (parsed) parsedLyrics.push(parsed);
         });
 
         // 添加翻译歌词

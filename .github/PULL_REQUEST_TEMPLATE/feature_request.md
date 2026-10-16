@@ -1,32 +1,28 @@
 ---
-name: ✨ New Feature | 新功能
-about: 实现一个新功能或对现有功能进行增强
-title: 'feat: 实现 [功能名称]'
+name: 功能开发
+about: 说明新增行为、需求来源及兼容性。
+title: "feat: 完成 [功能名称]"
 labels: enhancement
 ---
 
-## 🌟 实现了什么？What is added or changed?
+## 修改摘要
 
-请说明新增了哪些功能、修改了哪些行为：
-> Describe the new functionality or changes introduced.
+请用中文说明修改了什么、涉及哪些文件，以及修改原因。
 
----
+## 验证结果
 
-## 🎯 为什么需要这个改动？Why is it needed?
+- 执行的命令与退出结果：
+- 手动验证的页面或桌面行为：
+- 尚未验证的范围：
 
-> 请说明这个功能的背景、价值或需求来源。
-Explain the motivation behind this feature or change.
+## 风险与兼容性
 
----
+说明数据、安装身份、API、插件和上游同步是否受到影响；英文错误保留原文并附中文解释。
 
-## 🧪 如何测试？How to test?
+## Git 与合并说明
 
-- [ ] 添加了单元测试 Added unit tests
-- [ ] 手动验证通过 Verified manually
-- [ ] 不需要额外测试 No additional test needed
-
----
-
-## 🔗 相关 Issues / Related Issues
-
-> Resolves #xxx 或 Implements #xxx
+- 实际分支名及中文名称：
+- 分支用途与创建原因：
+- 关联 Issue（问题记录）：
+- 完成后如何处理分支：
+- 合并到 main 需要项目负责人确认。

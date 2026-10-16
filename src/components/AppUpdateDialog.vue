@@ -38,7 +38,7 @@ const props = defineProps({
 
 const emit = defineEmits(['badge-change']);
 
-const projectRepoUrl = 'https://github.com/MoeKoeMusic/MoeKoeMusic';
+const projectRepoUrl = 'https://github.com/yifulin114514143/MicoMusic';
 const repoUrl = `${projectRepoUrl}/releases`;
 const showUpdateDialog = ref(false);
 const showNewBadge = ref(false);
@@ -102,8 +102,21 @@ const fetchLatestVersion = async () => {
     }
 
     try {
-        const response = await fetch('https://api.github.com/repos/iAJue/MoeKoeMusic/releases/latest');
+        const response = await fetch('https://api.github.com/repos/yifulin114514143/MicoMusic/releases/latest', { signal: AbortSignal.timeout(10000) });
+        if (response.status === 404) {
+            downloadUrl.value = '';
+            latestVersion.value = '';
+            updateLog.value = 'MicoMusic 尚未发布安装包';
+            setShowNewBadge(false);
+            return;
+        }
+        if (!response.ok) {
+            throw new Error(`GitHub Releases HTTP ${response.status}`);
+        }
         const data = await response.json();
+        if (typeof data.tag_name !== 'string') {
+            throw new Error('GitHub Releases 响应缺少 tag_name');
+        }
         downloadUrl.value = getPlatformDownloadUrl(data);
         latestVersion.value = data.tag_name.replace(/^v/, '');
         updateLog.value = data.body?.trim() || '暂无更新日志';

@@ -10,7 +10,7 @@ const pick = (record, ...keys) => {
 
 const firstValue = (...values) => values.find(value => value !== undefined && value !== null && value !== '') || '';
 
-const normalizeCover = (cover) => cover ? String(cover).replace('{size}', 480) : './assets/images/ico.png';
+const normalizeCover = (cover) => cover ? String(cover).replace('{size}', 480) : './assets/images/mico/mico-app-icon-512.png';
 
 const mapRecognizeMatch = (item) => {
     const album = Array.isArray(item.album) ? item.album[0] || {} : {};

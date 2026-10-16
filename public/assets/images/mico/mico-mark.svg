@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MicoMusic 的 M 标识">
+  <defs><linearGradient id="mico-gradient" x2="1" y2="1"><stop stop-color="#6285d4"/><stop offset="1" stop-color="#9471bf"/></linearGradient></defs>
+  <rect x="2" y="2" width="60" height="60" rx="17" fill="url(#mico-gradient)"/>
+  <path d="M16 49V15h8l8 16 8-16h8v34h-8V30l-6 12h-4l-6-12v19z" fill="#fff"/>
+</svg>

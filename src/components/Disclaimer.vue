@@ -1,7 +1,7 @@
 <template>
     <div v-if="showModal" class="modal-overlay">
         <div class="modal-content user-agreement-guide">
-            <img class="modal-banner" :src="DISCLAIMER_BANNER_SRC" alt="Banner">
+            <MicoBrandBanner />
             <h2>{{ $t('yong-hu-tiao-kuan') }}</h2>
             <p v-for="key in USER_AGREEMENT_KEYS" :key="key">{{ $t(key) }}</p>
             <div class="button-group">
@@ -14,7 +14,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { DISCLAIMER_BANNER_SRC, USER_AGREEMENT_KEYS } from '../config/disclaimer';
+import { USER_AGREEMENT_KEYS } from '../config/disclaimer';
+import MicoBrandBanner from './MicoBrandBanner.vue';
 
 const showModal = ref(false);
 

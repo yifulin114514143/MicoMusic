@@ -1,11 +1,12 @@
+import './services/appIdentity.js';
 import { app, ipcMain, globalShortcut, dialog, Notification, shell, session, powerSaveBlocker, nativeImage, screen } from 'electron';
 import {
     createWindow, createTray, createTouchBar, startApiServer,
     stopApiServer, registerShortcut,
     playStartupSound, createLyricsWindow, setThumbarButtons,
-    registerProtocolHandler, sendHashAfterLoad, getTray, createMvWindow
+    getTray, createMvWindow, getRuntimeApiBaseUrl
 } from './appServices.js';
-import { initializeExtensions, cleanupExtensions } from './extensions/extensions.js';
+import { prepareExtensionsForStartup, cleanupExtensions } from './extensions/extensions.js';
 import { setupAutoUpdater, startUpdateDownload } from './services/updater.js';
 import apiService from './services/apiService.js';
 import statusBarLyricsService from './services/statusBarLyricsService.js';
@@ -13,6 +14,8 @@ import customTrayMenuService from './services/customTrayMenuService.js';
 import { setupDesktopShortcutIcon } from './services/desktopShortcutIcon.js';
 import { openLogPath, exportLog } from './services/logHelper.js';
 import Store from 'electron-store';
+import { initializeProtocolHandler, attachProtocolWindow } from './services/protocolHandler.js';
+import { APP_NAME } from './services/identityConfig.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { t } from './language/i18n.js';
@@ -27,24 +30,30 @@ if (!gotTheLock) {
     app.quit();
     process.exit(0);
 } else {
-    let protocolHandler;
-    app.on('second-instance', (event, commandLine) => {
-        if (!protocolHandler) {
-            protocolHandler = registerProtocolHandler(null);
-        }
-        if (mainWindow) {
-            if (mainWindow.isMinimized()) mainWindow.restore();
-            mainWindow.show();
-            mainWindow.focus();
-        }
-        protocolHandler.handleProtocolArgv(commandLine);
-    });
+    initializeProtocolHandler();
 }
 
 app.on('ready', () => {
-    startApiServer().then(() => {
+    app.setAboutPanelOptions({
+        applicationName: APP_NAME,
+        applicationVersion: app.getVersion(),
+        copyright: '© 2024 MoeKoe',
+        credits: 'MicoMusic 基于 MoeKoeMusic 开发，保留原作者信息与 GPL-2.0 许可。',
+        website: 'https://github.com/yifulin114514143/MicoMusic'
+    });
+    if (process.platform === 'darwin') {
+        const dockIconPath = process.env.NODE_ENV === 'development'
+            ? path.join(__dirname, '../build/icons/logo.png')
+            : path.join(process.resourcesPath, 'icons/logo.png');
+        app.dock?.setIcon(dockIconPath);
+    }
+
+    startApiServer().then(async () => {
         try {
+            const extensionResult = await prepareExtensionsForStartup();
+            if (!extensionResult.success) console.error('插件准备未全部完成，保留基础界面：', extensionResult);
             mainWindow = createWindow();
+            attachProtocolWindow(mainWindow);
             createTray(mainWindow);
             customTrayMenuService.init(() => mainWindow, getTray);
 
@@ -56,9 +65,6 @@ app.on('ready', () => {
             registerShortcut();
             setupAutoUpdater(mainWindow);
             apiService.init(mainWindow);
-            registerProtocolHandler(mainWindow);
-            sendHashAfterLoad(mainWindow);
-            void initializeExtensions();
             setupDesktopShortcutIcon();
         } catch (error) {
             console.log('初始化应用时发生错误:', error);
@@ -113,8 +119,13 @@ if (settings?.apiMode === 'on') {
     apiService.start();
 }
 
-// 即将退出
-app.on('before-quit', () => {
+// 等待扩展与本地程序清理完成后退出，避免默认退出流程越过异步清理。
+let shutdownStarted = false;
+app.on('before-quit', event => {
+    event.preventDefault();
+    if (shutdownStarted) return;
+    shutdownStarted = true;
+    app.isQuitting = true;
     if (mainWindow && !mainWindow.isMaximized()) {
         const windowBounds = mainWindow.getBounds();
         store.set('windowState', windowBounds);
@@ -124,14 +135,16 @@ app.on('before-quit', () => {
     }
 
     // 清理状态栏歌词服务
-    setImmediate(() => {
-        statusBarLyricsService.cleanup();
-        customTrayMenuService.cleanup();
-
-        stopApiServer();
-        apiService.stop();
-        cleanupExtensions();
-        app.exit(0);
+    setImmediate(async () => {
+        try {
+            statusBarLyricsService.cleanup();
+            customTrayMenuService.cleanup();
+            stopApiServer();
+            apiService.stop();
+            const cleaned = await cleanupExtensions();
+            if (!cleaned.success) console.error('退出时插件清理未全部完成:', cleaned);
+        } catch (error) { console.error('退出清理失败:', error); }
+        finally { app.exit(0); }
     });
 });
 // 关闭所有窗口
@@ -147,6 +160,7 @@ app.on('activate', () => {
         mainWindow.show();
     } else if (!mainWindow) {
         mainWindow = createWindow();
+        attachProtocolWindow(mainWindow);
     }
 });
 
@@ -193,6 +207,8 @@ ipcMain.on('window-control', (event, action) => {
 app.on('will-quit', () => {
     globalShortcut.unregisterAll();
 });
+ipcMain.handle('get-api-endpoints', () => ({ apiBaseUrl: getRuntimeApiBaseUrl(), websocketUrl: apiService.getUrl() }));
+
 ipcMain.on('save-settings', (event, settings) => {
     store.set('settings', settings);
     if (['on', 'off'].includes(settings?.autoStart)) {

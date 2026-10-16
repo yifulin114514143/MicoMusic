@@ -365,14 +365,12 @@ export const createSettingSections = (t, actions = {}) => computed(() => [
                 selectionTitle: t('wang-luo-jie-dian'),
                 options: [
                     { displayText: t('zhu-wang'), value: 'mainnet' },
-                    { displayText: t('ce-wang'), value: 'testnet' },
                     { displayText: t('kai-fa-wang'), value: 'devnet' }
                 ],
                 available: 'client',
                 label: t('wang-luo-mo-shi'),
                 showRefreshHint: true,
-                refreshHintText: t('zhong-qi-hou-sheng-xiao'),
-                helpLink: 'https://music.moekoe.cn/guide/network-modes.html'
+                refreshHintText: t('zhong-qi-hou-sheng-xiao')
             },
             {
                 key: 'startMinimized',

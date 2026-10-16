@@ -179,7 +179,7 @@
 
                         <!-- 网格模式封面 -->
                         <div class="track-cover" v-if="viewMode === 'grid'">
-                            <img :src="item.cover || './assets/images/ico.png'" alt="Cover">
+                            <img :src="item.cover || './assets/images/mico/mico-app-icon-512.png'" alt="Cover">
                             <div class="track-cover-overlay">
                                 <i
                                     :class="props.playerControl?.currentSong.hash == item.hash ? 'fas fa-music' : 'fas fa-play'"></i>

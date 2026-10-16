@@ -20,7 +20,7 @@
             <div v-for="account in accountList" :key="account.userid" class="account-item"
               @click="selectAccount(account)">
               <div class="account-avatar">
-                <img :src="account.pic || './assets/images/profile.jpg'" :alt="account.nickname" />
+                <img :src="account.pic || './assets/images/mico/mico-app-icon-512.png'" :alt="account.nickname" />
               </div>
               <div class="account-info">
                 <div class="account-name">{{ account.nickname || '未命名用户' }}</div>

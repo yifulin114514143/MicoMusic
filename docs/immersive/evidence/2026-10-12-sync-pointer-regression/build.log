@@ -1,0 +1,45 @@
+
+> micomusic@1.7.0 build
+> vite build
+
+vite v7.2.6 building client environment for production...
+transforming...
+✓ 394 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/manifest.webmanifest                          0.50 kB
+dist/index.html                                    1.55 kB │ gzip:   0.80 kB
+dist/assets/index-CHvAWAFn.css                   267.34 kB │ gzip:  43.18 kB
+dist/assets/AbstractID3Parser-DUremBoJ.js          1.00 kB │ gzip:   0.49 kB
+dist/assets/DsfParser-6YNhtUsl.js                  1.95 kB │ gzip:   0.85 kB
+dist/assets/WavPackParser-CmjcKUMC.js              3.44 kB │ gzip:   1.52 kB
+dist/assets/AiffParser-zXMOYG6r.js                 3.56 kB │ gzip:   1.52 kB
+dist/assets/DsdiffParser-JVWl-_oA.js               4.07 kB │ gzip:   1.27 kB
+dist/assets/MusepackParser-BBQ-RrJu.js             5.52 kB │ gzip:   1.93 kB
+dist/assets/WaveParser-DpkE_Cbq.js                 5.56 kB │ gzip:   1.98 kB
+dist/assets/workbox-window.prod.es5-BIl4cyR9.js    5.76 kB │ gzip:   2.37 kB
+dist/assets/FlacParser-C9lx0FwM.js                 6.89 kB │ gzip:   2.58 kB
+dist/assets/OggParser-Dk7YcbAb.js                  7.62 kB │ gzip:   2.71 kB
+dist/assets/ID3v2Parser-B0WASIfT.js                8.14 kB │ gzip:   3.05 kB
+dist/assets/AsfParser-C1ZcM7Yq.js                 11.12 kB │ gzip:   3.89 kB
+dist/assets/MatroskaParser-DDqUWups.js            11.83 kB │ gzip:   3.81 kB
+dist/assets/MpegParser-BFV9C39f.js                12.78 kB │ gzip:   4.22 kB
+dist/assets/MP4Parser-BmKAJbZ6.js                 18.40 kB │ gzip:   5.47 kB
+dist/assets/index-DdkaR3si.js                    874.62 kB │ gzip: 282.16 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.27s
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Browserslist: browsers data (caniuse-lite) is 11 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+PWA v1.2.0
+mode      generateSW
+precache  22 entries (1303.86 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-95c8c041.js

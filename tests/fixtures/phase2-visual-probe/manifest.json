@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "MicoMusic 阶段二视觉能力验证",
+  "version": "0.0.1",
+  "description": "隔离环境中的能力探针，不是正式液态玻璃主题",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["file:///*", "http://localhost/*"],
+      "js": ["content.js"],
+      "css": ["probe.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html" },
+  "moekoe": true,
+  "plugin_id": "mico-phase2-visual-probe"
+}

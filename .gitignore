@@ -35,3 +35,26 @@ pnpm-workspace.yaml
 vite.config.js*
 
 plugins/extensions/*
+!plugins/extensions/mico-liquid-glass/
+!plugins/extensions/mico-liquid-glass/**
+
+# 阶段二隔离运行数据；审计结论与证据另存于 docs/phase2/
+artifacts/phase2-runtime/
+artifacts/phase3-runtime/
+artifacts/immersive-runtime/
+
+# 原生验收的历史临时备份；当前通过报告与截图另行入库。
+docs/immersive/evidence/webgl/failed-attempts/
+docs/immersive/evidence/webgl/prior-to-focus-shortcut-fix/
+docs/immersive/evidence/webgl/prior-to-palette-fix/
+docs/immersive/evidence/webgl/failure.png
+docs/immersive/evidence/2026-10-11-visual-regression/failed-attempts/
+docs/immersive/evidence/2026-10-11-visual-regression/failure.png
+artifacts/immersive-reference/
+docs/immersive/evidence/2026-10-12-sync-pointer-regression/failed-attempts/
+docs/immersive/evidence/2026-10-12-sync-pointer-regression/failure.png
+docs/immersive/evidence/2026-10-12-sync-pointer-regression/failure-unthrottled.png
+docs/immersive/evidence/2026-10-12-sync-pointer-regression/11-webgl-motion-capturePage.mp4
+docs/immersive/evidence/2026-10-12-sync-pointer-regression/11-webgl-motion-capturePage-unthrottled.mp4
+# 本次未完成的原生回归现场保留本地；结论记录于 docs/upstream-sync/。
+docs/immersive/evidence/2026-10-16-upstream-sync/

@@ -14,7 +14,7 @@ import Disclaimer from '@/components/Disclaimer.vue';
 import TitleBar from '@/components/TitleBar.vue';
 import StatusBarLyrics from '@/components/StatusBarLyrics.vue';
 import { MoeAuthStore } from '@/stores/store';
-import logoImageSrc from '@/assets/images/tray/tray-icon@2x.png?url';
+import logoImageSrc from '@/assets/images/tray/mico-monogram@2x.png?url';
 
 const route = useRoute();
 const isLyricsRoute = computed(() => route.path === '/lyrics');

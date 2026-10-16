@@ -112,7 +112,7 @@ const changeSearchType = (type) => {
 
 const showContextMenu = (event, song) => {
     if (contextMenuRef.value) {
-        song.cover = song.Image?.replace("{size}", 480) || './assets/images/ico.png',
+        song.cover = song.Image?.replace("{size}", 480) || './assets/images/mico/mico-app-icon-512.png',
             song.timeLength = song.Duration;
         song.OriSongName = song.FileName;
         contextMenuRef.value.openContextMenu(event, song);
@@ -157,7 +157,7 @@ const handleSongClick = (song) => {
     playSong(
         song?.HQFileHash || song?.SQFileHash || song?.FileHash,
         song?.OriSongName,
-        song?.Image?.replace('{size}', 480) || './assets/images/ico.png',
+        song?.Image?.replace('{size}', 480) || './assets/images/mico/mico-app-icon-512.png',
         song?.SingerName
     );
 };

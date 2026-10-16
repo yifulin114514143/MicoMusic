@@ -39,7 +39,7 @@
                             <span class="user-gender" :title="userGenderTitle">
                                 <i :class="userGenderIcon"></i>
                             </span>
-                            <span class="user-duration">{{ formatDuration(userDetail.duration || 0) }} {{
+                            <span class="user-duration">{{ formatDuration(listenTimeMins || userDetail.duration || 0) }} {{
                                 $t('ting-ge-shi-chang') }}</span>
                             <span class="user-age">{{ formatRegTime(userDetail.rtime || 0) }}</span>
                         </div>
@@ -92,7 +92,7 @@
                         path: '/CloudDrive'
                     }">
                         <div class="album-image-wrap">
-                            <img :src="`./assets/images/cloud-disk.png`" class="album-image" />
+                            <img src="/assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png" class="album-image mico-illustration" alt="米可陪你查找云盘音乐" />
                         </div>
                         <div class="album-info">
                             <h3>我的云盘</h3>
@@ -105,7 +105,7 @@
                         path: '/LocalMusic'
                     }">
                         <div class="album-image-wrap">
-                            <img :src="`./assets/images/local-music.png`" class="album-image" />
+                            <img src="/assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png" class="album-image mico-illustration" alt="米可陪你播放本地音乐" />
                         </div>
                         <div class="album-info">
                             <h3>本地音乐</h3>
@@ -121,8 +121,8 @@
                         query: { global_collection_id: item.list_create_gid || item.global_collection_id, listid: item.listid }
                     }">
                         <div class="album-image-wrap">
-                            <img :src="item.pic ? $getCover(item.pic, 480) : './assets/images/live.png'"
-                                class="album-image" />
+                            <img :src="item.pic ? $getCover(item.pic, 480) : './assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png'"
+                                class="album-image" :class="{ 'mico-illustration': !item.pic }" />
                         </div>
                         <div class="album-info">
                             <h3>{{ item.name }}</h3>
@@ -133,7 +133,7 @@
                 <div v-if="selectedCategory === 0 && !isLoading" class="music-card create-playlist-button">
                     <i class="fas fa-plus"></i>
                     <div class="album-image-wrap" @click="createPlaylist">
-                        <img :src="`./assets/images/ti111mg.png`" class="album-image" />
+                        <img src="/assets/images/mico/onboarding/mico-onboarding-chibi-point-v1.png" class="album-image mico-illustration" alt="米可邀请你创建歌单" />
                     </div>
                     <div class="album-info" @click="createPlaylist">
                         <h3>{{ $t('chuang-jian-ge-dan') }}</h3>
@@ -159,7 +159,7 @@
             (selectedCategory == 3 && followedArtists.length === 0) ||
             (selectedCategory == 4 && collectedFriends.length === 0)" class="empty-container">
             <div class="empty-image">
-                <img src="/assets/images/empty.png" alt="暂无数据" />
+                <img src="/assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png" alt="米可正在帮你寻找内容" />
             </div>
             <div class="empty-description">{{ t('zhe-li-shi-mo-du-mei-you') }}</div>
         </div>
@@ -171,6 +171,7 @@ import { computed, ref, onMounted } from 'vue';
 import { get } from '../utils/request';
 import { getProfileBgColor } from '../utils/utils';
 import { MoeAuthStore } from '../stores/store';
+import { useListenTimeStore } from '@/stores/listenTime';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { createTeamEventPopup } from '@/utils/teamEvent';
@@ -179,6 +180,8 @@ import CommonSkeleton from '../components/CommonSkeleton.vue';
 const { t } = useI18n();
 const router = useRouter();
 const MoeAuth = MoeAuthStore();
+const listenTimeStore = useListenTimeStore();
+const listenTimeMins = computed(() => Math.round(listenTimeStore.listenTime / 60));
 const user = ref({});
 const userPlaylists = ref([]); // 创建的歌单
 const collectedPlaylists = ref([]); // 收藏的歌单
@@ -290,7 +293,7 @@ const getUserDetail = async () => {
         const detailResponse = await get('/user/detail');
         if (detailResponse.status === 1) {
             userDetail.value = detailResponse.data;
-            updateProfileBackground(userDetail.value.bg_pic || './assets/images/banner.png');
+            updateProfileBackground(userDetail.value.bg_pic || './assets/images/mico/mico-discover-peek.png');
         }
     } catch (error) {
         console.error('Failed to get user details:', error);
@@ -936,6 +939,11 @@ const addAllSongsToQueue = () => {
     transition: transform 0.28s ease, filter 0.22s ease;
 }
 
+.mico-illustration {
+    object-fit: contain;
+    background: linear-gradient(135deg, #e8e9ff, #f7eaf8);
+}
+
 .album-image-wrap {
     width: 100%;
     aspect-ratio: 1;
@@ -1050,6 +1058,7 @@ const addAllSongsToQueue = () => {
     img {
         width: 200px;
         height: 200px;
+        object-fit: contain;
         opacity: 0.6;
     }
 }

@@ -14,7 +14,7 @@ const getLocalSongCover = (item) => {
     if (isLocalFile(coverBlob) && coverBlob.size > 0) {
         return URL.createObjectURL(coverBlob);
     }
-    return item.cover || item.img || './assets/images/ico.png';
+    return item.cover || item.img || './assets/images/mico/mico-app-icon-512.png';
 };
 
 const LOCAL_MUSIC_DB_NAME = 'LocalMusicDB';
@@ -119,13 +119,13 @@ const readLocalSongCover = async (file) => {
     try {
         const metadata = await parseBlob(file);
         const picture = metadata.common.picture?.[0];
-        if (!picture) return './assets/images/ico.png';
+        if (!picture) return './assets/images/mico/mico-app-icon-512.png';
 
         const blob = new Blob([picture.data], { type: picture.format });
         return URL.createObjectURL(blob);
     } catch (error) {
         console.error('[SongQueue] 读取本地歌曲封面失败:', error);
-        return './assets/images/ico.png';
+        return './assets/images/mico/mico-app-icon-512.png';
     }
 };
 

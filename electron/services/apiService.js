@@ -8,6 +8,7 @@ class ApiService {
         this.isPlaying = false;
         this.currentTime = 0;
         this.mainWindow = null;
+        this.websocketUrl = '';
     }
     init(mainWindow) {
         this.mainWindow = mainWindow;
@@ -15,13 +16,21 @@ class ApiService {
     // 启动 WebSocket 服务器
     start() {
         if (this.wsServer) return; 
-        this.wsServer = new WebSocketServer({ port: 6520 });
+        this.wsServer = new WebSocketServer({ host: '127.0.0.1', port: 0 });
+        this.wsServer.on('listening', () => {
+            this.websocketUrl = `ws://127.0.0.1:${this.wsServer.address().port}`;
+            console.log(`MicoMusic WebSocket 地址: ${this.websocketUrl}`);
+        });
+        this.wsServer.on('error', error => {
+            console.error('MicoMusic WebSocket 启动失败:', error);
+            this.websocketUrl = '';
+        });
         this.wsServer.on('connection', (ws) => {
             this.clients.add(ws);
             //发送欢迎信息
             ws.send(JSON.stringify({
                 type: 'welcome',
-                data: '感谢接入MoeKoe Music，文档地址：https://music.moekoe.cn/'
+                data: '感谢接入 MicoMusic，项目地址：https://github.com/yifulin114514143/MicoMusic'
             }));
 
             // 发送当前歌词
@@ -60,7 +69,10 @@ class ApiService {
             });
         });
 
-        console.log('WebSocket server running at ws://127.0.0.1:6520');
+    }
+
+    getUrl() {
+        return this.websocketUrl;
     }
 
     stop() {
@@ -71,6 +83,7 @@ class ApiService {
             this.clients.clear();
             this.wsServer.close();
             this.wsServer = null;
+            this.websocketUrl = '';
             console.log('WebSocket 服务器已停止');
         }
     }
@@ -122,4 +135,4 @@ class ApiService {
 }
 
 const apiService = new ApiService();
-export default apiService; 
+export default apiService;

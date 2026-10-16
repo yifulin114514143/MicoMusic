@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "MicoMusic 液态玻璃",
+  "version": "1.3.1",
+  "description": "可随时关闭的 WebGL 封面流体、光学液态玻璃与逐词歌词沉浸播放器。",
+  "author": "MicoMusic",
+  "permissions": ["storage", "scripting", "tabs"],
+  "host_permissions": ["file:///*", "http://localhost/*", "http://127.0.0.1/*"],
+  "content_scripts": [
+    {
+      "matches": ["file:///*", "http://localhost/*", "http://127.0.0.1/*"],
+      "js": ["settings.js", "fluid-palette.js", "fluid-shaders.js", "fluid-engine.js", "content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["glass.css", "immersive.css", "lyrics.css", "motion.css"],
+      "matches": ["file:///*", "http://localhost/*", "http://127.0.0.1/*"]
+    }
+  ],
+  "action": { "default_popup": "popup.html" },
+  "moekoe": true,
+  "plugin_id": "mico-liquid-glass"
+}

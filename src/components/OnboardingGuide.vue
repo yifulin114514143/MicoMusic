@@ -3,11 +3,11 @@
         <div v-if="showOnboardingGuide && currentSteps.length" class="onboarding-overlay">
             <div v-if="hasTarget" class="onboarding-highlight" :style="highlightStyle"></div>
             <img class="onboarding-mascot" :class="{ intro: isIntroStep }" :style="mascotStyle"
-                src="/assets/images/mascotGirl.png" alt="MoeKoe 看板娘">
+                :src="mascotSrc" alt="Q 版米可陪你了解 MicoMusic">
             <section class="onboarding-card" :class="{ centered: !hasTarget, intro: isIntroStep }" :style="cardStyle">
                 <div class="onboarding-progress">{{ progressText }}</div>
                 <template v-if="isIntroStep">
-                    <h3>Hi，I'm 萌音酱!</h3>
+                    <h3>Hi，我是米可。</h3>
                     <p>这里是新手引导，我会用几个简短步骤介绍常用入口和一些隐藏功能。你可以随时跳过，也可以之后在设置里重新查看。</p>
                 </template>
                 <template v-else>
@@ -60,6 +60,19 @@ const isIntroStep = computed(() => currentIndex.value < 0);
 const isLastStep = computed(() => !isIntroStep.value && currentIndex.value === currentSteps.value.length - 1);
 const hasTarget = computed(() => !isIntroStep.value && !!targetRect.value);
 const progressText = computed(() => isIntroStep.value ? '新手引导' : `${currentIndex.value + 1} / ${currentSteps.value.length}`);
+const mascotImages = Object.freeze({
+    front: './assets/images/mico/onboarding/mico-chibi-approved-front-v0.4.png',
+    welcome: './assets/images/mico/onboarding/mico-onboarding-chibi-welcome-v1.png',
+    point: './assets/images/mico/onboarding/mico-onboarding-chibi-point-v1.png',
+    search: './assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png',
+    play: './assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png',
+    favorite: './assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png',
+    settings: './assets/images/mico/onboarding/mico-onboarding-chibi-settings-v1.png'
+});
+const mascotSrc = computed(() => {
+    const pose = isIntroStep.value ? 'welcome' : currentStep.value.mascotPose || currentGuide.value?.mascotPose || 'front';
+    return mascotImages[pose] || mascotImages.front;
+});
 const primaryButtonText = computed(() => {
     if (isIntroStep.value) return '开始引导';
     return isLastStep.value ? '完成' : '下一步';
@@ -156,12 +169,13 @@ const getMascotPosition = (card, size) => {
 };
 
 const mascotStyle = computed(() => {
-    const size = Math.min(isIntroStep.value ? 200 : 160, Math.max(96, viewportSize.value.width * 0.24));
+    const size = Math.min(isIntroStep.value ? 172 : 136, Math.max(96, viewportSize.value.width * 0.2));
     const position = getMascotPosition(cardRect.value || getCenteredCardRect(), size);
     return {
         top: `${position.top}px`,
         left: `${position.left}px`,
-        width: `${size}px`
+        width: `${size}px`,
+        height: `${size}px`
     };
 });
 
@@ -506,7 +520,7 @@ onUnmounted(() => {
     position: fixed;
     z-index: 1;
     display: block;
-    height: auto;
+    object-fit: contain;
     filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.22));
     pointer-events: none;
     user-select: none;
@@ -514,18 +528,6 @@ onUnmounted(() => {
 
     &.intro {
         z-index: 3;
-        -webkit-mask-image: linear-gradient(to bottom,
-                rgba(0, 0, 0, 1) 0%,
-                rgba(0, 0, 0, 1) 58%,
-                rgba(0, 0, 0, 0) 64%,
-                rgba(0, 0, 0, 0) 100%);
-        mask-image: linear-gradient(to bottom,
-                rgba(0, 0, 0, 1) 0%,
-                rgba(0, 0, 0, 1) 58%,
-                rgba(0, 0, 0, 0) 64%,
-                rgba(0, 0, 0, 0) 100%);
-        mask-size: 100% 100%;
-        mask-repeat: no-repeat;
         filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.22));
     }
 }

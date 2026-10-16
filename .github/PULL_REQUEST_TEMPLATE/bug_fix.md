@@ -1,32 +1,28 @@
 ---
-name: 🐞 Bug Fix | 修复 Bug
-about: 修复现有的问题或异常
-title: 'fix: 修复 [问题名称]'
+name: 修复问题
+about: 说明复现步骤、修复原因，以及修复后的验证结果。
+title: "fix: 修复 [问题名称]"
 labels: bug
 ---
 
-## 🐛 修复了什么？What is fixed?
+## 修改摘要
 
-请简要说明修复的 Bug 内容：
-> Describe the bug that has been fixed.
+请用中文说明修改了什么、涉及哪些文件，以及修改原因。
 
----
+## 验证结果
 
-## 🔍 修复方法 How was it fixed?
+- 执行的命令与退出结果：
+- 手动验证的页面或桌面行为：
+- 尚未验证的范围：
 
-> 简述你是如何定位并解决该问题的。
-Explain your approach or steps taken to fix the issue.
+## 风险与兼容性
 
----
+说明数据、安装身份、API、插件和上游同步是否受到影响；英文错误保留原文并附中文解释。
 
-## ✅ 测试验证 How did you test?
+## Git 与合并说明
 
-- [ ] 本地测试通过 Passed local tests
-- [ ] 已测试关键路径功能 Tested critical paths
-- [ ] 附加截图或日志（如适用）Attached screenshot/logs (if applicable)
-
----
-
-## 🔗 相关 Issues / Related Issues
-
-> Closes #xxx 或 Related to #xxx
+- 实际分支名及中文名称：
+- 分支用途与创建原因：
+- 关联 Issue（问题记录）：
+- 完成后如何处理分支：
+- 合并到 main 需要项目负责人确认。

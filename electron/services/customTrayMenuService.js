@@ -287,8 +287,8 @@ class CustomTrayMenuService {
             const progressPercent = duration > 0 ? Math.max(0, Math.min((currentTime / duration) * 100, 100)) : 0;
 
             return {
-                title: currentSong?.displayName || currentSong?.name || 'MoeKoe Music',
-                artist: currentSong?.author || 'MoeJue',
+                title: currentSong?.displayName || currentSong?.name || 'MicoMusic',
+                artist: currentSong?.author || '米可',
                 cover: currentSong?.img || '',
                 qualityLabel: currentSong?.qualityLabel || '',
                 currentTime,
@@ -347,10 +347,10 @@ class CustomTrayMenuService {
 
         switch (action) {
             case 'project-home':
-                shell.openExternal('https://Music.MoeKoe.cn');
+                shell.openExternal('https://github.com/yifulin114514143/MicoMusic');
                 break;
             case 'report-bug':
-                shell.openExternal('https://github.com/iAJue/MoeKoeMusic/issues');
+                shell.openExternal('https://github.com/yifulin114514143/MicoMusic/issues');
                 break;
             case 'prev-track':
                 mainWindow?.webContents.send('play-previous-track');

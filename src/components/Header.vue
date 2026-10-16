@@ -32,7 +32,11 @@
                     </router-link>
                 </div>
                 <div class="profile" @click="toggleProfile">
-                    <img :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/profile.jpg'" alt="Profile Picture">
+                    <span class="profile-avatar">
+                        <img :class="{ 'mico-placeholder': !MoeAuth.UserInfo }"
+                            :src="MoeAuth.UserInfo ? MoeAuth.UserInfo.pic : './assets/images/mico/mico-app-icon-512.png'"
+                            alt="用户头像，未登录时显示米可">
+                    </span>
                     <div v-if="showProfile" class="profile-menu">
                         <ul>
                             <li>
@@ -65,11 +69,12 @@
     </header>
     <div v-if="isDisclaimerVisible" class="modal-overlay" @click="Disclaimer">
         <div class="modal-content" @click.stop>
-            <img class="modal-banner" :src="DISCLAIMER_BANNER_SRC" alt="Banner">
+            <MicoBrandBanner />
             <h2>{{ $t('mian-ze-sheng-ming') }}</h2>
             <p v-for="key in ABOUT_DISCLAIMER_KEYS" :key="key">{{ $t(key) }}</p>
+            <MicoProjectInfo />
             <button @click="Disclaimer">{{ $t('guan-bi-an-niu') }}</button>
-            <div class="version-number">© MoeKoe Music <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span></div>
+            <div class="version-number">MicoMusic <span v-if="appVersion">V{{ appVersion }} - {{ platform }}</span></div>
         </div>
     </div>
     <AppUpdateDialog ref="updateDialogRef" :app-version="appVersion" :platform="platform" @badge-change="showNewBadge = $event" />
@@ -81,7 +86,9 @@ import { useRouter, useRoute } from 'vue-router';
 import { MoeAuthStore } from '../stores/store';
 import { useI18n } from 'vue-i18n';
 import AppUpdateDialog from './AppUpdateDialog.vue';
-import { ABOUT_DISCLAIMER_KEYS, DISCLAIMER_BANNER_SRC } from '../config/disclaimer';
+import { ABOUT_DISCLAIMER_KEYS } from '../config/disclaimer';
+import MicoBrandBanner from './MicoBrandBanner.vue';
+import MicoProjectInfo from './MicoProjectInfo.vue';
 
 const MoeAuth = MoeAuthStore();
 const searchQuery = ref('');
@@ -412,13 +419,28 @@ header::before {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--secondary-color);
     cursor: pointer;
     position: relative;
 
-    img {
-        width: 41px;
+    .profile-avatar {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
         border-radius: 50%;
+    }
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .mico-placeholder {
+        // 512px 图标的非透明区域为 462px，放大后由头像框裁掉透明留白。
+        transform: scale(1.11);
     }
 }
 

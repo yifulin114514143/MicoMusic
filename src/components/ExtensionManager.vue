@@ -23,6 +23,9 @@
                     <i class="fas fa-upload"></i>
                     {{ t('an-zhuang-cha-jian') }}
                 </button>
+                <button v-if="builtinVisualRemoved" @click="restoreVisualPlugin" class="extension-btn secondary" :disabled="extensionsLoading">
+                    恢复液态玻璃插件
+                </button>
             </div>
 
             <div v-else class="market-actions">
@@ -36,12 +39,18 @@
                 </button>
                 <button @click="openPluginsRepo" class="extension-btn secondary">
                     <i class="fas fa-arrow-up-right-from-square"></i>
-                    上架&举报
+                    上游插件仓库
                 </button>
             </div>
         </div>
 
         <div v-if="currentView === 'installed'">
+            <div v-if="extensionsError || extensionLoadFailures.length" class="extension-load-errors" role="alert">
+                <p v-if="extensionsError">{{ extensionsError }}</p>
+                <p v-for="failure in extensionLoadFailures" :key="failure.directory || failure.path">
+                    {{ failure.directory }}：{{ failure.message }}
+                </p>
+            </div>
             <div v-if="!extensionsLoading && extensions.length > 0" class="extensions-list">
                 <div v-for="extension in extensions" :key="extension.id" class="market-item installed-item">
                     <div class="market-item-header">
@@ -87,11 +96,11 @@
 
                     <p v-if="!extension.moeKoeAdapted" class="extension-compatibility-warning installed-warning">
                         <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                        <span>该插件未对萌音适配，可能存在兼容性问题</span>
+                        <span>该插件未对 MicoMusic 适配，可能存在兼容性问题</span>
                     </p>
                     <p v-if="isCurrentAppVersionLowerThanMin(extension.minversion)" class="extension-compatibility-warning installed-warning">
                         <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                        <span>当前萌音版本较低，插件最低支持 V{{ extension.minversion }}</span>
+                        <span>当前 MicoMusic 版本较低，插件最低支持 V{{ extension.minversion }}</span>
                     </p>
                     <div v-if="extension.nativeHosts?.length" class="native-host-panel">
                         <div class="native-host-title">
@@ -268,6 +277,9 @@ const MARKET_PAGE_SIZE = 5
 
 const extensions = ref([])
 const extensionsLoading = ref(false)
+const extensionsError = ref('')
+const extensionLoadFailures = ref([])
+const builtinVisualRemoved = ref(false)
 const currentView = ref('installed')
 const marketPlugins = ref([])
 const marketLoading = ref(false)
@@ -328,11 +340,12 @@ watch(currentView, async view => {
 
 const refreshExtensions = async (reload = false) => {
     extensionsLoading.value = true
+    extensionsError.value = ''
     try {
         if (reload) {
             const reloadResult = await window.electronAPI?.reloadExtensions()
             if (!reloadResult?.success) {
-                console.error('Failed to reload plugins:', reloadResult?.message)
+                extensionsError.value = reloadResult?.message || '插件重新加载失败，基础界面仍可使用。'
             }
         }
 
@@ -340,11 +353,32 @@ const refreshExtensions = async (reload = false) => {
         const result = await window.electronAPI?.getExtensions()
         if (result?.success) {
             extensions.value = result.extensions || []
+            extensionLoadFailures.value = (result.loadResults || []).filter(item => item.success === false)
+            builtinVisualRemoved.value = result.builtinVisual?.removed === true
+            if (result.builtinVisual?.preparationResult?.success === false) {
+                extensionsError.value = result.builtinVisual.preparationResult.message
+            }
+            const runtimeFailure = (result.visualRuntime || []).find(item => item.state?.success === false)
+            if (runtimeFailure) extensionsError.value = runtimeFailure.state.error || '液态玻璃初始化失败，已返回基础界面。'
         } else {
-            console.error('Failed to get plugins:', result?.error)
+            extensionsError.value = result?.error || '无法读取插件加载结果。'
         }
     } catch (error) {
+        extensionsError.value = error.message
         console.error('Error refreshing plugins:', error)
+    } finally {
+        extensionsLoading.value = false
+    }
+}
+
+const restoreVisualPlugin = async () => {
+    extensionsLoading.value = true
+    try {
+        const result = await window.electronAPI.restoreBuiltinVisualPlugin()
+        await refreshExtensions()
+        if (!result.success) extensionsError.value = result.message || '液态玻璃插件恢复失败。'
+    } catch (error) {
+        extensionsError.value = error.message
     } finally {
         extensionsLoading.value = false
     }
@@ -592,7 +626,7 @@ const buildNativeHostAuthorizationMessage = (extension, host) => {
         `插件 ${extension.name} 请求运行本地程序：`,
         host.path,
         '',
-        '1. 该程序会由 MoeKoe Music 启动，并可能在后台持续运行。',
+        '1. 该程序会由 MicoMusic 启动，并可能在后台持续运行。',
         '2. 该程序属于插件附带的本地二进制内容，具备普通本地程序的系统访问能力。',
         '3. 如果插件来源不可信，可能带来隐私泄露、文件读写或网络访问风险。',
         '4. 本地程序运行后可能修改系统状态，造成数据丢失、系统异常，甚至损坏计算机。',
@@ -813,6 +847,14 @@ $danger-hover: #b91c1c;
 $text-muted: #666;
 $border-light: #e5e7eb;
 $border-dark: #232527;
+
+.extension-load-errors {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border: 1px solid $danger;
+    border-radius: 8px;
+    p { margin: 4px 0; }
+}
 
 .extensions-toolbar {
     display: flex;

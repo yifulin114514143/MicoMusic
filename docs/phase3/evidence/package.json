@@ -1,0 +1,440 @@
+{
+  "success": true,
+  "app": "/Users/mico/AI 事物/MicoMusic-阶段三/dist_electron/mac-arm64/MicoMusic.app",
+  "verifiedFiles": 107,
+  "files": [
+    {
+      "file": "electron/appServices.js",
+      "sha256": "bdab76cdfc03ca0e845526967e39d7e63cc307e0d210e809cf99e46089be4b15"
+    },
+    {
+      "file": "electron/extensions/builtinVisualPlugin.js",
+      "sha256": "bd636771ef8e55d120b8edfedeb25288c537f1a22cd4cfd06c6da68ba3749015"
+    },
+    {
+      "file": "electron/extensions/builtinVisualPluginFiles.js",
+      "sha256": "b8c3d5192f42e85fc645b6a61b82435af85c3da65c482ad75364842236a29902"
+    },
+    {
+      "file": "electron/extensions/extensionIPC.js",
+      "sha256": "cb5afc04da51937680ae3b265b5f7ba2ee6463e6e5692294115f76fd9c674e16"
+    },
+    {
+      "file": "electron/extensions/extensionLifecycle.js",
+      "sha256": "9a998fbcb9e1a63f0ceb664934d54a85ecbed23c205bbb026d58ac6d0a1db0ce"
+    },
+    {
+      "file": "electron/extensions/extensionManager.js",
+      "sha256": "1de11cc77892106d5a8f740d496568173820da5581d2b65f3cbf325baad62b47"
+    },
+    {
+      "file": "electron/extensions/extensions.js",
+      "sha256": "130b6f8bd4abd3331a4a454a78467954c822e01761150ce183be4a0d009b939e"
+    },
+    {
+      "file": "electron/extensions/nativeHostManager.js",
+      "sha256": "61e8429dfea608f25e2341317277028cd7f1f253176ea16954c27e8ed89bd701"
+    },
+    {
+      "file": "electron/extensions/visualPluginHost.js",
+      "sha256": "7bb815bbd9b58f8e72000303cc4bbdc95a8ba9ff5913949ce901b35e49222f26"
+    },
+    {
+      "file": "electron/language/i18n.js",
+      "sha256": "68643b10e4f6f4d7243e0b5624d26aa0ecb121f89ae6d89e09a04364f1b7fca1"
+    },
+    {
+      "file": "electron/main.js",
+      "sha256": "2406d9df1a8899875a9191670365223e1df9568463a1b8023695e5d5e33ac0e1"
+    },
+    {
+      "file": "electron/preload.cjs",
+      "sha256": "f20b259e576f1fd9a2edbd3546331abe436810584ba146181ce2803a34688b27"
+    },
+    {
+      "file": "electron/services/apiService.js",
+      "sha256": "79acc39efca98fff482842f5c55a937976d09bae538dae3d0d2322740836ed2c"
+    },
+    {
+      "file": "electron/services/appIdentity.js",
+      "sha256": "5b99991aff9e0e5613b4f4350c5252b5b4acc488d186e0b81037caef47227de4"
+    },
+    {
+      "file": "electron/services/customTrayMenuService.js",
+      "sha256": "3f0f3981de1295a5dff732e5e484e8b645e2a89f914cdeb9d9386f43c560e653"
+    },
+    {
+      "file": "electron/services/deepLinks.js",
+      "sha256": "6cafc3c74e4d25cff15cfae366eb8bd1beca21ffb526fe3d1ac8cdd16c203db8"
+    },
+    {
+      "file": "electron/services/desktopShortcutIcon.js",
+      "sha256": "083e92b72328e6f3eb0d5ba9bd6d355ea2afe307dbe5c4a004c245def1a4341b"
+    },
+    {
+      "file": "electron/services/externalLinkHandler.js",
+      "sha256": "f04a3b3f284c5dc48b525d02af4d30c48906c60eea0b9929d9111cefa2406003"
+    },
+    {
+      "file": "electron/services/identityConfig.js",
+      "sha256": "70f6c5d0e52d882b37916dddfe33b372b722751d892f2d93ebb5de16f80e39fd"
+    },
+    {
+      "file": "electron/services/logHelper.js",
+      "sha256": "8d3d94f8b7ad5b9f3e4857c51defeb399954d39615d1e83a6c57a6b2ea307f2c"
+    },
+    {
+      "file": "electron/services/loopbackApi.js",
+      "sha256": "0a19d228a3749bc0f8de9d9ad839a0b7b2966e0b0dbc355eab65e2cb83ddd545"
+    },
+    {
+      "file": "electron/services/protocolHandler.js",
+      "sha256": "9ab4d71e703ecba1ead01f1f98517ae1d7737c9202c8c2a0b4c73a98e323160a"
+    },
+    {
+      "file": "electron/services/statusBarLyricsService.js",
+      "sha256": "3163efccaea143f84a2c175c35dda574abe55309992877f7c771195aa66873c9"
+    },
+    {
+      "file": "electron/services/updater.js",
+      "sha256": "d1a7c985de8c535cd4dd34ea209ef8509e532ac4e4b7175a4674da65b02b61e0"
+    },
+    {
+      "file": "electron/view/index.html",
+      "sha256": "dcbeedba77bf7167d61ed229d002580d206a121b5796ba0123e5e031cb743799"
+    },
+    {
+      "file": "dist/assets/AbstractID3Parser-Ku7n4TNa.js",
+      "sha256": "6c1f2762597ef03008fd9d29014bc007ff3d7239ed30978a69c95eb239033840"
+    },
+    {
+      "file": "dist/assets/AiffParser-C8l3HDhc.js",
+      "sha256": "93c4b084c7484208b598e32e1213309fe750938c6a83bcbdfd39516e95898216"
+    },
+    {
+      "file": "dist/assets/AsfParser-BOI9WYbq.js",
+      "sha256": "b77a0b08269b32679f35f3c92208cd763509950f5857ea42b802309c45c0c999"
+    },
+    {
+      "file": "dist/assets/DsdiffParser-5SfzHkzM.js",
+      "sha256": "f874427a8ada7488eadcfdc224064076946502b128388745d65fc853cd95879d"
+    },
+    {
+      "file": "dist/assets/DsfParser-CXYX3rdb.js",
+      "sha256": "b0ba6514f479c2eea852ca429cb8374f28fb1c4f692b91984d7b02fd3f93af45"
+    },
+    {
+      "file": "dist/assets/FlacParser-h4q5PMYb.js",
+      "sha256": "b60744d375f74f6c757c345af0de688c562c992153914cb8e3714040d906a008"
+    },
+    {
+      "file": "dist/assets/ID3v2Parser-CjZjtHJs.js",
+      "sha256": "f2c925cd3d7abe158b59d1e614b77190cb9fd218aa5b25978f1cbe9656fbfc4f"
+    },
+    {
+      "file": "dist/assets/MP4Parser-Cqrj3Z0b.js",
+      "sha256": "a050849774e486aef43eea0ed0497e9c2b5961a9822d16b8b348f31dce2690bd"
+    },
+    {
+      "file": "dist/assets/MatroskaParser-DyrAByGU.js",
+      "sha256": "74885094fd9bbdf1283919c0278268e2b3edfbc9005e966690e0bb75881e432c"
+    },
+    {
+      "file": "dist/assets/MpegParser-CYSEsatt.js",
+      "sha256": "05741aa04abd92f6178d371a0b9b7c916a5cac9f36943d8e89e756bd86081a60"
+    },
+    {
+      "file": "dist/assets/MusepackParser-T-7zSNrJ.js",
+      "sha256": "be805a0a1d647d75bfe11127974532bbc4edb50a14734f23846fb85abbfc25b3"
+    },
+    {
+      "file": "dist/assets/OggParser-CzwDEMxS.js",
+      "sha256": "961e0961e7048d93bf195e1f59270e86d03a5a80fa690b4700a3956aaf89c35b"
+    },
+    {
+      "file": "dist/assets/WavPackParser-H79fXha7.js",
+      "sha256": "14e969b689c61e084036775a8e39c485ca16e6230cc80104c3ac7ca9ab23ce0d"
+    },
+    {
+      "file": "dist/assets/WaveParser-C2v5cD7p.js",
+      "sha256": "171eb3ce05251e472528a2bbfae104ddb5eadf930a66bd0f201c60ee0fa4c449"
+    },
+    {
+      "file": "dist/assets/font-awesome/css/all.min.css",
+      "sha256": "a361e7885c36bacb3fd9cb068da207c3b9329962cac022d06e28923939f575e8"
+    },
+    {
+      "file": "dist/assets/font-awesome/webfonts/fa-brands-400.ttf",
+      "sha256": "523dc72caa42687c946e5a8d7e6b438880a26881964466cf1425ce5114e49701"
+    },
+    {
+      "file": "dist/assets/font-awesome/webfonts/fa-brands-400.woff2",
+      "sha256": "33a252d6393cbd6debe0ac517229c7aa258a0ee68fc0253f8be6a7cee8b65ee9"
+    },
+    {
+      "file": "dist/assets/font-awesome/webfonts/fa-regular-400.ttf",
+      "sha256": "e47616185481b0ecd636dc35fc4673a4a332b1ac96585fc1f9cf0d0553dac2a0"
+    },
+    {
+      "file": "dist/assets/font-awesome/webfonts/fa-regular-400.woff2",
+      "sha256": "886fd1e6ce992ede514743a826fa71fefdb577047a2a899ca95f6f28f3305d09"
+    },
+    {
+      "file": "dist/assets/font-awesome/webfonts/fa-solid-900.ttf",
+      "sha256": "1c210c134c340a1133991a605b0aac990ce8505c48fce37c915063402964e994"
+    },
+    {
+      "file": "dist/assets/font-awesome/webfonts/fa-solid-900.woff2",
+      "sha256": "94e1bbc1c2a41ebc73fa5253fd563256c0035b4d69181e48f9aef9e474a11251"
+    },
+    {
+      "file": "dist/assets/font-awesome/webfonts/fa-v4compatibility.ttf",
+      "sha256": "a77fc4d94850e5a9b3964d08f5e2d2fad5c6635ba68d38b2a7e17cf4c560bf37"
+    },
+    {
+      "file": "dist/assets/font-awesome/webfonts/fa-v4compatibility.woff2",
+      "sha256": "4dc08f15f61ce16b97c0c4580bd233be0c9ea52165333fe460af54040a5c425c"
+    },
+    {
+      "file": "dist/assets/images/!.png",
+      "sha256": "c831046f3d1ea9cd35f0a613124154fada001c5d12ff9d01f4099e9c7c3a39f1"
+    },
+    {
+      "file": "dist/assets/images/arona.png",
+      "sha256": "e95c262c4d52c2967a95585b59130e31ee2a29365815dd4be7721689cd5a7b8b"
+    },
+    {
+      "file": "dist/assets/images/banner.png",
+      "sha256": "6da5dc32ad01a97d918daed3bb82cc2d7d31d636affaf299cc1d0fed27adaa97"
+    },
+    {
+      "file": "dist/assets/images/banners.png",
+      "sha256": "4826b9630ab5bd8416ed66ca4625b1d3b071b46b8a89b103279a6ee7c70f8d7b"
+    },
+    {
+      "file": "dist/assets/images/cloud-disk.png",
+      "sha256": "0395236e75ffe27c8080c02129bf6ade7f1bcf1e81e2655399511f270762c00c"
+    },
+    {
+      "file": "dist/assets/images/cloud.png",
+      "sha256": "7fe467141d6af502e81f29b5f7c8cf13b78e6e30820fb0769f9b75fdd6e47faa"
+    },
+    {
+      "file": "dist/assets/images/empty.png",
+      "sha256": "24034aef7205860cf8456ec5f8110cd737bb1d066a030145ff95da5262fc9f7a"
+    },
+    {
+      "file": "dist/assets/images/empty1.png",
+      "sha256": "1bf83ae5473eb32c1111829dd6d4b4237202ee3379872806acbd2283c13e8335"
+    },
+    {
+      "file": "dist/assets/images/head.png",
+      "sha256": "af3e8ed6388cdd5f66215c49a8ec473571dab51590d486c5e27ec831b5598256"
+    },
+    {
+      "file": "dist/assets/images/home/hutao.png",
+      "sha256": "d98c118a07593a7cfdd31b6a28f27def4deaf5249f69431dc94eb218837c07da"
+    },
+    {
+      "file": "dist/assets/images/home/hutao1.png",
+      "sha256": "512f8f4557e171c56f2d981804d1afc7ef8a4d25e6a31397ff060eca330ab5c8"
+    },
+    {
+      "file": "dist/assets/images/home/hutao2.png",
+      "sha256": "28f2d024faaa4debfdb97eb3a38e712ce6920d86a4b8f2bf481806cd024d33ec"
+    },
+    {
+      "file": "dist/assets/images/home/mama.png",
+      "sha256": "bf0620ee73d51ca62174fb4dd0b7ecd6436af176797f64632ad0cdadf51b337e"
+    },
+    {
+      "file": "dist/assets/images/ico.png",
+      "sha256": "69809cdfc94925bfe95eb368babed3ffee42aa4c6aaed862d133e022742d63ca"
+    },
+    {
+      "file": "dist/assets/images/live.png",
+      "sha256": "7b5ba1d9e761565f7fb1dc7918e9fc330d96474374db0cf1a78b77c529bf5cf0"
+    },
+    {
+      "file": "dist/assets/images/local-music.png",
+      "sha256": "f7097e7c114bbeb6eb12f8925afb8dbee7afe0570972f9805ac9d9de6a250be6"
+    },
+    {
+      "file": "dist/assets/images/local.png",
+      "sha256": "426746dfc1acc6f4482b83540e9b22a676a4533b0c9fb49057bba8b7808c5b51"
+    },
+    {
+      "file": "dist/assets/images/logo.png",
+      "sha256": "608bbfd98be20c933023c21fe1dfbc41aab854ef136909f98eff81251abb65d0"
+    },
+    {
+      "file": "dist/assets/images/mascotGirl.png",
+      "sha256": "39b7f898dcca88e37f56e004e9c161be644a2ffa7d9ba07f5292a20a2a8793a9"
+    },
+    {
+      "file": "dist/assets/images/mico/mico-app-icon-192.png",
+      "sha256": "47e5d607bb83521cecb02409a68d8b7a9d0bb0b9271244351eb8aeaf8297b4f1"
+    },
+    {
+      "file": "dist/assets/images/mico/mico-app-icon-512.png",
+      "sha256": "608bbfd98be20c933023c21fe1dfbc41aab854ef136909f98eff81251abb65d0"
+    },
+    {
+      "file": "dist/assets/images/mico/mico-discover-peek.png",
+      "sha256": "f97cae8b3bc05aa30fe36d5342c56c48df60673076d0c3ba3b19a38b4f658537"
+    },
+    {
+      "file": "dist/assets/images/mico/mico-mark.svg",
+      "sha256": "73c4c747c2385ceeda6989486b2a7473dba7b4065aa344238a521e16aedbc267"
+    },
+    {
+      "file": "dist/assets/images/mico/mico-onboarding-bust.png",
+      "sha256": "4381f15b26e108459fb5f26c17325d475c95b09b9eb427a429f0c871b79911c9"
+    },
+    {
+      "file": "dist/assets/images/mico/onboarding/mico-chibi-approved-front-v0.4.png",
+      "sha256": "705d5051db808700391d6e77bcf9f7a66d6e602a4e40f7b2151325cd47b8215c"
+    },
+    {
+      "file": "dist/assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png",
+      "sha256": "ea6c6228a3dc82d5c92805c717c61449f37e1920473b50ceec2ec1d1f816e473"
+    },
+    {
+      "file": "dist/assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png",
+      "sha256": "4385fd1a25bfede8adc9d04cfe226d55a22965606862a1ed489bc93c2c7a2ba2"
+    },
+    {
+      "file": "dist/assets/images/mico/onboarding/mico-onboarding-chibi-point-v1.png",
+      "sha256": "b2fd4a06f08c1ae5fe57b6223290b3f76d04723b041548e19facb0994bb46fd3"
+    },
+    {
+      "file": "dist/assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png",
+      "sha256": "c739cf48e28e0cfe5a024ee0a4bb0c600475edf1f5363f6e91089d4b0a02f1d9"
+    },
+    {
+      "file": "dist/assets/images/mico/onboarding/mico-onboarding-chibi-settings-v1.png",
+      "sha256": "ff65fbc1459a87816e85e73c9290279d91080c38bf65ec010aad4e918a33686a"
+    },
+    {
+      "file": "dist/assets/images/mico/onboarding/mico-onboarding-chibi-welcome-v1.png",
+      "sha256": "09434c539fd52f131314534f520098aea148006241cba0e4d7f5c0825cc89c6d"
+    },
+    {
+      "file": "dist/assets/images/miku.png",
+      "sha256": "36212c047a689251cfba22be745de8d422e8b763ba375452907dae8fe566bcc6"
+    },
+    {
+      "file": "dist/assets/images/miku2.png",
+      "sha256": "e146fd8edae13409da569facf09e7c7b87da3b300aa44a00ed0ca6a4ca898bb4"
+    },
+    {
+      "file": "dist/assets/images/miku3.png",
+      "sha256": "3f095b50632d2b3dd2f824b358b349474541e3311db6a95c4513bc7c8a1e4689"
+    },
+    {
+      "file": "dist/assets/images/profile.jpg",
+      "sha256": "0f4325ca4a5975fead709070860d163bd9429fe20941a5e8432b32d9d2d5857d"
+    },
+    {
+      "file": "dist/assets/images/recognize-bg.png",
+      "sha256": "3d30dfea36676c18cd049bf99caa9dfb25d45677d148287a6284cb992e00de9e"
+    },
+    {
+      "file": "dist/assets/images/ti111mg.png",
+      "sha256": "e7b3cbf9158ffd0277ed043c6cc599797b001310ffb080d9fc8872eb79f23c30"
+    },
+    {
+      "file": "dist/assets/images/vip.png",
+      "sha256": "60901bda7cb9588a93794541e579097220e6d42637ee8cf471ebff4b019134c4"
+    },
+    {
+      "file": "dist/assets/images/vip2.png",
+      "sha256": "445c284dea179bee032fcb06c154d63e6a584b753b21f48709f24b7ac5b23171"
+    },
+    {
+      "file": "dist/assets/index--2AUHTZp.css",
+      "sha256": "688aa963968309a471d31f7ca6bceff1405f041cd9e3cbce268379f7b8ee0d26"
+    },
+    {
+      "file": "dist/assets/index-DnVNOq-b.js",
+      "sha256": "9ce9f182ac0f533009dd66265d1260fdfcb6358d40d72993b15c2fd8b53fa57e"
+    },
+    {
+      "file": "dist/assets/sound/qiqi-jp.mp3",
+      "sha256": "cb1fc4862a6487be99a79ac33c26cad02a767cbd8a0ae418fb47cf8e552239f8"
+    },
+    {
+      "file": "dist/assets/sound/qiqi-zh.mp3",
+      "sha256": "c320f4c0c440ae4566d2cb5c241c33894d18f3b1cddb8ec402f3166e32ab8d7b"
+    },
+    {
+      "file": "dist/assets/sound/yise-jp.mp3",
+      "sha256": "659e7abb07903a435519e5f398e14b77d1431958c741ea7280ddbf82cfd6aae4"
+    },
+    {
+      "file": "dist/assets/workbox-window.prod.es5-BIl4cyR9.js",
+      "sha256": "ef75dc538a74d630094d7453bce980f4e7c78096700d40489d8ead191131d8ba"
+    },
+    {
+      "file": "dist/favicon.ico",
+      "sha256": "47a668f2010a768f359ff4552a6d6fa61a8f106ff7a43c02971d1d7107d5a39b"
+    },
+    {
+      "file": "dist/index.html",
+      "sha256": "c2b49978f9a15eab7679db2d5bb9818275db4321cb31fdba9687729f1db14a3d"
+    },
+    {
+      "file": "dist/manifest.webmanifest",
+      "sha256": "3fe5fd25b47969d5b2d4e065147e493077414e18f633fbda88834f1ac6abacb4"
+    },
+    {
+      "file": "dist/sw.js",
+      "sha256": "e57aeaef644417fd8bc1697bc1c24349e353e87d75a9579e5f5b3639bb4f202b"
+    },
+    {
+      "file": "dist/workbox-95c8c041.js",
+      "sha256": "a7b8c12184791ee838e0390672bb0d74d8c2a7d3c48f16426e3ff4772c34e8cf"
+    },
+    {
+      "file": "plugins/extensions/mico-liquid-glass/README.md",
+      "sha256": "22525024c3037b0bd15cdd95e6e7dd1934fc6a810e4f119faa6da540abfd5d07"
+    },
+    {
+      "file": "plugins/extensions/mico-liquid-glass/content.js",
+      "sha256": "1c58e61c4dfdce5cca26828157519d985bc36c777ffc09028c1c775a0b87d5bd"
+    },
+    {
+      "file": "plugins/extensions/mico-liquid-glass/glass.css",
+      "sha256": "cfbb69c8e27ed85831dcf918eea5381bc9d8dfbb8a910fede81c2908e513ad28"
+    },
+    {
+      "file": "plugins/extensions/mico-liquid-glass/host-bridge.html",
+      "sha256": "b6d080edb68582cbe31b189554e317b196392e72d512ae3fddfd46b77e574660"
+    },
+    {
+      "file": "plugins/extensions/mico-liquid-glass/manifest.json",
+      "sha256": "6ba45ff7d750687c804288950de48743aef83b343240b34f4265336a6b2610ce"
+    },
+    {
+      "file": "plugins/extensions/mico-liquid-glass/popup.css",
+      "sha256": "c9c78d45b42768c13fdea3ad1bbd91bd1dae018df618c390703982c3b052416e"
+    },
+    {
+      "file": "plugins/extensions/mico-liquid-glass/popup.html",
+      "sha256": "ff68d02fa2d0d896f5610287f8dd250aa6d21c0f68b2c4f3d62cdeda8f0a5fb0"
+    },
+    {
+      "file": "plugins/extensions/mico-liquid-glass/popup.js",
+      "sha256": "e991ff5e7a266a8f65b227edcb593daa6e002746213c16fa6db4829ad6351d21"
+    },
+    {
+      "file": "plugins/extensions/mico-liquid-glass/settings.js",
+      "sha256": "13d969f4e363da946b81f839f8d62c5ac3fa03e7b93863c1f53222fe1e1bf6a8"
+    }
+  ],
+  "identity": "io.github.yifulin114514143.micomusic",
+  "electronArchitecture": "arm64",
+  "apiArchitecture": "x86_64",
+  "signing": "unsigned local test app",
+  "configuration": "Dependency collection from original unchanged checkout; current worktree source, runtime metadata and resources"
+}

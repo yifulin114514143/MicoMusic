@@ -1,0 +1,6171 @@
+{
+  "baseline": "0c4ccf82e93cd1d82291f509dace34eee9e79f3b",
+  "electron": "39.2.4",
+  "chromium": "142.0.7444.177",
+  "platform": "darwin",
+  "timestamp": "2026-10-06T06:02:23.985Z",
+  "mode": "capabilities",
+  "sourceState": {
+    "head": "0c4ccf82e93cd1d82291f509dace34eee9e79f3b",
+    "gitStatusShort": "M electron/appServices.js\n M electron/extensions/extensionIPC.js\n M electron/extensions/extensions.js\n M electron/main.js\n M electron/preload.cjs\n M package.json\n M plugins/extensions/mico-liquid-glass/glass.css\n M src/components/ExtensionManager.vue\n M tests/extensionManager.electron.mjs\n?? docs/phase3/\n?? electron/extensions/builtinVisualPlugin.js\n?? electron/extensions/builtinVisualPluginFiles.js\n?? electron/extensions/visualPluginHost.js\n?? scripts/run-phase3-validation.mjs\n?? scripts/validate-phase3.mjs\n?? tests/builtinVisualPluginFiles.test.js\n?? tests/fixtures/phase3-preload.cjs",
+    "sourceFingerprintSha256": "74b4e7bb5f02084d14774ac5b283f375b290ad6d2426a35a3faea061bbffcc43",
+    "files": [
+      "electron/appServices.js",
+      "electron/extensions/builtinVisualPlugin.js",
+      "electron/extensions/builtinVisualPluginFiles.js",
+      "electron/extensions/extensionIPC.js",
+      "electron/extensions/extensionLifecycle.js",
+      "electron/extensions/extensionManager.js",
+      "electron/extensions/extensions.js",
+      "electron/extensions/nativeHostManager.js",
+      "electron/extensions/visualPluginHost.js",
+      "electron/language/i18n.js",
+      "electron/main.js",
+      "electron/preload.cjs",
+      "electron/services/apiService.js",
+      "electron/services/appIdentity.js",
+      "electron/services/customTrayMenuService.js",
+      "electron/services/deepLinks.js",
+      "electron/services/desktopShortcutIcon.js",
+      "electron/services/externalLinkHandler.js",
+      "electron/services/identityConfig.js",
+      "electron/services/logHelper.js",
+      "electron/services/loopbackApi.js",
+      "electron/services/protocolHandler.js",
+      "electron/services/statusBarLyricsService.js",
+      "electron/services/updater.js",
+      "electron/view/index.html",
+      "package-lock.json",
+      "package.json",
+      "plugins/extensions/mico-liquid-glass/README.md",
+      "plugins/extensions/mico-liquid-glass/content.js",
+      "plugins/extensions/mico-liquid-glass/glass.css",
+      "plugins/extensions/mico-liquid-glass/host-bridge.html",
+      "plugins/extensions/mico-liquid-glass/manifest.json",
+      "plugins/extensions/mico-liquid-glass/popup.css",
+      "plugins/extensions/mico-liquid-glass/popup.html",
+      "plugins/extensions/mico-liquid-glass/popup.js",
+      "plugins/extensions/mico-liquid-glass/settings.js",
+      "scripts/audit-extension-capabilities.mjs",
+      "scripts/build-mico-tray-icons.swift",
+      "scripts/run-extension-audit.mjs",
+      "scripts/run-phase3-validation.mjs",
+      "scripts/validate-phase3.mjs",
+      "src/App.vue",
+      "src/assets/images/tray/mico-monogram.png",
+      "src/assets/images/tray/mico-monogram@2x.png",
+      "src/assets/images/tray/tray-icon.png",
+      "src/assets/images/tray/tray-icon@2x.png",
+      "src/assets/style/PlayerControl.scss",
+      "src/assets/themes/dark.scss",
+      "src/components/AppUpdateDialog.vue",
+      "src/components/BackToTop.vue",
+      "src/components/BirthdayEasterEgg.vue",
+      "src/components/CommonSkeleton.vue",
+      "src/components/ContextMenu.vue",
+      "src/components/CustomModal.vue",
+      "src/components/Disclaimer.vue",
+      "src/components/ExtensionManager.vue",
+      "src/components/FullscreenLyricsSettings.vue",
+      "src/components/Header.vue",
+      "src/components/MarkdownContent.vue",
+      "src/components/MessageNotification.vue",
+      "src/components/MicoBrandBanner.vue",
+      "src/components/MicoProjectInfo.vue",
+      "src/components/OnboardingGuide.vue",
+      "src/components/PageScrollbar.vue",
+      "src/components/PlayerControl.vue",
+      "src/components/PlaylistSelectModal.vue",
+      "src/components/QueueList.vue",
+      "src/components/RiskVerifyModal.vue",
+      "src/components/SidebarNavigation.vue",
+      "src/components/StatusBarLyrics.vue",
+      "src/components/TeamEvent.vue",
+      "src/components/TitleBar.vue",
+      "src/components/discover/DiscoverNewAlbumContent.vue",
+      "src/components/discover/DiscoverNewSongContent.vue",
+      "src/components/discover/DiscoverPlaylistContent.vue",
+      "src/components/discover/RankingContent.vue",
+      "src/components/home/HomeRecommendations.vue",
+      "src/components/player/AudioController.js",
+      "src/components/player/AudioOutput.js",
+      "src/components/player/ClimaxPoints.js",
+      "src/components/player/Helpers.js",
+      "src/components/player/LyricsHandler.js",
+      "src/components/player/MediaSession.js",
+      "src/components/player/PlaybackMode.js",
+      "src/components/player/ProgressBar.js",
+      "src/components/player/SongQueue.js",
+      "src/components/player/index.js",
+      "src/components/player/songQueue/CloudMusicQueue.js",
+      "src/components/player/songQueue/LocalMusicQueue.js",
+      "src/components/player/songQueue/OnlineMusicQueue.js",
+      "src/components/search/AlbumGrid.vue",
+      "src/components/search/ArtistGrid.vue",
+      "src/components/search/ComplexSearchResults.vue",
+      "src/components/search/MvGrid.vue",
+      "src/components/search/PlaylistGrid.vue",
+      "src/components/search/SongSearchList.vue",
+      "src/composables/useActivatedWatch.js",
+      "src/composables/useStickyDetailHeader.js",
+      "src/config/disclaimer.js",
+      "src/config/onboardingGuide.js",
+      "src/config/settings.js",
+      "src/language/en.json",
+      "src/language/ja.json",
+      "src/language/ko.json",
+      "src/language/ru.json",
+      "src/language/zh-CN.json",
+      "src/language/zh-TW.json",
+      "src/layouts/HomeLayout.vue",
+      "src/main.js",
+      "src/plugins/MessagePlugin.js",
+      "src/plugins/ModalPlugin.js",
+      "src/router/router.js",
+      "src/stores/musicQueue.js",
+      "src/stores/store.js",
+      "src/utils/apiBaseUrl.js",
+      "src/utils/i18n.js",
+      "src/utils/recognize.js",
+      "src/utils/request.js",
+      "src/utils/riskVerify.js",
+      "src/utils/teamEvent.js",
+      "src/utils/utils.js",
+      "src/views/CloudDrive.vue",
+      "src/views/Discover.vue",
+      "src/views/Home.vue",
+      "src/views/Library.vue",
+      "src/views/LocalMusic.vue",
+      "src/views/Login.vue",
+      "src/views/Lyrics.vue",
+      "src/views/PlaylistDetail.vue",
+      "src/views/Ranking.vue",
+      "src/views/Recognize.vue",
+      "src/views/RecommendedSearch.vue",
+      "src/views/Search.vue",
+      "src/views/Settings.vue",
+      "src/views/VideoPlayer.vue",
+      "tests/apiBaseUrl.test.js",
+      "tests/builtinVisualPluginFiles.test.js",
+      "tests/deepLinks.test.js",
+      "tests/extensionLifecycle.test.js",
+      "tests/extensionManager.electron.mjs",
+      "tests/extensionManagerRuntime.test.js",
+      "tests/fixtures/api-process.cjs",
+      "tests/fixtures/phase2-preload.cjs",
+      "tests/fixtures/phase2-visual-probe/background.js",
+      "tests/fixtures/phase2-visual-probe/content.js",
+      "tests/fixtures/phase2-visual-probe/manifest.json",
+      "tests/fixtures/phase2-visual-probe/popup.html",
+      "tests/fixtures/phase2-visual-probe/popup.js",
+      "tests/fixtures/phase2-visual-probe/probe.css",
+      "tests/fixtures/phase3-preload.cjs",
+      "tests/identity.test.js",
+      "tests/liquidGlassPlugin.test.js",
+      "tests/loopbackApi.test.js",
+      "tests/nativeHostShutdown.electron.mjs",
+      "tests/nativeHostShutdownRuntime.test.js"
+    ],
+    "rendererFingerprintSha256": "0ba662f16f2937f88e46c4bc5de1db7566a78e31e83c49131f6b5e151b17ff3e",
+    "rendererFiles": [
+      "assets/AbstractID3Parser-Ku7n4TNa.js",
+      "assets/AiffParser-C8l3HDhc.js",
+      "assets/AsfParser-BOI9WYbq.js",
+      "assets/DsdiffParser-5SfzHkzM.js",
+      "assets/DsfParser-CXYX3rdb.js",
+      "assets/FlacParser-h4q5PMYb.js",
+      "assets/ID3v2Parser-CjZjtHJs.js",
+      "assets/MP4Parser-Cqrj3Z0b.js",
+      "assets/MatroskaParser-DyrAByGU.js",
+      "assets/MpegParser-CYSEsatt.js",
+      "assets/MusepackParser-T-7zSNrJ.js",
+      "assets/OggParser-CzwDEMxS.js",
+      "assets/WavPackParser-H79fXha7.js",
+      "assets/WaveParser-C2v5cD7p.js",
+      "assets/font-awesome/css/all.min.css",
+      "assets/font-awesome/webfonts/fa-brands-400.ttf",
+      "assets/font-awesome/webfonts/fa-brands-400.woff2",
+      "assets/font-awesome/webfonts/fa-regular-400.ttf",
+      "assets/font-awesome/webfonts/fa-regular-400.woff2",
+      "assets/font-awesome/webfonts/fa-solid-900.ttf",
+      "assets/font-awesome/webfonts/fa-solid-900.woff2",
+      "assets/font-awesome/webfonts/fa-v4compatibility.ttf",
+      "assets/font-awesome/webfonts/fa-v4compatibility.woff2",
+      "assets/images/!.png",
+      "assets/images/arona.png",
+      "assets/images/banner.png",
+      "assets/images/banners.png",
+      "assets/images/cloud-disk.png",
+      "assets/images/cloud.png",
+      "assets/images/empty.png",
+      "assets/images/empty1.png",
+      "assets/images/head.png",
+      "assets/images/home/hutao.png",
+      "assets/images/home/hutao1.png",
+      "assets/images/home/hutao2.png",
+      "assets/images/home/mama.png",
+      "assets/images/ico.png",
+      "assets/images/live.png",
+      "assets/images/local-music.png",
+      "assets/images/local.png",
+      "assets/images/logo.png",
+      "assets/images/mascotGirl.png",
+      "assets/images/mico/mico-app-icon-192.png",
+      "assets/images/mico/mico-app-icon-512.png",
+      "assets/images/mico/mico-discover-peek.png",
+      "assets/images/mico/mico-mark.svg",
+      "assets/images/mico/mico-onboarding-bust.png",
+      "assets/images/mico/onboarding/mico-chibi-approved-front-v0.4.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-favorite-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-play-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-point-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-search-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-settings-v1.png",
+      "assets/images/mico/onboarding/mico-onboarding-chibi-welcome-v1.png",
+      "assets/images/miku.png",
+      "assets/images/miku2.png",
+      "assets/images/miku3.png",
+      "assets/images/profile.jpg",
+      "assets/images/recognize-bg.png",
+      "assets/images/ti111mg.png",
+      "assets/images/vip.png",
+      "assets/images/vip2.png",
+      "assets/index--2AUHTZp.css",
+      "assets/index-DnVNOq-b.js",
+      "assets/sound/qiqi-jp.mp3",
+      "assets/sound/qiqi-zh.mp3",
+      "assets/sound/yise-jp.mp3",
+      "assets/workbox-window.prod.es5-BIl4cyR9.js",
+      "favicon.ico",
+      "index.html",
+      "manifest.webmanifest",
+      "sw.js",
+      "workbox-95c8c041.js"
+    ],
+    "interpretation": "运行时读取当前工作树，包含未提交源码；HEAD 本身不是此次测试源码的全部内容"
+  },
+  "checks": [
+    {
+      "name": "隔离生产插件系统初始化成功",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "results": [
+          {
+            "success": true,
+            "directory": "mico-liquid-glass",
+            "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+            "id": "iooncallackkkjcmnohoenonakeljfmj",
+            "name": "MicoMusic 液态玻璃"
+          }
+        ],
+        "builtinResult": {
+          "success": true,
+          "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+          "updated": true,
+          "fingerprint": "97572a43d0a5c31ff739bad0eebe29ca4399ea062d8e5cbf2ae14a81c4a12197",
+          "version": "1.0.0"
+        }
+      }
+    },
+    {
+      "name": "生产插件目录属于隔离 profile",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "生产 Vue 主框架加载成功",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "首次内置主题默认开启并成功读取 CSS",
+      "passed": true,
+      "detail": {
+        "ready": {
+          "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+          "enabled": true,
+          "success": true
+        },
+        "ack": null,
+        "styles": 1,
+        "enabled": "on",
+        "theme": "auto",
+        "motion": "normal",
+        "blur": "normal",
+        "materialSeen": true,
+        "identity": "72961da6-9cad-45c5-abc2-00a344bb7b56",
+        "media": null,
+        "materialMutations": null
+      }
+    },
+    {
+      "name": "内置主题复制到隔离用户插件目录",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "生产插件弹窗 IPC 可打开主题设置",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "extensionId": "iooncallackkkjcmnohoenonakeljfmj"
+      }
+    },
+    {
+      "name": "浅色控制与音量图标使用主题可读颜色",
+      "passed": true,
+      "detail": {
+        ".player-bar .control-btn": [
+          {
+            "color": "rgb(35, 48, 68)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(35, 48, 68)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(35, 48, 68)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          }
+        ],
+        ".player-bar .control-btn i": [
+          {
+            "color": "rgb(35, 48, 68)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(35, 48, 68)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(35, 48, 68)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          }
+        ],
+        ".player-bar .extra-btn": [
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          }
+        ],
+        ".player-bar .extra-btn i": [
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          },
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          }
+        ],
+        ".player-bar .volume-control i": [
+          {
+            "color": "rgb(88, 103, 121)",
+            "text": "#233044",
+            "muted": "#586779",
+            "parentText": "#233044",
+            "parentMuted": "#586779"
+          }
+        ]
+      }
+    },
+    {
+      "name": "生产导航和播放器应用浅色 22px 材质",
+      "passed": true,
+      "detail": {
+        "header": {
+          "background": "rgba(249, 251, 255, 0.74)",
+          "backdropFilter": "blur(22px) saturate(1.35)",
+          "shadow": "rgba(255, 255, 255, 0.92) 0px 1px 0px 0px inset, rgba(55, 71, 94, 0.12) 0px -1px 0px 0px inset, rgba(34, 50, 72, 0.1) 0px 4px 18px 0px",
+          "color": "rgb(51, 51, 51)",
+          "width": 1180,
+          "height": 82,
+          "surface": "rgba(249, 251, 255, 0.74)"
+        },
+        "player": {
+          "background": "rgba(249, 251, 255, 0.74)",
+          "backdropFilter": "blur(22px) saturate(1.35)",
+          "shadow": "rgba(255, 255, 255, 0.92) 0px 1px 0px 0px inset, rgba(34, 50, 72, 0.1) 0px -5px 22px 0px",
+          "color": "rgb(51, 51, 51)",
+          "width": 1180,
+          "height": 82,
+          "surface": "rgba(249, 251, 255, 0.74)"
+        }
+      }
+    },
+    {
+      "name": "材质不改变导航、播放器和头像几何",
+      "passed": true,
+      "detail": {
+        "base": {
+          ".app-header": {
+            "x": 0,
+            "y": 0,
+            "width": 1180,
+            "height": 82
+          },
+          ".player-container": {
+            "x": 0,
+            "y": 738,
+            "width": 1180,
+            "height": 82
+          },
+          ".profile": {
+            "x": 1120,
+            "y": 21,
+            "width": 40,
+            "height": 40,
+            "background": "rgba(0, 0, 0, 0)",
+            "overflow": "visible",
+            "transform": "none"
+          },
+          ".profile-avatar": {
+            "x": 1120,
+            "y": 21,
+            "width": 40,
+            "height": 40,
+            "background": "rgba(0, 0, 0, 0)",
+            "overflow": "hidden",
+            "transform": "none"
+          },
+          ".profile-avatar img": {
+            "x": 1117.800048828125,
+            "y": 18.799999237060547,
+            "width": 44.39990234375,
+            "height": 44.400001525878906,
+            "background": "rgba(0, 0, 0, 0)",
+            "overflow": "clip",
+            "transform": "matrix(1.11, 0, 0, 1.11, 0, 0)"
+          }
+        },
+        "glass": {
+          ".app-header": {
+            "x": 0,
+            "y": 0,
+            "width": 1180,
+            "height": 82
+          },
+          ".player-container": {
+            "x": 0,
+            "y": 738,
+            "width": 1180,
+            "height": 82
+          },
+          ".profile": {
+            "x": 1120,
+            "y": 21,
+            "width": 40,
+            "height": 40,
+            "background": "rgba(0, 0, 0, 0)",
+            "overflow": "visible",
+            "transform": "none"
+          },
+          ".profile-avatar": {
+            "x": 1120,
+            "y": 21,
+            "width": 40,
+            "height": 40,
+            "background": "rgba(0, 0, 0, 0)",
+            "overflow": "hidden",
+            "transform": "none"
+          },
+          ".profile-avatar img": {
+            "x": 1117.800048828125,
+            "y": 18.799999237060547,
+            "width": 44.39990234375,
+            "height": 44.400001525878906,
+            "background": "rgba(0, 0, 0, 0)",
+            "overflow": "clip",
+            "transform": "matrix(1.11, 0, 0, 1.11, 0, 0)"
+          }
+        }
+      }
+    },
+    {
+      "name": "头像保持均匀裁切且无粉色底色",
+      "passed": true,
+      "detail": {
+        ".app-header": {
+          "x": 0,
+          "y": 0,
+          "width": 1180,
+          "height": 82
+        },
+        ".player-container": {
+          "x": 0,
+          "y": 738,
+          "width": 1180,
+          "height": 82
+        },
+        ".profile": {
+          "x": 1120,
+          "y": 21,
+          "width": 40,
+          "height": 40,
+          "background": "rgba(0, 0, 0, 0)",
+          "overflow": "visible",
+          "transform": "none"
+        },
+        ".profile-avatar": {
+          "x": 1120,
+          "y": 21,
+          "width": 40,
+          "height": 40,
+          "background": "rgba(0, 0, 0, 0)",
+          "overflow": "hidden",
+          "transform": "none"
+        },
+        ".profile-avatar img": {
+          "x": 1117.800048828125,
+          "y": 18.799999237060547,
+          "width": 44.39990234375,
+          "height": 44.400001525878906,
+          "background": "rgba(0, 0, 0, 0)",
+          "overflow": "clip",
+          "transform": "matrix(1.11, 0, 0, 1.11, 0, 0)"
+        }
+      }
+    },
+    {
+      "name": "深色材质即时生效",
+      "passed": true,
+      "detail": {
+        "header": {
+          "background": "rgba(25, 31, 43, 0.76)",
+          "backdropFilter": "blur(22px) saturate(1.35)",
+          "shadow": "rgba(217, 230, 255, 0.18) 0px 1px 0px 0px inset, rgba(195, 215, 244, 0.16) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.24) 0px 4px 18px 0px",
+          "color": "rgb(51, 51, 51)",
+          "width": 1180,
+          "height": 82,
+          "surface": "rgba(25, 31, 43, 0.76)"
+        },
+        "player": {
+          "background": "rgba(25, 31, 43, 0.76)",
+          "backdropFilter": "blur(22px) saturate(1.35)",
+          "shadow": "rgba(217, 230, 255, 0.18) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.24) 0px -5px 22px 0px",
+          "color": "rgb(51, 51, 51)",
+          "width": 1180,
+          "height": 82,
+          "surface": "rgba(25, 31, 43, 0.76)"
+        }
+      }
+    },
+    {
+      "name": "深色播放与扩展控件、音量图标保持可读颜色",
+      "passed": true,
+      "detail": {
+        ".player-bar .control-btn": [
+          {
+            "color": "rgb(238, 243, 252)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(238, 243, 252)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(238, 243, 252)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          }
+        ],
+        ".player-bar .control-btn i": [
+          {
+            "color": "rgb(238, 243, 252)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(238, 243, 252)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(238, 243, 252)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          }
+        ],
+        ".player-bar .extra-btn": [
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          }
+        ],
+        ".player-bar .extra-btn i": [
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          },
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          }
+        ],
+        ".player-bar .volume-control i": [
+          {
+            "color": "rgb(186, 199, 217)",
+            "text": "#eef3fc",
+            "muted": "#bac7d9",
+            "parentText": "#eef3fc",
+            "parentMuted": "#bac7d9"
+          }
+        ]
+      }
+    },
+    {
+      "name": "低模糊与减少动效设置即时生效",
+      "passed": true,
+      "detail": {
+        "header": {
+          "background": "rgba(25, 31, 43, 0.94)",
+          "backdropFilter": "blur(8px) saturate(1.1)",
+          "shadow": "rgba(217, 230, 255, 0.18) 0px 1px 0px 0px inset, rgba(195, 215, 244, 0.16) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.24) 0px 4px 18px 0px",
+          "color": "rgb(51, 51, 51)",
+          "width": 1180,
+          "height": 82,
+          "surface": "rgba(25, 31, 43, 0.94)"
+        },
+        "player": {
+          "background": "rgba(25, 31, 43, 0.94)",
+          "backdropFilter": "blur(8px) saturate(1.1)",
+          "shadow": "rgba(217, 230, 255, 0.18) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.24) 0px -5px 22px 0px",
+          "color": "rgb(51, 51, 51)",
+          "width": 1180,
+          "height": 82,
+          "surface": "rgba(25, 31, 43, 0.94)"
+        }
+      }
+    },
+    {
+      "name": "auto 设置跟随宿主深色标记",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "auto 设置跟随宿主浅色标记",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "开关第 1 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.516746,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.517942,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 1 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 2 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.518079,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.520955,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 2 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 3 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.524339,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.526171,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 3 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 4 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.526316,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.527329,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 4 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 5 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.527439,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.528534,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 5 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 6 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.528668,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.529676,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 6 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 7 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.529767,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.530689,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 7 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 8 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.530775,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.531682,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 8 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 9 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.532587,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.535077,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 9 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 10 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.535337,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.538035,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 10 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 11 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.538175,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.539217,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 11 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 12 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.539312,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.540206,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 12 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 13 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.540306,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.541209,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 13 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 14 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.541301,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.542216,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 14 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 15 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.542298,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.543215,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 15 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 16 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.543291,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.544231,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 16 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 17 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.544313,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.545198,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 17 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 18 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.545279,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.546128,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 18 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 19 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.546217,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.547067,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 19 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "开关第 20 次不刷新或中断技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.547144,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.548037,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "开关第 20 次样式完整撤回并保持单实例",
+      "passed": true,
+      "detail": {
+        "off": 0,
+        "on": 1
+      }
+    },
+    {
+      "name": "重载第 1 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 21,
+          "removed": 21
+        },
+        "after": {
+          "added": 22,
+          "removed": 22
+        }
+      }
+    },
+    {
+      "name": "重载第 1 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.549096,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.719949,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 2 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 22,
+          "removed": 22
+        },
+        "after": {
+          "added": 23,
+          "removed": 23
+        }
+      }
+    },
+    {
+      "name": "重载第 2 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.720115,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.819886,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 3 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 23,
+          "removed": 23
+        },
+        "after": {
+          "added": 24,
+          "removed": 24
+        }
+      }
+    },
+    {
+      "name": "重载第 3 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.820035,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 1.919758,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 4 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 24,
+          "removed": 24
+        },
+        "after": {
+          "added": 25,
+          "removed": 25
+        }
+      }
+    },
+    {
+      "name": "重载第 4 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 1.919893,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 2.019787,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 5 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 25,
+          "removed": 25
+        },
+        "after": {
+          "added": 26,
+          "removed": 26
+        }
+      }
+    },
+    {
+      "name": "重载第 5 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 2.01996,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 2.119969,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 6 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 26,
+          "removed": 26
+        },
+        "after": {
+          "added": 27,
+          "removed": 27
+        }
+      }
+    },
+    {
+      "name": "重载第 6 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 2.120183,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 2.219817,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 7 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 27,
+          "removed": 27
+        },
+        "after": {
+          "added": 28,
+          "removed": 28
+        }
+      }
+    },
+    {
+      "name": "重载第 7 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 2.21997,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 2.319797,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 8 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 28,
+          "removed": 28
+        },
+        "after": {
+          "added": 29,
+          "removed": 29
+        }
+      }
+    },
+    {
+      "name": "重载第 8 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 2.319941,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 2.419757,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 9 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 29,
+          "removed": 29
+        },
+        "after": {
+          "added": 30,
+          "removed": 30
+        }
+      }
+    },
+    {
+      "name": "重载第 9 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 2.419903,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 2.51728,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 10 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 30,
+          "removed": 30
+        },
+        "after": {
+          "added": 31,
+          "removed": 31
+        }
+      }
+    },
+    {
+      "name": "重载第 10 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 2.517431,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 2.616205,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 11 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 31,
+          "removed": 31
+        },
+        "after": {
+          "added": 32,
+          "removed": 32
+        }
+      }
+    },
+    {
+      "name": "重载第 11 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 2.616345,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 2.715182,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 12 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 32,
+          "removed": 32
+        },
+        "after": {
+          "added": 33,
+          "removed": 33
+        }
+      }
+    },
+    {
+      "name": "重载第 12 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 2.715335,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 2.810716,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 13 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 33,
+          "removed": 33
+        },
+        "after": {
+          "added": 34,
+          "removed": 34
+        }
+      }
+    },
+    {
+      "name": "重载第 13 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 2.810859,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 2.909967,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 14 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 34,
+          "removed": 34
+        },
+        "after": {
+          "added": 35,
+          "removed": 35
+        }
+      }
+    },
+    {
+      "name": "重载第 14 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 2.910089,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 3.004953,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 15 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 35,
+          "removed": 35
+        },
+        "after": {
+          "added": 36,
+          "removed": 36
+        }
+      }
+    },
+    {
+      "name": "重载第 15 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 3.005104,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 3.103016,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 16 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 36,
+          "removed": 36
+        },
+        "after": {
+          "added": 37,
+          "removed": 37
+        }
+      }
+    },
+    {
+      "name": "重载第 16 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 3.103131,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 3.201989,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 17 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 37,
+          "removed": 37
+        },
+        "after": {
+          "added": 38,
+          "removed": 38
+        }
+      }
+    },
+    {
+      "name": "重载第 17 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 3.202214,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 3.299127,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 18 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 38,
+          "removed": 38
+        },
+        "after": {
+          "added": 39,
+          "removed": 39
+        }
+      }
+    },
+    {
+      "name": "重载第 18 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 3.299277,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 3.3973,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 19 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 39,
+          "removed": 39
+        },
+        "after": {
+          "added": 40,
+          "removed": 40
+        }
+      }
+    },
+    {
+      "name": "重载第 19 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 3.39744,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 3.495244,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "重载第 20 次完整清理后重新注入",
+      "passed": true,
+      "detail": {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "added": 40,
+          "removed": 40
+        },
+        "after": {
+          "added": 41,
+          "removed": 41
+        }
+      }
+    },
+    {
+      "name": "重载第 20 次文档与技术音频连续",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 3.4954,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 3.593296,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "插件系统重启完成重新初始化",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "results": [
+          {
+            "success": true,
+            "directory": "mico-liquid-glass",
+            "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+            "id": "iooncallackkkjcmnohoenonakeljfmj",
+            "name": "MicoMusic 液态玻璃"
+          }
+        ],
+        "builtinResult": {
+          "success": true,
+          "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+          "updated": false,
+          "fingerprint": "97572a43d0a5c31ff739bad0eebe29ca4399ea062d8e5cbf2ae14a81c4a12197",
+          "version": "1.0.0"
+        }
+      }
+    },
+    {
+      "name": "重启后原 preload 插件 IPC 恢复",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "extensions": [
+          {
+            "id": "iooncallackkkjcmnohoenonakeljfmj",
+            "pluginId": "mico-liquid-glass",
+            "name": "MicoMusic 液态玻璃",
+            "directory": "mico-liquid-glass",
+            "version": "1.0.0",
+            "enabled": true,
+            "description": "可随时关闭的顶部导航与底部播放器玻璃材质样板。",
+            "author": "MicoMusic",
+            "authorUrl": "",
+            "permissions": [
+              "storage",
+              "scripting",
+              "tabs"
+            ],
+            "iconData": null,
+            "moeKoeAdapted": true,
+            "minversion": "",
+            "popupPath": "popup.html",
+            "hasPopup": true,
+            "nativeHosts": []
+          }
+        ],
+        "loadResults": [
+          {
+            "success": true,
+            "directory": "mico-liquid-glass",
+            "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+            "id": "iooncallackkkjcmnohoenonakeljfmj",
+            "name": "MicoMusic 液态玻璃"
+          }
+        ],
+        "builtinVisual": {
+          "removed": false,
+          "fingerprint": "97572a43d0a5c31ff739bad0eebe29ca4399ea062d8e5cbf2ae14a81c4a12197",
+          "version": "1.0.0",
+          "development": false,
+          "preparationResult": {
+            "success": true,
+            "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+            "updated": false,
+            "fingerprint": "97572a43d0a5c31ff739bad0eebe29ca4399ea062d8e5cbf2ae14a81c4a12197",
+            "version": "1.0.0"
+          }
+        },
+        "visualRuntime": [
+          {
+            "windowId": 1,
+            "state": {
+              "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+              "enabled": true,
+              "success": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "生产插件弹窗 IPC 可打开主题设置",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "extensionId": "iooncallackkkjcmnohoenonakeljfmj"
+      }
+    },
+    {
+      "name": "关闭后恢复生产 scoped 样式",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "关闭后音量图标恢复基础颜色",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "空目录卸载拒绝且保留内置插件及根目录",
+      "passed": true,
+      "detail": {
+        "success": false,
+        "message": "插件目录名不能为空",
+        "removedFromSession": false,
+        "removedFiles": false,
+        "path": ""
+      }
+    },
+    {
+      "name": "合法其他插件可正常安装",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "extension": {
+          "id": "bmeflmhpindidoappdekdlnolpjbekhj",
+          "name": "阶段三其他插件保留验证",
+          "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/phase3-other-plugin"
+        }
+      }
+    },
+    {
+      "name": "身份目录不匹配拒绝且保留其他插件",
+      "passed": true,
+      "detail": {
+        "success": false,
+        "message": "插件 ID 与目录不匹配",
+        "removedFromSession": false,
+        "removedFiles": false,
+        "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/phase3-other-plugin"
+      }
+    },
+    {
+      "name": "合法其他插件卸载不影响内置主题",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "removedFromSession": true,
+        "removedFiles": true,
+        "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/phase3-other-plugin"
+      }
+    },
+    {
+      "name": "错误清单逐条返回且合法主题继续可用",
+      "passed": true,
+      "detail": {
+        "success": false,
+        "results": [
+          {
+            "success": true,
+            "directory": "mico-liquid-glass",
+            "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+            "id": "iooncallackkkjcmnohoenonakeljfmj",
+            "name": "MicoMusic 液态玻璃"
+          },
+          {
+            "success": false,
+            "directory": "phase3-invalid-json",
+            "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/phase3-invalid-json",
+            "message": "解析 manifest.json 失败: Expected double-quoted property name in JSON at position 22 (line 1 column 23)"
+          },
+          {
+            "success": false,
+            "directory": "phase3-invalid-version",
+            "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/phase3-invalid-version",
+            "message": "仅支持 Manifest V3 格式"
+          }
+        ],
+        "unloadResults": [
+          {
+            "success": true,
+            "id": "iooncallackkkjcmnohoenonakeljfmj",
+            "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+          }
+        ],
+        "message": "部分插件加载失败"
+      }
+    },
+    {
+      "name": "移除测试错误清单后重载恢复成功",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "内置资源差异触发原子升级",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+        "updated": true,
+        "fingerprint": "97572a43d0a5c31ff739bad0eebe29ca4399ea062d8e5cbf2ae14a81c4a12197",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "升级后重新初始化成功",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "升级保留用户关闭选择",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "资源错误测试前完整清理成功",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "材质资源失败返回基础界面及明确错误",
+      "passed": true,
+      "detail": {
+        "fallback": {
+          "success": false,
+          "results": [
+            {
+              "success": false,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "message": "Failed to fetch"
+            }
+          ]
+        },
+        "failedState": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "success": false,
+            "error": "Failed to fetch"
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 4.339491,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 42,
+            "removed": 43
+          }
+        }
+      }
+    },
+    {
+      "name": "材质失败回退保留当前文档和技术播放",
+      "passed": true,
+      "detail": {
+        "before": {
+          "time": 4.270829,
+          "paused": false,
+          "starts": 1
+        },
+        "after": {
+          "time": 4.339491,
+          "paused": false,
+          "starts": 1
+        },
+        "navigationCount": 1
+      }
+    },
+    {
+      "name": "正式资源可修复隔离缺失文件",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "修复后当前文档可重新注入",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "生产插件弹窗 IPC 可打开主题设置",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "extensionId": "iooncallackkkjcmnohoenonakeljfmj"
+      }
+    },
+    {
+      "name": "base 性能样本完成 600 帧",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "glass 性能样本完成 600 帧",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lowBlur 性能样本完成 600 帧",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "已保存跨进程完整设置",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "observations": {
+    "builtin": {
+      "installed": {
+        "id": "iooncallackkkjcmnohoenonakeljfmj",
+        "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+        "version": "1.0.0"
+      },
+      "state": {
+        "removed": false,
+        "fingerprint": "97572a43d0a5c31ff739bad0eebe29ca4399ea062d8e5cbf2ae14a81c4a12197",
+        "version": "1.0.0",
+        "development": false,
+        "preparationResult": {
+          "success": true,
+          "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+          "updated": true,
+          "fingerprint": "97572a43d0a5c31ff739bad0eebe29ca4399ea062d8e5cbf2ae14a81c4a12197",
+          "version": "1.0.0"
+        }
+      }
+    },
+    "darkControls": {
+      ".player-bar .control-btn": [
+        {
+          "color": "rgb(238, 243, 252)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(238, 243, 252)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(238, 243, 252)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        }
+      ],
+      ".player-bar .control-btn i": [
+        {
+          "color": "rgb(238, 243, 252)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(238, 243, 252)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(238, 243, 252)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        }
+      ],
+      ".player-bar .extra-btn": [
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        }
+      ],
+      ".player-bar .extra-btn i": [
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        },
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        }
+      ],
+      ".player-bar .volume-control i": [
+        {
+          "color": "rgb(186, 199, 217)",
+          "text": "#eef3fc",
+          "muted": "#bac7d9",
+          "parentText": "#eef3fc",
+          "parentMuted": "#bac7d9"
+        }
+      ]
+    },
+    "switches": [
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.516746,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 1,
+            "removed": 1
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.517381,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 1,
+            "removed": 2
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.517942,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 2,
+            "removed": 2
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.518079,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 2,
+            "removed": 2
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.518722,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 2,
+            "removed": 3
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.520955,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 3,
+            "removed": 3
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.524339,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 3,
+            "removed": 3
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.525654,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 3,
+            "removed": 4
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.526171,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 4,
+            "removed": 4
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.526316,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 4,
+            "removed": 4
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.526828,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 4,
+            "removed": 5
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.527329,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 5,
+            "removed": 5
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.527439,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 5,
+            "removed": 5
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.528013,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 5,
+            "removed": 6
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.528534,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 6,
+            "removed": 6
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.528668,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 6,
+            "removed": 6
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.529209,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 6,
+            "removed": 7
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.529676,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 7,
+            "removed": 7
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.529767,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 7,
+            "removed": 7
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.530251,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 7,
+            "removed": 8
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.530689,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 8,
+            "removed": 8
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.530775,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 8,
+            "removed": 8
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.531247,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 8,
+            "removed": 9
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.531682,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 9,
+            "removed": 9
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.532587,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 9,
+            "removed": 9
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.533564,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 9,
+            "removed": 10
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.535077,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 10,
+            "removed": 10
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.535337,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 10,
+            "removed": 10
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.537333,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 10,
+            "removed": 11
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.538035,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 11,
+            "removed": 11
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.538175,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 11,
+            "removed": 11
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.538735,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 11,
+            "removed": 12
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.539217,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 12,
+            "removed": 12
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.539312,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 12,
+            "removed": 12
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.539776,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 12,
+            "removed": 13
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.540206,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 13,
+            "removed": 13
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.540306,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 13,
+            "removed": 13
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.540766,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 13,
+            "removed": 14
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.541209,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 14,
+            "removed": 14
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.541301,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 14,
+            "removed": 14
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.541773,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 14,
+            "removed": 15
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.542216,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 15,
+            "removed": 15
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.542298,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 15,
+            "removed": 15
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.542753,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 15,
+            "removed": 16
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.543215,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 16,
+            "removed": 16
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.543291,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 16,
+            "removed": 16
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.543787,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 16,
+            "removed": 17
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.544231,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 17,
+            "removed": 17
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.544313,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 17,
+            "removed": 17
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.544765,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 17,
+            "removed": 18
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.545198,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 18,
+            "removed": 18
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.545279,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 18,
+            "removed": 18
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.545734,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 18,
+            "removed": 19
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.546128,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 19,
+            "removed": 19
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.546217,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 19,
+            "removed": 19
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.546646,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 19,
+            "removed": 20
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.547067,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 20,
+            "removed": 20
+          }
+        }
+      },
+      {
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.547144,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 20,
+            "removed": 20
+          }
+        },
+        "off": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": false,
+            "success": true
+          },
+          "ack": null,
+          "styles": 0,
+          "enabled": null,
+          "theme": null,
+          "motion": null,
+          "blur": null,
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.547602,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 20,
+            "removed": 21
+          }
+        },
+        "on": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.548037,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 21,
+            "removed": 21
+          }
+        }
+      }
+    ],
+    "reloads": [
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.549096,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 21,
+            "removed": 21
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.719949,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 22,
+            "removed": 22
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.720115,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 22,
+            "removed": 22
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.819886,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 23,
+            "removed": 23
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.820035,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 23,
+            "removed": 23
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.919758,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 24,
+            "removed": 24
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 1.919893,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 24,
+            "removed": 24
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.019787,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 25,
+            "removed": 25
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.01996,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 25,
+            "removed": 25
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.119969,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 26,
+            "removed": 26
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.120183,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 26,
+            "removed": 26
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.219817,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 27,
+            "removed": 27
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.21997,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 27,
+            "removed": 27
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.319797,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 28,
+            "removed": 28
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.319941,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 28,
+            "removed": 28
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.419757,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 29,
+            "removed": 29
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.419903,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 29,
+            "removed": 29
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.51728,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 30,
+            "removed": 30
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.517431,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 30,
+            "removed": 30
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.616205,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 31,
+            "removed": 31
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.616345,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 31,
+            "removed": 31
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.715182,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 32,
+            "removed": 32
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.715335,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 32,
+            "removed": 32
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.810716,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 33,
+            "removed": 33
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.810859,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 33,
+            "removed": 33
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.909967,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 34,
+            "removed": 34
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 2.910089,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 34,
+            "removed": 34
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.004953,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 35,
+            "removed": 35
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.005104,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 35,
+            "removed": 35
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.103016,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 36,
+            "removed": 36
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.103131,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 36,
+            "removed": 36
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.201989,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 37,
+            "removed": 37
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.202214,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 37,
+            "removed": 37
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.299127,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 38,
+            "removed": 38
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.299277,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 38,
+            "removed": 38
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.3973,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 39,
+            "removed": 39
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.39744,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 39,
+            "removed": 39
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.495244,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 40,
+            "removed": 40
+          }
+        }
+      },
+      {
+        "result": {
+          "success": true,
+          "results": [
+            {
+              "success": true,
+              "directory": "mico-liquid-glass",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "name": "MicoMusic 液态玻璃"
+            }
+          ],
+          "unloadResults": [
+            {
+              "success": true,
+              "id": "iooncallackkkjcmnohoenonakeljfmj",
+              "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+            }
+          ],
+          "message": "插件重新加载成功"
+        },
+        "before": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.4954,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 40,
+            "removed": 40
+          }
+        },
+        "after": {
+          "ready": {
+            "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+            "enabled": true,
+            "success": true
+          },
+          "ack": null,
+          "styles": 1,
+          "enabled": "on",
+          "theme": "auto",
+          "motion": "reduced",
+          "blur": "normal",
+          "materialSeen": true,
+          "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+          "media": {
+            "time": 3.593296,
+            "paused": false,
+            "starts": 1
+          },
+          "materialMutations": {
+            "added": 41,
+            "removed": 41
+          }
+        }
+      }
+    ],
+    "invalidManifest": {
+      "success": false,
+      "results": [
+        {
+          "success": true,
+          "directory": "mico-liquid-glass",
+          "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+          "id": "iooncallackkkjcmnohoenonakeljfmj",
+          "name": "MicoMusic 液态玻璃"
+        },
+        {
+          "success": false,
+          "directory": "phase3-invalid-json",
+          "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/phase3-invalid-json",
+          "message": "解析 manifest.json 失败: Expected double-quoted property name in JSON at position 22 (line 1 column 23)"
+        },
+        {
+          "success": false,
+          "directory": "phase3-invalid-version",
+          "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/phase3-invalid-version",
+          "message": "仅支持 Manifest V3 格式"
+        }
+      ],
+      "unloadResults": [
+        {
+          "success": true,
+          "id": "iooncallackkkjcmnohoenonakeljfmj",
+          "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass"
+        }
+      ],
+      "message": "部分插件加载失败"
+    },
+    "upgrade": {
+      "success": true,
+      "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+      "updated": true,
+      "fingerprint": "97572a43d0a5c31ff739bad0eebe29ca4399ea062d8e5cbf2ae14a81c4a12197",
+      "version": "1.0.0"
+    },
+    "resourceFailureFallback": {
+      "fallback": {
+        "success": false,
+        "results": [
+          {
+            "success": false,
+            "directory": "mico-liquid-glass",
+            "path": "/Users/mico/AI 事物/MicoMusic-阶段三/artifacts/phase3-runtime/validation-RmEfn9/extensions/mico-liquid-glass",
+            "message": "Failed to fetch"
+          }
+        ]
+      },
+      "failedState": {
+        "ready": {
+          "extensionId": "iooncallackkkjcmnohoenonakeljfmj",
+          "success": false,
+          "error": "Failed to fetch"
+        },
+        "ack": null,
+        "styles": 0,
+        "enabled": null,
+        "theme": null,
+        "motion": null,
+        "blur": null,
+        "materialSeen": true,
+        "identity": "2fce3108-7eb1-4bc1-8859-df315e136368",
+        "media": {
+          "time": 4.339491,
+          "paused": false,
+          "starts": 1
+        },
+        "materialMutations": {
+          "added": 42,
+          "removed": 43
+        }
+      }
+    },
+    "performance": {
+      "base": {
+        "frames": {
+          "frames": 600,
+          "medianMs": 16.69999999999891,
+          "p95Ms": 17.30000000000109,
+          "maxMs": 17.799999999999272,
+          "over33Ms": 0
+        },
+        "processMetrics": [
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 1.87297,
+              "percentCPUUsage": 0.009664966809350459,
+              "idleWakeupsPerSecond": 6
+            },
+            "pid": 65876,
+            "type": "Browser",
+            "creationTime": 1791266543872.337,
+            "memory": {
+              "workingSetSize": 200592,
+              "peakWorkingSetSize": 250560
+            },
+            "sandboxed": false
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 1.247106,
+              "percentCPUUsage": 0.5521479322240862,
+              "idleWakeupsPerSecond": 131
+            },
+            "pid": 65901,
+            "type": "GPU",
+            "creationTime": 1791266544032.304,
+            "serviceName": "GPU",
+            "memory": {
+              "workingSetSize": 118384,
+              "peakWorkingSetSize": 158752
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.107837,
+              "percentCPUUsage": 0.0014024076230200364,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 65902,
+            "type": "Utility",
+            "creationTime": 1791266544033.169,
+            "serviceName": "network.mojom.NetworkService",
+            "name": "Network Service",
+            "memory": {
+              "workingSetSize": 54560,
+              "peakWorkingSetSize": 54560
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 1.070817,
+              "percentCPUUsage": 0.4627403816118531,
+              "idleWakeupsPerSecond": 16
+            },
+            "pid": 65918,
+            "type": "Tab",
+            "creationTime": 1791266544379.664,
+            "memory": {
+              "workingSetSize": 222896,
+              "peakWorkingSetSize": 224352
+            },
+            "sandboxed": false
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.091757,
+              "percentCPUUsage": 0.02723936606675289,
+              "idleWakeupsPerSecond": 15
+            },
+            "pid": 65919,
+            "type": "Utility",
+            "creationTime": 1791266544566.329,
+            "serviceName": "audio.mojom.AudioService",
+            "name": "Audio Service",
+            "memory": {
+              "workingSetSize": 46496,
+              "peakWorkingSetSize": 46496
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.065822,
+              "percentCPUUsage": 0.0011035266973994855,
+              "idleWakeupsPerSecond": 2
+            },
+            "pid": 65957,
+            "type": "Tab",
+            "creationTime": 1791266549103.98,
+            "memory": {
+              "workingSetSize": 105712,
+              "peakWorkingSetSize": 105840
+            },
+            "sandboxed": true
+          }
+        ]
+      },
+      "glass": {
+        "frames": {
+          "frames": 600,
+          "medianMs": 16.69999999999709,
+          "p95Ms": 17.399999999997817,
+          "maxMs": 17.799999999999272,
+          "over33Ms": 0
+        },
+        "processMetrics": [
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 1.877109,
+              "percentCPUUsage": 0.002450523931802738,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 65876,
+            "type": "Browser",
+            "creationTime": 1791266543872.337,
+            "memory": {
+              "workingSetSize": 200544,
+              "peakWorkingSetSize": 250560
+            },
+            "sandboxed": false
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 1.787794,
+              "percentCPUUsage": 0.539846561830865,
+              "idleWakeupsPerSecond": 127
+            },
+            "pid": 65901,
+            "type": "GPU",
+            "creationTime": 1791266544032.304,
+            "serviceName": "GPU",
+            "memory": {
+              "workingSetSize": 118448,
+              "peakWorkingSetSize": 158752
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.108324,
+              "percentCPUUsage": 0.0004863020107240078,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 65902,
+            "type": "Utility",
+            "creationTime": 1791266544033.169,
+            "serviceName": "network.mojom.NetworkService",
+            "name": "Network Service",
+            "memory": {
+              "workingSetSize": 54560,
+              "peakWorkingSetSize": 54560
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 1.557886,
+              "percentCPUUsage": 0.48575881884966743,
+              "idleWakeupsPerSecond": 16
+            },
+            "pid": 65918,
+            "type": "Tab",
+            "creationTime": 1791266544379.664,
+            "memory": {
+              "workingSetSize": 223536,
+              "peakWorkingSetSize": 224352
+            },
+            "sandboxed": false
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.119266,
+              "percentCPUUsage": 0.02746947691661238,
+              "idleWakeupsPerSecond": 15
+            },
+            "pid": 65919,
+            "type": "Utility",
+            "creationTime": 1791266544566.329,
+            "serviceName": "audio.mojom.AudioService",
+            "name": "Audio Service",
+            "memory": {
+              "workingSetSize": 46528,
+              "peakWorkingSetSize": 46528
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.066612,
+              "percentCPUUsage": 0.0001417957432318745,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 65957,
+            "type": "Tab",
+            "creationTime": 1791266549103.98,
+            "memory": {
+              "workingSetSize": 105840,
+              "peakWorkingSetSize": 105840
+            },
+            "sandboxed": true
+          }
+        ]
+      },
+      "lowBlur": {
+        "frames": {
+          "frames": 600,
+          "medianMs": 16.69999999999709,
+          "p95Ms": 17.299999999999272,
+          "maxMs": 17.700000000000728,
+          "over33Ms": 0
+        },
+        "processMetrics": [
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 1.918423,
+              "percentCPUUsage": 0.03802170859884475,
+              "idleWakeupsPerSecond": 8
+            },
+            "pid": 65876,
+            "type": "Browser",
+            "creationTime": 1791266543872.337,
+            "memory": {
+              "workingSetSize": 194256,
+              "peakWorkingSetSize": 250560
+            },
+            "sandboxed": false
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 2.334241,
+              "percentCPUUsage": 0.5456272209164625,
+              "idleWakeupsPerSecond": 129
+            },
+            "pid": 65901,
+            "type": "GPU",
+            "creationTime": 1791266544032.304,
+            "serviceName": "GPU",
+            "memory": {
+              "workingSetSize": 118512,
+              "peakWorkingSetSize": 158752
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.108402,
+              "percentCPUUsage": 0.00007790280845617008,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 65902,
+            "type": "Utility",
+            "creationTime": 1791266544033.169,
+            "serviceName": "network.mojom.NetworkService",
+            "name": "Network Service",
+            "memory": {
+              "workingSetSize": 54576,
+              "peakWorkingSetSize": 54576
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 2.085355,
+              "percentCPUUsage": 0.5261027919875539,
+              "idleWakeupsPerSecond": 14
+            },
+            "pid": 65918,
+            "type": "Tab",
+            "creationTime": 1791266544379.664,
+            "memory": {
+              "workingSetSize": 218544,
+              "peakWorkingSetSize": 224352
+            },
+            "sandboxed": false
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.145731,
+              "percentCPUUsage": 0.026432028687415315,
+              "idleWakeupsPerSecond": 15
+            },
+            "pid": 65919,
+            "type": "Utility",
+            "creationTime": 1791266544566.329,
+            "serviceName": "audio.mojom.AudioService",
+            "name": "Audio Service",
+            "memory": {
+              "workingSetSize": 46528,
+              "peakWorkingSetSize": 46528
+            },
+            "sandboxed": true
+          },
+          {
+            "cpu": {
+              "cumulativeCPUUsage": 0.067666,
+              "percentCPUUsage": 0.00011885175620448615,
+              "idleWakeupsPerSecond": 0
+            },
+            "pid": 65957,
+            "type": "Tab",
+            "creationTime": 1791266549103.98,
+            "memory": {
+              "workingSetSize": 105840,
+              "peakWorkingSetSize": 105840
+            },
+            "sandboxed": true
+          }
+        ]
+      },
+      "gpuFeatureStatus": {
+        "2d_canvas": "enabled",
+        "direct_rendering_display_compositor": "disabled_off_ok",
+        "gpu_compositing": "enabled",
+        "multiple_raster_threads": "enabled_on",
+        "opengl": "enabled_on",
+        "rasterization": "enabled",
+        "raw_draw": "disabled_off_ok",
+        "skia_graphite": "enabled_on",
+        "trees_in_viz": "disabled_off",
+        "video_decode": "enabled",
+        "video_encode": "enabled",
+        "webgl": "enabled",
+        "webgl2": "enabled",
+        "webgpu": "enabled",
+        "webnn": "disabled_off"
+      },
+      "acceptance": "当前设备实测记录；不替代其他平台性能验收"
+    },
+    "finalCleanup": {
+      "success": true
+    }
+  },
+  "scope": "真实生产 Vue、扩展管理器与 IPC；隔离宿主不实现完整播放器主进程；自生成 PCM 仅验证技术连续性"
+}

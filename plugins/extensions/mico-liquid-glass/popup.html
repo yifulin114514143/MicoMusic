@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>液态玻璃设置</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <main>
+        <h1>液态玻璃</h1>
+        <p>启用玻璃材质和沉浸播放器。点击底部歌曲封面进入；关闭后恢复原界面。</p>
+        <form id="glass-settings">
+            <label class="toggle"><span>启用视觉插件</span><input id="enabled" type="checkbox"></label>
+            <label class="choice"><span>材质明暗</span><select id="theme"><option value="auto">跟随应用</option><option value="light">浅色</option><option value="dark">深色</option></select></label>
+            <label class="toggle"><span>减少动效</span><input id="reduceMotion" type="checkbox"></label>
+            <label class="toggle"><span>降低模糊开销</span><input id="lowBlur" type="checkbox"></label>
+            <p class="hint">系统的减少动态效果设置始终生效。降低模糊开销会提高表面不透明度。</p>
+        </form>
+        <p id="status" role="status" aria-live="polite">正在读取设置…</p>
+    </main>
+    <script src="settings.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

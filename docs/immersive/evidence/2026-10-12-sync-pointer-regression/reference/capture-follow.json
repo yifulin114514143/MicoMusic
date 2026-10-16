@@ -1,0 +1,243 @@
+{
+  "timestamp": "2026-10-12T03:14:43.003Z",
+  "application": "com.oscar.lyricsblossom",
+  "captureMethod": "cua native window screenshot sequence",
+  "elapsedMs": 6038.636332999915,
+  "frames": [
+    {
+      "file": "frame-0000.png",
+      "timeMs": 56.1085830014199
+    },
+    {
+      "file": "frame-0001.png",
+      "timeMs": 114.77483300119638
+    },
+    {
+      "file": "frame-0002.png",
+      "timeMs": 174.37979100085795
+    },
+    {
+      "file": "frame-0003.png",
+      "timeMs": 240.85908300057054
+    },
+    {
+      "file": "frame-0004.png",
+      "timeMs": 322.53625000081956
+    },
+    {
+      "file": "frame-0005.png",
+      "timeMs": 399.7873750012368
+    },
+    {
+      "file": "frame-0006.png",
+      "timeMs": 465.1609580013901
+    },
+    {
+      "file": "frame-0007.png",
+      "timeMs": 533.3008329998702
+    },
+    {
+      "file": "frame-0008.png",
+      "timeMs": 607.9312910009176
+    },
+    {
+      "file": "frame-0009.png",
+      "timeMs": 698.7590410001576
+    },
+    {
+      "file": "frame-0010.png",
+      "timeMs": 840.7436660006642
+    },
+    {
+      "file": "frame-0011.png",
+      "timeMs": 952.0849580001086
+    },
+    {
+      "file": "frame-0012.png",
+      "timeMs": 1054.2163329999894
+    },
+    {
+      "file": "frame-0013.png",
+      "timeMs": 1195.9588750004768
+    },
+    {
+      "file": "frame-0014.png",
+      "timeMs": 1379.0680830013007
+    },
+    {
+      "file": "frame-0015.png",
+      "timeMs": 1540.9351250007749
+    },
+    {
+      "file": "frame-0016.png",
+      "timeMs": 1715.2094999998808
+    },
+    {
+      "file": "frame-0017.png",
+      "timeMs": 1961.0151250008494
+    },
+    {
+      "file": "frame-0018.png",
+      "timeMs": 2155.0739160012454
+    },
+    {
+      "file": "frame-0019.png",
+      "timeMs": 2340.6411250010133
+    },
+    {
+      "file": "frame-0020.png",
+      "timeMs": 2543.501749999821
+    },
+    {
+      "file": "frame-0021.png",
+      "timeMs": 2692.2905830014497
+    },
+    {
+      "file": "frame-0022.png",
+      "timeMs": 2820.9602080006152
+    },
+    {
+      "file": "frame-0023.png",
+      "timeMs": 2993.611750001088
+    },
+    {
+      "file": "frame-0024.png",
+      "timeMs": 3106.931500000879
+    },
+    {
+      "file": "frame-0025.png",
+      "timeMs": 3218.9804159998894
+    },
+    {
+      "file": "frame-0026.png",
+      "timeMs": 3321.887250000611
+    },
+    {
+      "file": "frame-0027.png",
+      "timeMs": 3456.1737910006195
+    },
+    {
+      "file": "frame-0028.png",
+      "timeMs": 3587.071208000183
+    },
+    {
+      "file": "frame-0029.png",
+      "timeMs": 3701.5739160012454
+    },
+    {
+      "file": "frame-0030.png",
+      "timeMs": 3809.3401250001043
+    },
+    {
+      "file": "frame-0031.png",
+      "timeMs": 3936.0033750012517
+    },
+    {
+      "file": "frame-0032.png",
+      "timeMs": 4089.160375000909
+    },
+    {
+      "file": "frame-0033.png",
+      "timeMs": 4199.586458001286
+    },
+    {
+      "file": "frame-0034.png",
+      "timeMs": 4291.243666000664
+    },
+    {
+      "file": "frame-0035.png",
+      "timeMs": 4401.9281660001725
+    },
+    {
+      "file": "frame-0036.png",
+      "timeMs": 4552.429416000843
+    },
+    {
+      "file": "frame-0037.png",
+      "timeMs": 4660.141083000228
+    },
+    {
+      "file": "frame-0038.png",
+      "timeMs": 4754.1825409997255
+    },
+    {
+      "file": "frame-0039.png",
+      "timeMs": 4851.650541000068
+    },
+    {
+      "file": "frame-0040.png",
+      "timeMs": 5008.514957999811
+    },
+    {
+      "file": "frame-0041.png",
+      "timeMs": 5119.130541000515
+    },
+    {
+      "file": "frame-0042.png",
+      "timeMs": 5219.240083001554
+    },
+    {
+      "file": "frame-0043.png",
+      "timeMs": 5337.338375000283
+    },
+    {
+      "file": "frame-0044.png",
+      "timeMs": 5470.257125001401
+    },
+    {
+      "file": "frame-0045.png",
+      "timeMs": 5571.43479100056
+    },
+    {
+      "file": "frame-0046.png",
+      "timeMs": 5668.340874999762
+    },
+    {
+      "file": "frame-0047.png",
+      "timeMs": 5770.489916000515
+    },
+    {
+      "file": "frame-0048.png",
+      "timeMs": 5923.536415999755
+    },
+    {
+      "file": "frame-0049.png",
+      "timeMs": 6037.531915999949
+    }
+  ],
+  "actions": [
+    {
+      "timeMs": 0,
+      "action": "pointer left on observed empty background before sampling"
+    }
+  ],
+  "limitations": [
+    "window image sequence without audio",
+    "actual screenshot cadence, not 60fps recording"
+  ],
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "width": 1470,
+        "height": 848,
+        "avg_frame_rate": "50000/6021",
+        "nb_frames": "50",
+        "side_data_list": [
+          {}
+        ]
+      }
+    ],
+    "format": {
+      "duration": "6.021000"
+    }
+  },
+  "maxEncodedTimestampErrorMs": 0.4968330003323196,
+  "version": {
+    "CFBundleShortVersionString": "7.0",
+    "CFBundleVersion": "15"
+  },
+  "sampledFps": 8.19203010254684,
+  "videoFile": "lyricsblossom-follow-sampled.mp4"
+}

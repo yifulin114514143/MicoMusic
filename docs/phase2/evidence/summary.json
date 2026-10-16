@@ -1,0 +1,417 @@
+{
+  "baseline": "da5ec4a3e38961d2a60c1287f77ef19f6ae9af6e",
+  "electron": "39.2.4",
+  "checks": [
+    {
+      "name": "生产插件目录与隔离配置目录一致",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "探针通过项目真实 Manifest V3 校验",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "插件系统初始化成功",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "启动扫描加载探针",
+      "passed": true,
+      "detail": [
+        {
+          "name": "MicoMusic 阶段二视觉能力验证",
+          "id": "kabkkmipggaoblidfljkijfgfjfgjphk"
+        }
+      ]
+    },
+    {
+      "name": "file:// 页面注入 JS 与 CSS",
+      "passed": true,
+      "detail": {
+        "documentRuns": 1,
+        "hashEvents": 0,
+        "mutationBatches": 0,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "initial"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      }
+    },
+    {
+      "name": "内容脚本与宿主 preload 世界隔离",
+      "passed": true,
+      "detail": {
+        "electron": "object",
+        "electronAPI": "object",
+        "require": "undefined",
+        "chromeRuntime": "undefined"
+      }
+    },
+    {
+      "name": "顶部导航的 scoped 样式可由插件覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "主内容容器可由插件覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "底部播放器可由插件覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "当前 Chromium 支持 backdrop-filter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Hash 路由变化可监听且不重复注入",
+      "passed": true,
+      "detail": {
+        "documentRuns": 1,
+        "hashEvents": 2,
+        "mutationBatches": 3,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "initial"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      }
+    },
+    {
+      "name": "Vue 动态节点变化可被 MutationObserver 监听",
+      "passed": true,
+      "detail": 3
+    },
+    {
+      "name": "切换到侧栏后的新节点由同一插件 CSS 覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "侧栏顶部操作区域可覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "深色状态可使用独立规则",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(20, 30, 55, 0.4)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "独立挂载到 body 的真实弹窗可覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": true
+      }
+    },
+    {
+      "name": "弹窗覆盖不依赖 #app 内部范围",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "动态消息提示可覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": true
+      }
+    },
+    {
+      "name": "主窗口全屏歌词外层可覆盖",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "真实插件弹窗 IPC 可打开 action.default_popup",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk"
+      }
+    },
+    {
+      "name": "插件弹窗可以读取自己的 chrome.storage.local",
+      "passed": true,
+      "detail": {
+        "settings": {
+          "enabled": true,
+          "proof": "popup-seed"
+        },
+        "electronAPI": "object",
+        "electron": "object",
+        "require": "undefined"
+      }
+    },
+    {
+      "name": "插件自有开关可实时恢复原 scoped 样式",
+      "passed": true,
+      "detail": {
+        "proof": "",
+        "backdropFilter": "blur(10px)",
+        "background": "rgba(255, 255, 255, 0.7)",
+        "radius": "0px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "默认会话的独立歌词窗口可注入",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(0, 0, 0, 0)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "localhost HTTP 页面可注入 JS 与 CSS",
+      "passed": true,
+      "detail": {
+        "proof": "applied",
+        "backdropFilter": "blur(12px)",
+        "background": "rgba(65, 90, 145, 0.2)",
+        "radius": "16px",
+        "outsideApp": false
+      }
+    },
+    {
+      "name": "本地音乐空状态可正常切换",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "视觉注入保留未登录时的搜索路由守卫",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "卸载后的当前文档内容监听仍存活，需定义清理机制",
+      "passed": true,
+      "detail": {
+        "documentRuns": 1,
+        "hashEvents": 6,
+        "mutationBatches": 20,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "performance-probe"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      }
+    },
+    {
+      "name": "真实重新加载 IPC 返回成功",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "文档刷新后只注入一次且读取插件设置",
+      "passed": true,
+      "detail": {
+        "documentRuns": 1,
+        "hashEvents": 0,
+        "mutationBatches": 0,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": true,
+          "proof": "performance-probe"
+        },
+        "error": null,
+        "worker": null
+      }
+    },
+    {
+      "name": "存在无效清单时重载仍报告成功，错误反馈需补齐",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "现有 restartExtensions 只完成清理而未重新初始化",
+      "passed": true,
+      "detail": {
+        "success": true
+      }
+    },
+    {
+      "name": "空目录卸载会删除插件根目录，已在隔离探针中复现",
+      "passed": true,
+      "detail": {
+        "success": true,
+        "removedFromSession": true,
+        "removedFiles": true,
+        "path": "/Users/mico/AI 事物/MicoMusic-阶段二/artifacts/phase2-runtime/run-tIce94/extensions"
+      }
+    },
+    {
+      "name": "插件设置可保存供进程重启验证",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "生产插件目录与隔离配置目录一致",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "探针通过项目真实 Manifest V3 校验",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "插件系统初始化成功",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "启动扫描加载探针",
+      "passed": true,
+      "detail": [
+        {
+          "name": "MicoMusic 阶段二视觉能力验证",
+          "id": "kabkkmipggaoblidfljkijfgfjfgjphk"
+        }
+      ]
+    },
+    {
+      "name": "file:// 页面注入 JS 与 CSS",
+      "passed": true,
+      "detail": {
+        "documentRuns": 1,
+        "hashEvents": 0,
+        "mutationBatches": 0,
+        "electronInContentWorld": "undefined",
+        "electronAPIInContentWorld": "undefined",
+        "localStorageAvailable": "object",
+        "extensionId": "kabkkmipggaoblidfljkijfgfjfgjphk",
+        "settings": {
+          "enabled": false,
+          "proof": "cross-process"
+        },
+        "error": null,
+        "worker": {
+          "serviceWorker": true
+        }
+      }
+    },
+    {
+      "name": "内容脚本与宿主 preload 世界隔离",
+      "passed": true,
+      "detail": {
+        "electron": "object",
+        "electronAPI": "object",
+        "require": "undefined",
+        "chromeRuntime": "undefined"
+      }
+    },
+    {
+      "name": "退出并重启 Electron 后插件设置保留",
+      "passed": true,
+      "detail": {
+        "enabled": false,
+        "proof": "cross-process"
+      }
+    },
+    {
+      "name": "重启后的关闭设置未应用验证样式",
+      "passed": true,
+      "detail": {
+        "proof": "",
+        "backdropFilter": "blur(10px)",
+        "background": "rgba(255, 255, 255, 0.7)",
+        "radius": "0px",
+        "outsideApp": false
+      }
+    }
+  ],
+  "limitations": [
+    "无真实账号验收",
+    "验证样式并非正式液态玻璃设计",
+    "性能样本只覆盖探针和当前机器"
+  ],
+  "reports": [
+    "capabilities.json",
+    "persistence.json"
+  ]
+}

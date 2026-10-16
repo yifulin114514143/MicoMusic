@@ -2,7 +2,7 @@
   <div class="album-grid">
     <div v-for="(album, index) in albums" :key="index" class="album-card" @click="onAlbumClick(album)">
       <div class="album-cover">
-        <img :src="(album.img || './assets/images/ico.png').replace('/240/', '/480/')" />
+        <img :src="(album.img || './assets/images/mico/mico-app-icon-512.png').replace('/240/', '/480/')" />
         <div class="album-overlay">
           <button class="play-button">
             <i class="fas fa-play"></i>
